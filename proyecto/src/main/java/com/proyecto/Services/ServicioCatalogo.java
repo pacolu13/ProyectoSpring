@@ -29,12 +29,21 @@ public class ServicioCatalogo {
         return new CatalogoDTO(catalogo.getProducto().getId(), catalogo.getPrecio(), catalogo.getStock());
     }
 
-    public CatalogoDTO crearCatalogo(Catalogo catalogo) {
-        Catalogo nuevoCatalogo = repoCatalogo.save(catalogo);
-        return new CatalogoDTO(nuevoCatalogo.getProducto().getId(), nuevoCatalogo.getPrecio(), nuevoCatalogo.getStock());
+    public List<CatalogoDTO> obtenerCatalogoPorFiltro(String nombre, String categoria, Double precioMin,
+            Double precioMax) {
+        return repoCatalogo.buscarPorFiltros(nombre, categoria, precioMin, precioMax)
+                .stream()
+                .map(c -> new CatalogoDTO(c.getProducto().getId(), c.getPrecio(), c.getStock()))
+                .toList();
     }
 
-    //Todavia no vamos a darle la posibilidad de editar catalogos
+    public CatalogoDTO crearCatalogo(Catalogo catalogo) {
+        Catalogo nuevoCatalogo = repoCatalogo.save(catalogo);
+        return new CatalogoDTO(nuevoCatalogo.getProducto().getId(), nuevoCatalogo.getPrecio(),
+                nuevoCatalogo.getStock());
+    }
+
+    // Todavia no vamos a darle la posibilidad de editar catalogos
 
     public void eliminarCatalogo(Long id) {
         if (!repoCatalogo.existsById(id)) {

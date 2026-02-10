@@ -23,14 +23,19 @@ public class ServicioProducto {
     public Producto obtenerProductoPorId(Long id) {
         return repoProducto.findById(id).orElseThrow(() -> new RuntimeException("Producto no encontrado"));
     }
+    
 
     public Producto crearProducto(Producto producto) {
         return repoProducto.save(producto);
     }
 
+    public List<Producto> crearListaProductos(List<Producto> productos) {
+        return repoProducto.saveAll(productos);
+    }
+
     public Producto actualizarProducto(Long id, Producto productoActualizado) {
         Producto productoExistente = repoProducto.findById(id).orElseThrow(
-        () -> new RuntimeException("Producto no encontrado"));
+                () -> new RuntimeException("Producto no encontrado"));
         productoExistente.setNombre(productoActualizado.getNombre());
         productoExistente.setCategoria(productoActualizado.getCategoria());
         productoExistente.setDescripcion(productoActualizado.getDescripcion());
@@ -42,5 +47,14 @@ public class ServicioProducto {
             throw new RuntimeException("Producto no encontrado");
         }
         repoProducto.deleteById(id);
+    }
+
+    public void eliminarListaProductos(List<Long> ids) {
+        for (Long id : ids) {
+            if (!repoProducto.existsById(id)) {
+                throw new RuntimeException("Producto con ID " + id + " no encontrado");
+            }
+        }
+        repoProducto.deleteAllById(ids);
     }
 }
