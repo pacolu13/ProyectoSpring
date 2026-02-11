@@ -1,19 +1,22 @@
 package com.proyecto;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.*;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.proyecto.DTOs.CatalogoDTO;
 import com.proyecto.DataProvider.DataProvider;
-import com.proyecto.Entities.Catalogo;
 import com.proyecto.Repositories.RepoCatalogo;
 import com.proyecto.Services.ServicioCatalogo;
 
@@ -22,20 +25,64 @@ public class ServicioCatalogoTests {
 
     @Mock
     private RepoCatalogo repoCatalogo;
-    
+
     @InjectMocks
     private ServicioCatalogo servicioCatalogo;
 
+    // Primero vamos a testear las excepciones
 
     @Test
-    public void obtenerCatalogoTest(){
-        
-        Catalogo catalogoMock = DataProvider.catalogoMock();
-        when(servicioCatalogo.obtenerCatalogo()).thenReturn(List.of(catalogoMock)); 
-        // Verificar que el método findAll del repositorio devuelve 
-        // la lista de catálogos mockeada
-        assertEquals(catalogoMock,catalogos.get(0));
+    public void obtenerCatalogoNullTest() {
+        when(repoCatalogo.findAll()).thenReturn(null);
+        assertThrows(RuntimeException.class, () -> servicioCatalogo.obtenerCatalogo());
+    }
 
+    @Test
+    public void obtenerCatalogoVacioTest() {
+        when(repoCatalogo.findAll()).thenReturn(List.of());
+        assertThrows(RuntimeException.class, () -> servicioCatalogo.obtenerCatalogo());
+    }
+
+    @Test
+    public void obtenerCatalogoTest() {
+
+        CatalogoDTO catalogoDTO = new CatalogoDTO(1L, 1L, "Producto de prueba", "Categoría de prueba", 100.0, 10);
+        
+        when(repoCatalogo.findAll()).thenReturn(List.of(DataProvider.catalogoMock()));
+        List<CatalogoDTO> resultado = servicioCatalogo.obtenerCatalogo();
+        assertFalse(resultado.isEmpty());
+        assertEquals(catalogoDTO, resultado.get(0));
+    }
+
+    @Test
+    public void obtenerCatalogoPorIdNullTest() {
+        when(repoCatalogo.findById(anyLong())).thenReturn(Optional.empty());
+        assertThrows(RuntimeException.class, () -> servicioCatalogo.obtenerCatalogoPorId(1L));
+    }
+
+    @Test
+    public void obtenerCatalogoPorIdTest() {
+        CatalogoDTO catalogoDTO = new CatalogoDTO(1L, 1L, "Producto de prueba", "Categoría de prueba", 100.0, 10);
+        when(repoCatalogo.findById(anyLong())).thenReturn(Optional.of(DataProvider.catalogoMock()));
+        CatalogoDTO resultado = servicioCatalogo.obtenerCatalogoPorId(1L);
+        assertEquals(catalogoDTO, resultado);
+    }
+
+    @Test
+    public void obtenerCatalogoPorFiltroTest() {
+
+        CatalogoDTO catalogoDTO = new CatalogoDTO(1L, 1L, "Producto de prueba", "Categoría de prueba", 100.0, 10);
+
+        when(repoCatalogo.buscarPorFiltros(
+                anyString(),
+                anyString(),
+                isNull(),
+                isNull())).thenReturn(List.of(DataProvider.catalogoMock()));
+
+        List<CatalogoDTO> resultado = servicioCatalogo.obtenerCatalogoPorFiltro("Producto de prueba", "Categoria", null, null);
+
+        assertEquals(1, resultado.size());
+        assertEquals(catalogoDTO, resultado.get(0));
     }
 
 }

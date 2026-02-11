@@ -10,6 +10,8 @@ import com.proyecto.Entities.Catalogo;
 
 public interface RepoCatalogo extends JpaRepository<Catalogo, Long> {
 
+
+
     @Query("""
             SELECT c FROM Catalogo c
             WHERE (:nombre IS NULL OR LOWER(c.producto.nombre) = LOWER(:nombre))

@@ -29,9 +29,9 @@ public class DataProvider {
 
     public static List<CatalogoDTO> listaCatalogosMock() {
         return List.of(
-                new CatalogoDTO(1L, 100.0, 10),
-                new CatalogoDTO(2L, 200.0, 20),
-                new CatalogoDTO(3L, 300.0, 30)
+                new CatalogoDTO(1L,1L,"Producto 1", "Categoría 1", 100.0, 10),
+                new CatalogoDTO(2L,2L,"Producto 2", "Categoría 2", 200.0, 20),
+                new CatalogoDTO(3L,3L,"Producto 3", "Categoría 3",    300.0, 30)
         );
     }
 
