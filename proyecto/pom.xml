@@ -101,6 +101,14 @@
 			<version>0.8.7</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Dependencia Swagger para documentación de API -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
