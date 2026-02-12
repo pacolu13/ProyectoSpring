@@ -31,7 +31,8 @@ public class DataProvider {
         return List.of(
                 new CatalogoDTO(1L,1L,"Producto 1", "Categoría 1", 100.0, 10),
                 new CatalogoDTO(2L,2L,"Producto 2", "Categoría 2", 200.0, 20),
-                new CatalogoDTO(3L,3L,"Producto 3", "Categoría 3",    300.0, 30)
+                new CatalogoDTO(3L,3L,"Producto 3", "Categoría 3",    300.0, 30),
+                new CatalogoDTO(4L, 4L, "Coca Cola", "Bebidas", 15.0, 50)
         );
     }
 

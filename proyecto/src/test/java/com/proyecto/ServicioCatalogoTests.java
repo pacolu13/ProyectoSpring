@@ -1,9 +1,9 @@
 package com.proyecto;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
@@ -71,15 +71,16 @@ public class ServicioCatalogoTests {
     @Test
     public void obtenerCatalogoPorFiltroTest() {
 
-        CatalogoDTO catalogoDTO = new CatalogoDTO(1L, 1L, "Producto de prueba", "Categoría de prueba", 100.0, 10);
+        CatalogoDTO catalogoDTO = new CatalogoDTO(4L, 4L, "Coca Cola", "Bebidas", 15.0, 50);
+
 
         when(repoCatalogo.buscarPorFiltros(
                 anyString(),
                 anyString(),
-                isNull(),
-                isNull())).thenReturn(List.of(DataProvider.catalogoMock()));
+                anyDouble(),
+                anyDouble())).thenReturn(List.of(DataProvider.catalogoMock()));
 
-        List<CatalogoDTO> resultado = servicioCatalogo.obtenerCatalogoPorFiltro("Producto de prueba", "Categoria", null, null);
+        List<CatalogoDTO> resultado = servicioCatalogo.obtenerCatalogoPorFiltro("Coca Cola", "Bebidas", 10.0, 50.0);
 
         assertEquals(1, resultado.size());
         assertEquals(catalogoDTO, resultado.get(0));
