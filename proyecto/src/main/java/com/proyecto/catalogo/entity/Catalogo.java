@@ -2,6 +2,7 @@ package com.proyecto.catalogo.entity;
 import java.math.BigDecimal;
 
 import com.proyecto.producto.entity.Producto;
+import com.proyecto.vendedor.entity.Vendedor;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,8 +12,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data               // Genera getters, setters, toString, equals y hashCode automáticamente
 @NoArgsConstructor  // Genera un constructor sin argumentos
@@ -27,8 +29,9 @@ public class Catalogo {
     @ManyToOne // Relación muchos a uno con Producto
     @JoinColumn(name = "id_producto", referencedColumnName = "id")
     private Producto producto;
-    @Column(name = "id_vendedor")
-    private Long idVendedor;
+    @ManyToOne // Relación muchos a uno con Vendedor
+    @JoinColumn(name = "id_vendedor", referencedColumnName = "id")
+    private Vendedor vendedor;
     @Column(name = "precio")
     private BigDecimal precio;
     @Column(name = "stock")
