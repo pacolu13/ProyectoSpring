@@ -1,0 +1,34 @@
+package com.proyecto.detallecompra;
+
+import java.math.BigDecimal;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data               // Genera getters, setters, toString, equals y hashCode automáticamente
+@NoArgsConstructor  // Genera un constructor sin argumentos
+@AllArgsConstructor // Genera un constructor con todos los argumentos
+@Entity
+@Table(name = "detalle_compras")
+public class DetalleCompra {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+    @Column(name = "id_catalogo")
+    private Long idCatalogo;
+    @Column(name = "id_producto")
+    private Long idProducto;
+    @Column(name = "cantidad")
+    private Integer cantidad;
+    @Column(name = "subtotal")
+    private BigDecimal subtotal;
+}
