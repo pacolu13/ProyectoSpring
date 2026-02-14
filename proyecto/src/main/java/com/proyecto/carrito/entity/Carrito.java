@@ -1,4 +1,6 @@
 package com.proyecto.carrito.entity;
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,20 +16,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor  // Genera un constructor sin argumentos
 @AllArgsConstructor // Genera un constructor con todos los argumentos
 @Entity
-@Table(name = "carritos")
+@Table(name = "carrito")
 public class Carrito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "id_cliente")
-    private Long idCliente;
-    @Column(name = "id_detalle_compra")
-    private Long idDetalleCompra;
-    @Column(name = "total")
-    private Double total;
-    @Column(name = "estado")
-    private String estado;
     @Column(name = "fecha_creacion")
-    private String fechaCreacion;
+    private LocalDateTime fechaCreacion;
+    @Column(name = "fecha_actualizacion")
+    private LocalDateTime fechaActualizacion;
+    @Column(name = "estado")
+    private EstadoCarrito estado;
 }

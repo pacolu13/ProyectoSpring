@@ -1,10 +1,20 @@
 package com.proyecto.vendedor.entity;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.management.RuntimeErrorException;
+
+import com.proyecto.catalogo.entity.Catalogo;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -24,13 +34,20 @@ public class Vendedor {
     private Long id;
     @Column(name = "nombre")
     private String nombre;
-    @Column(name = "apellido")
-    private String apellido;
     @Column(name = "email")
     private String email;
-    @Column(name = "telefono")
-    private String telefono; 
-    @Column(name = "direccion")
-    private String direccion;   
+    @Column(name = "contraseña")
+    private String contrasenia;
+    @Column(name = "cuit")
+    private String cuit;
+    @Column(name = "activo")
+    private boolean activo;
+    @Column(name = "fecha_registro")
+    private LocalDateTime fechaRegistro;
 
+    // Estudiar relaciones
+
+    @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Catalogo> catalogos = new ArrayList<>();
+    
 }

@@ -1,5 +1,9 @@
-package com.proyecto.catalogo.entity;
+package com.proyecto.compra.entity;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import com.proyecto.ordenpedido.entity.EstadoOrden;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,21 +18,21 @@ import lombok.NoArgsConstructor;
 @Data               // Genera getters, setters, toString, equals y hashCode automáticamente
 @NoArgsConstructor  // Genera un constructor sin argumentos
 @AllArgsConstructor // Genera un constructor con todos los argumentos
+
 @Entity
-@Table(name = "catalogos")
-public class Catalogo {
+@Table(name = "compra") 
+public class Compra {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "nombre")
-    private String nombre;
-    @Column(name = "descripcion")
-    private String descripcion;
-    @Column(name = "activo")
-    private Boolean activo;
-    @Column(name = "fecha_creacion")
-    private LocalDateTime fechaCreacion;
+    @Column(name = "fecha")
+    private LocalDateTime fecha;
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
+    @Column(name = "total")
+    private BigDecimal total;
+    @Column(name = "estado")
+    private EstadoCompra estado;
 }

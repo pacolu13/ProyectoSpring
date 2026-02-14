@@ -1,5 +1,7 @@
 package com.proyecto.producto.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,9 +27,18 @@ public class Producto {
     private Long id;
     @Column(name = "nombre")
     private String nombre;
-    @Column(name = "categoria")
-    private String categoria;
     @Column(name = "descripcion")
     private String descripcion;
-   
+    @Column(name = "marca")
+    private String marca;
+    @Column(name = "categoria")
+    private String categoria;
+    @Column(name = "imagen")
+    private String imagen;
+    @Column(name = "activo")
+    private boolean activo;
+    @Column(name = "fecha_creacion")
+    private LocalDateTime fechaCreacion;
+    
+    
 }

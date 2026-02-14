@@ -1,5 +1,8 @@
 package com.proyecto.cliente;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor // Genera un constructor con todos los argumentos
 
 @Entity
-@Table(name = "clientes") 
+@Table(name = "cliente") 
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +31,28 @@ public class Cliente {
     private String apellido;
     @Column(name = "email")
     private String email;
+    @Column(name = "contraseña")
+    private String contrasenia;
     @Column(name = "telefono")
     private String telefono;
-    @Column(name = "direccion")
-    private String direccion;
+    @Column(name = "saldo")
+    private BigDecimal saldo;
+    @Column(name = "activo")
+    private boolean activo;
+    @Column(name = "fecha_registro")
+    private LocalDateTime fechaRegistro;
+
+    public void recargarSaldo(BigDecimal monto){
+        BigDecimal nuevoSaldo = getSaldo().add(monto);
+        setSaldo(nuevoSaldo);
+    }
+
+    public void descontarSaldo(BigDecimal monto){
+        BigDecimal nuevoSaldo = getSaldo().subtract(monto);
+        setSaldo(nuevoSaldo);
+    }
+
+    public boolean verificarSaldoSuficiente(BigDecimal monto){
+        return getSaldo().compareTo(monto) >= 0;
+    }
 }

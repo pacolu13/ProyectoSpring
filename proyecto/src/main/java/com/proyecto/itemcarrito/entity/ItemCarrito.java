@@ -1,5 +1,4 @@
-package com.proyecto.catalogo.entity;
-import java.time.LocalDateTime;
+package com.proyecto.itemcarrito.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,21 +13,17 @@ import lombok.NoArgsConstructor;
 @Data               // Genera getters, setters, toString, equals y hashCode automáticamente
 @NoArgsConstructor  // Genera un constructor sin argumentos
 @AllArgsConstructor // Genera un constructor con todos los argumentos
+
+
 @Entity
-@Table(name = "catalogos")
-public class Catalogo {
+@Table(name="item_carrito")
+public class ItemCarrito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "nombre")
-    private String nombre;
-    @Column(name = "descripcion")
-    private String descripcion;
-    @Column(name = "activo")
-    private Boolean activo;
-    @Column(name = "fecha_creacion")
-    private LocalDateTime fechaCreacion;
-    @Column(name = "fecha_actualizacion")
-    private LocalDateTime fechaActualizacion;
+    @Column(name = "cantidad")
+    private Integer cantidad;
+    
+
 }
