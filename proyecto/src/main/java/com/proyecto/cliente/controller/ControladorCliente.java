@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +16,6 @@ import com.proyecto.cliente.dto.ClienteCreateDTO;
 import com.proyecto.cliente.dto.ClienteDTO;
 import com.proyecto.cliente.service.ServicioCliente;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -35,8 +35,9 @@ public class ControladorCliente {
     }
 
     @GetMapping("/{id}")
-    public ClienteDTO obtenerClientePorId(@PathVariable Long id) {
-        return servicioCliente.obtenerClientePorId(id);
+    public ResponseEntity<ClienteDTO> obtenerClientePorId(@PathVariable Long id) {
+        ClienteDTO cliente = servicioCliente.obtenerClientePorId(id);
+        return ResponseEntity.ok(cliente);
     }
 
     @PostMapping
@@ -45,4 +46,8 @@ public class ControladorCliente {
         ClienteDTO resultado = servicioCliente.añadirCliente(cliente);
         return new ResponseEntity<>(resultado, HttpStatus.CREATED);
     }
+
+    //Modificar Cliente
+
+    //Eliminar Cliente
 }

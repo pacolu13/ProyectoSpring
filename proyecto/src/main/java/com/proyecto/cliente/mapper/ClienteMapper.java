@@ -1,10 +1,13 @@
 package com.proyecto.cliente.mapper;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.proyecto.cliente.dto.ClienteCreateDTO;
 import com.proyecto.cliente.dto.ClienteDTO;
 import com.proyecto.cliente.entity.Cliente;
 
@@ -30,18 +33,18 @@ public class ClienteMapper {
     }
 
     // DTO → Entity
-    public Cliente toEntity(ClienteDTO dto) {
+    public Cliente toEntity(ClienteCreateDTO dto) {
         if (dto == null)
             return null;
 
         Cliente cliente = new Cliente();
-        cliente.setId(dto.getId());
         cliente.setNombre(dto.getNombre());
         cliente.setApellido(dto.getApellido());
         cliente.setEmail(dto.getEmail());
         cliente.setTelefono(dto.getTelefono());
-        cliente.setSaldo(dto.getSaldo());
-        cliente.setActivo(dto.getActivo());
+        cliente.setSaldo(BigDecimal.ZERO);
+        cliente.setActivo(true);
+        cliente.setFechaRegistro(LocalDateTime.now());
 
         return cliente;
     }

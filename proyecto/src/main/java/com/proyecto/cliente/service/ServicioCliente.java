@@ -1,7 +1,6 @@
 package com.proyecto.cliente.service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -38,20 +37,9 @@ public class ServicioCliente {
     }
 
     public ClienteDTO añadirCliente(ClienteCreateDTO cliente) {
-
-        Cliente guardar = new Cliente();
-        guardar.setNombre(cliente.getNombre());
-        guardar.setApellido(cliente.getApellido());
-        guardar.setEmail(cliente.getEmail());
-        guardar.setTelefono(cliente.getTelefono());
-        guardar.setSaldo(BigDecimal.ZERO);
-        guardar.setFechaRegistro(LocalDateTime.now());
-        Cliente clienteGuardado = repoCliente.save(guardar);
-
-        ClienteDTO respuesta = new ClienteDTO();
-        respuesta.setNombre(clienteGuardado.getNombre());
-        respuesta.setApellido(clienteGuardado.getApellido());
-        return respuesta;
+        Cliente nuevo = clienteMapper.toEntity(cliente);
+        Cliente resultado = repoCliente.save(nuevo);
+        return clienteMapper.toDTO(resultado);
     }
 
 }
