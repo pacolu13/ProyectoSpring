@@ -1,12 +1,16 @@
 package com.proyecto.producto.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.proyecto.itemcatalogo.entity.ItemCatalogo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -40,5 +44,7 @@ public class Producto {
     @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
     
+    @OneToMany(mappedBy = "producto")
+    private List<ItemCatalogo> itemsCatalogoList;
     
 }

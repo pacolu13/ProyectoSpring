@@ -4,9 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
-import com.proyecto.catalogo.entity.Catalogo;
+import com.proyecto.compra.entity.Compra;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -48,6 +46,22 @@ public class Vendedor {
     // Estudiar relaciones
 
     @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Catalogo> catalogos = new ArrayList<>();
-    
+    private List<Compra> comprasList = new ArrayList<>();
+
+    /* 
+    public ItemCatalogo actualizarPrecio(Long itemId, BigDecimal nuevoPrecio){
+        if(itemId == null)
+            throw new IllegalArgumentException("La ID no puede ser nulo");
+
+        if(nuevoPrecio == null || nuevoPrecio.equals(0))
+            throw new IllegalArgumentException("El nuevo precio no puede estar vacio");
+
+        for(ItemCatalogo item: itemsCatalogoList)
+            if(item.getId().equals(itemId)){
+                item.setPrecio(nuevoPrecio);
+                return item;
+            }
+        throw new IllegalArgumentException("No se encontro el Item solicitado");
+    } 
+        */
 }

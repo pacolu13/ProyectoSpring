@@ -18,6 +18,7 @@ public class ServicioVendedor {
         this.repoVendedor = repoVendedor;
     }
 
+    /* 
     public List<VendedorDTO> obtenerVendedores() {
         List<Vendedor> vendedores = repoVendedor.findAll();
         return vendedores.stream().map(v -> {
@@ -39,4 +40,5 @@ public class ServicioVendedor {
         Vendedor vendedor = vendedores.get(0);
         return new VendedorDTO(vendedor.getId(), vendedor.getNombre(), vendedor.getApellido(), vendedor.getEmail());
     }
+        */
 }

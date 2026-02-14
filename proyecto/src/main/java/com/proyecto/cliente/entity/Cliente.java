@@ -1,13 +1,17 @@
-package com.proyecto.cliente;
+package com.proyecto.cliente.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.proyecto.carrito.entity.Carrito;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -41,6 +45,9 @@ public class Cliente {
     private boolean activo;
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
+
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Carrito carrito;
 
     public void recargarSaldo(BigDecimal monto){
         BigDecimal nuevoSaldo = getSaldo().add(monto);

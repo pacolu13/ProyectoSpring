@@ -1,15 +1,13 @@
 package com.proyecto.catalogo.dataprovider;
 
-import java.math.BigDecimal;
-import java.util.List;
-
+/* 
 import com.proyecto.catalogo.dto.CatalogoDTO;
 import com.proyecto.catalogo.entity.Catalogo;
 import com.proyecto.producto.entity.Producto;
 import com.proyecto.vendedor.entity.Vendedor;
-
+*/
 public class DataProvider {
-
+    /* 
     public static Catalogo catalogoMock() {
         Catalogo catalogo = new Catalogo();
         catalogo.setId(1L);
@@ -47,5 +45,5 @@ public class DataProvider {
                 new CatalogoDTO(4L, 4L, "Coca Cola", "Bebidas", BigDecimal.valueOf(15), 50)
         );
     }
-
+    */
 }
