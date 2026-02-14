@@ -10,21 +10,29 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.proyecto.cliente.entity.Cliente;
 import com.proyecto.cliente.dto.ClienteDTO;
+import com.proyecto.cliente.entity.Cliente;
+import com.proyecto.cliente.mapper.ClienteMapper;
 import com.proyecto.cliente.repository.RepoCliente;
 import com.proyecto.cliente.service.ServicioCliente;
 
+@ExtendWith(MockitoExtension.class)  // ← AGREGAR ESTO
 public class servicioClienteTests {
 
     @Mock
     private RepoCliente repoCliente;
 
+    @Mock
+    private ClienteMapper clienteMapper;
+
     @InjectMocks
     private ServicioCliente servicioCliente;
+
 
     @Test
     public void obtenerClientesNullTest() {
@@ -38,32 +46,30 @@ public class servicioClienteTests {
         assertThrows(RuntimeException.class, () -> servicioCliente.obtenerClientes());
     }
 
-
     @Test
     public void obtenerClientesTest(){
         List<Cliente> clientesMock = ClienteProvider.listaClientesMock();
+        List<ClienteDTO> esperado = ClienteProvider.listaClientesMockDTOs();
 
         when(repoCliente.findAll()).thenReturn(clientesMock);
+        when(clienteMapper.toDTOList(clientesMock)).thenReturn(esperado);
+
         List<ClienteDTO> resultado = servicioCliente.obtenerClientes();
 
-        //Realizar la conversion a DTO para comparar
-
-        assertEquals(clientesMock, resultado);
+        assertEquals(esperado, resultado);
     }
 
     @Test
     public void obtenerClientePorIdTest(){
         Cliente cliente = ClienteProvider.clienteMock();
-
-        //Realizar el Mapper
+        ClienteDTO esperado = ClienteProvider.clienteMockDTO();
 
         when(repoCliente.findById(anyLong())).thenReturn(Optional.of(cliente));
+        when(clienteMapper.toDTO(cliente)).thenReturn(esperado);
 
         ClienteDTO resultado = servicioCliente.obtenerClientePorId(1L);
 
-        //Realizar la comparacion con el cliente casteado a DTO
-
-        assertEquals(cliente.getId(), resultado.getId());
+        assertEquals(esperado.getId(), resultado.getId());
+        assertEquals(esperado.getNombre(), resultado.getNombre());
     }
-
 }

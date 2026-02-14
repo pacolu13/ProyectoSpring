@@ -1,16 +1,32 @@
 package com.proyecto.cliente.dto;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 public class ClienteDTO {
     private Long id;
     private String nombre;
     private String apellido;
     private String email;
-    
-    public ClienteDTO(Long id, String nombre, String apellido, String email) {
+    private String telefono;
+    private BigDecimal saldo;
+    private Boolean activo;
+    private LocalDateTime fechaRegistro;
+
+    public ClienteDTO() {
+
+    }
+
+    public ClienteDTO(Long id, String nombre, String apellido, String email, String telefono, BigDecimal saldo,
+            Boolean activo, LocalDateTime fechaRegistro) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
+        this.telefono = telefono;
+        this.saldo = saldo;
+        this.activo = activo;
+        this.fechaRegistro = fechaRegistro;
     }
 
     public Long getId() {
@@ -45,14 +61,45 @@ public class ClienteDTO {
         this.email = email;
     }
 
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public BigDecimal getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(BigDecimal saldo) {
+        this.saldo = saldo;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
+    public LocalDateTime getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-        result = prime * result + ((apellido == null) ? 0 : apellido.hashCode());
-        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + ((fechaRegistro == null) ? 0 : fechaRegistro.hashCode());
         return result;
     }
 
@@ -75,15 +122,10 @@ public class ClienteDTO {
                 return false;
         } else if (!nombre.equals(other.nombre))
             return false;
-        if (apellido == null) {
-            if (other.apellido != null)
+        if (fechaRegistro == null) {
+            if (other.fechaRegistro != null)
                 return false;
-        } else if (!apellido.equals(other.apellido))
-            return false;
-        if (email == null) {
-            if (other.email != null)
-                return false;
-        } else if (!email.equals(other.email))
+        } else if (!fechaRegistro.equals(other.fechaRegistro))
             return false;
         return true;
     }
