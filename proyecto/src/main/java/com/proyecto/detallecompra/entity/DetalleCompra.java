@@ -2,6 +2,7 @@ package com.proyecto.detallecompra.entity;
 
 import java.math.BigDecimal;
 
+import com.proyecto.compra.entity.Compra;
 import com.proyecto.itemcatalogo.entity.ItemCatalogo;
 
 import jakarta.persistence.Column;
@@ -34,7 +35,5 @@ public class DetalleCompra {
     private BigDecimal preocioUnitario;
     @Column(name = "subtotal")
     private BigDecimal subtotal;
-    @ManyToOne
-    private ItemCatalogo itemCatalogo;
-    
+
 }

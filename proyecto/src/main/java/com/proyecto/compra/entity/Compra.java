@@ -41,8 +41,5 @@ public class Compra {
     private BigDecimal total;
     @Column(name = "estado")
     private EstadoCompra estado;
-    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DetalleCompra> detallesCompraList;
-    @ManyToOne
-    private Vendedor vendedor;
+
 }

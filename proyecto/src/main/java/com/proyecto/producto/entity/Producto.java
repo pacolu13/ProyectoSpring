@@ -43,8 +43,4 @@ public class Producto {
     private boolean activo;
     @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
-    
-    @OneToMany(mappedBy = "producto")
-    private List<ItemCatalogo> itemsCatalogoList;
-    
 }

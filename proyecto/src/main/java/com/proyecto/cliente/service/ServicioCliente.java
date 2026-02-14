@@ -22,6 +22,9 @@ public class ServicioCliente {
 
     public List<ClienteDTO> obtenerClientes() {
         List<Cliente> clientes = repoCliente.findAll();
+        if(clientes.isEmpty() || clientes == null){
+            throw new RuntimeException("Error al obtener clientes");
+        }
         return clienteMapper.toDTOList(clientes);
     }
 

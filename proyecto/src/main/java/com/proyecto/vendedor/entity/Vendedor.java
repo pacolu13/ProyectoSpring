@@ -1,18 +1,12 @@
 package com.proyecto.vendedor.entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.proyecto.compra.entity.Compra;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -44,10 +38,6 @@ public class Vendedor {
     private LocalDateTime fechaRegistro;
 
     // Estudiar relaciones
-
-    @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Compra> comprasList = new ArrayList<>();
-
     /* 
     public ItemCatalogo actualizarPrecio(Long itemId, BigDecimal nuevoPrecio){
         if(itemId == null)

@@ -2,6 +2,7 @@ package com.proyecto.carrito.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.proyecto.cliente.entity.Cliente;
 import com.proyecto.itemcarrito.entity.ItemCarrito;
 
 import jakarta.persistence.CascadeType;
@@ -11,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -33,6 +35,5 @@ public class Carrito {
     private LocalDateTime fechaActualizacion;
     @Column(name = "estado")
     private EstadoCarrito estado;
-    @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemCarrito> itemCarritoList;
+
 }

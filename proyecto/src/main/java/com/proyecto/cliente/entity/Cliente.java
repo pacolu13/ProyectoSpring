@@ -46,9 +46,6 @@ public class Cliente {
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
 
-    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Carrito carrito;
-
     public void recargarSaldo(BigDecimal monto){
         BigDecimal nuevoSaldo = getSaldo().add(monto);
         setSaldo(nuevoSaldo);

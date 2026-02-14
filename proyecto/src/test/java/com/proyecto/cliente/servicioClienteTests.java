@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -21,7 +21,7 @@ import com.proyecto.cliente.mapper.ClienteMapper;
 import com.proyecto.cliente.repository.RepoCliente;
 import com.proyecto.cliente.service.ServicioCliente;
 
-@ExtendWith(MockitoExtension.class)  // ← AGREGAR ESTO
+@ExtendWith(MockitoExtension.class)
 public class servicioClienteTests {
 
     @Mock
@@ -33,7 +33,6 @@ public class servicioClienteTests {
     @InjectMocks
     private ServicioCliente servicioCliente;
 
-
     @Test
     public void obtenerClientesNullTest() {
         when(repoCliente.findAll()).thenReturn(null);
@@ -41,13 +40,13 @@ public class servicioClienteTests {
     }
 
     @Test
-    public void obtenerClientesVacioTest(){
+    public void obtenerClientesVacioTest() {
         when(repoCliente.findAll()).thenReturn(new ArrayList<>());
         assertThrows(RuntimeException.class, () -> servicioCliente.obtenerClientes());
     }
 
     @Test
-    public void obtenerClientesTest(){
+    public void obtenerClientesTest() {
         List<Cliente> clientesMock = ClienteProvider.listaClientesMock();
         List<ClienteDTO> esperado = ClienteProvider.listaClientesMockDTOs();
 
@@ -60,7 +59,7 @@ public class servicioClienteTests {
     }
 
     @Test
-    public void obtenerClientePorIdTest(){
+    public void obtenerClientePorIdTest() {
         Cliente cliente = ClienteProvider.clienteMock();
         ClienteDTO esperado = ClienteProvider.clienteMockDTO();
 

@@ -38,9 +38,4 @@ public class ItemCatalogo {
     private Boolean disponible;
     @Column(name ="fecha_agregado")
     private LocalDateTime fechaAgregado;
-    @ManyToOne
-    private Producto producto;
-    @ManyToOne
-    private Vendedor vendedor;
-    
 }
