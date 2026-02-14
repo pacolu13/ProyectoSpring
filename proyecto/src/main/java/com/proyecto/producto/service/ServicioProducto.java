@@ -4,16 +4,21 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.proyecto.producto.dto.ProductoCreateDTO;
+import com.proyecto.producto.dto.ProductoDTO;
 import com.proyecto.producto.entity.Producto;
+import com.proyecto.producto.mapper.ProductoMapper;
 import com.proyecto.producto.repository.RepoProducto;
 
 @Service
 public class ServicioProducto {
 
     private final RepoProducto repoProducto;
+    private final ProductoMapper productoMapper;
 
-    public ServicioProducto(RepoProducto repoProducto) {
+    public ServicioProducto(RepoProducto repoProducto, ProductoMapper productoMapper) {
         this.repoProducto = repoProducto;
+        this.productoMapper = productoMapper;
     }
 
     public List<Producto> obtenerTodosLosProductos() {
@@ -24,9 +29,10 @@ public class ServicioProducto {
         return repoProducto.findById(id).orElseThrow(() -> new RuntimeException("Producto no encontrado"));
     }
     
-
-    public Producto crearProducto(Producto producto) {
-        return repoProducto.save(producto);
+    public ProductoDTO añadirProducto(ProductoCreateDTO prod) {
+        Producto producto = productoMapper.toEntity(prod);
+        Producto resultado = repoProducto.save(producto);
+        return productoMapper.toDTO(resultado);
     }
 
     public List<Producto> crearListaProductos(List<Producto> productos) {

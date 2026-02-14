@@ -10,12 +10,17 @@ import org.mapstruct.MappingTarget;
 
 import com.proyecto.cliente.dto.ClienteCreateDTO;
 import com.proyecto.cliente.dto.ClienteDTO;
+import com.proyecto.cliente.dto.ClienteUpdateDTO;
 import com.proyecto.cliente.entity.Cliente;
 
 @Mapper(componentModel = "spring")
 public interface ClienteMapper {
 
     ClienteDTO toDTO(Cliente cliente);
+
+    ClienteCreateDTO toCreateDTO(Cliente cliente);
+
+    ClienteUpdateDTO toUpdateDTO(Cliente cliente);
 
     Cliente toEntity(ClienteCreateDTO dto);
 

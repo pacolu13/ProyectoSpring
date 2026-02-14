@@ -43,18 +43,17 @@ public class ServicioCliente {
         return clienteMapper.toDTO(resultado);
     }
 
-    /*
-        Implementar excepciones personalizadas
-    */
-
+    public ClienteDTO  actualizarCliente(Long id, ClienteUpdateDTO dto) {
+        Cliente cliente = repoCliente.findById(id)
+        .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+        return clienteMapper.toDTO(cliente);
+    }
+    
     public void eliminarCliente(Long id) {
         if(!repoCliente.existsById(id))
             throw new IllegalArgumentException("Cliente no encontrado");
         repoCliente.deleteById(id);
     }
 
-    public ClienteDTO  actualizarCliente(Long id, ClienteUpdateDTO dto) {
-        ClienteDTO cli = new ClienteDTO();
-        return cli;
-    }
+    
 }

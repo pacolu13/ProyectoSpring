@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,7 +35,7 @@ public class Producto {
     @Column(name = "imagen")
     private String imagen;
     @Column(name = "activo")
-    private boolean activo;
+    private Boolean activo;
     @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
 }
