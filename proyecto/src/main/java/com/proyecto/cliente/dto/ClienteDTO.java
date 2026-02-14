@@ -13,7 +13,16 @@ public class ClienteDTO {
     private Boolean activo;
     private LocalDateTime fechaRegistro;
 
+
     public ClienteDTO() {
+
+    }
+
+    public ClienteDTO(String nombre, String apellido, String email, String telefono){
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.telefono = telefono;
 
     }
 

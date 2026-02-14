@@ -32,13 +32,12 @@ public class ServicioVendedor {
         return vendedorMapper.toDTO(vendedor);
     }
 
-    public VendedorDTO obtenerVendedorPorFiltro(String nombre, String apellido, String email) {
+    public List<VendedorDTO> obtenerVendedorPorFiltro(String nombre, String apellido, String email) {
         BusquedaVendedor busqueda = new BusquedaVendedor(nombre, apellido, email);
         List<Vendedor> vendedores = repoVendedor.findAll(busqueda);
         if (vendedores == null || vendedores.isEmpty()) {
             throw new RuntimeException("No se encontraron vendedores con los filtros especificados");
         }
-        Vendedor vendedor = vendedores.get(0);
-        return vendedorMapper.toDTO(vendedor);
+        return vendedorMapper.toDTOList(vendedores);
     }
 }
