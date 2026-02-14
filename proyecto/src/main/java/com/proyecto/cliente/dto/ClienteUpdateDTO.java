@@ -1,20 +1,19 @@
 package com.proyecto.cliente.dto;
 
-public class ClienteCreateDTO extends ClienteAbstractDTO {
+public class ClienteUpdateDTO extends ClienteAbstractDTO {
     
-    public ClienteCreateDTO(){}
+    public ClienteUpdateDTO(){}
 
-    public ClienteCreateDTO(String nombre, String apellido, String email, String telefono, String contrasenia) {
+    public ClienteUpdateDTO(String nombre, String apellido, String email, String telefono) {
         setNombre(nombre);
         setApellido(apellido);
         setEmail(email);
         setTelefono(telefono);
-        setContrasenia(contrasenia);
     }
     
     @Override
     public String toString() {
-        return "ClienteCreateDTO [nombre=" + getNombre()
+        return "ClienteUpdateDTO [nombre=" + getNombre()
             + ", apellido=" + getApellido() 
             + ", email=" + getEmail() 
             + ", telefono=" + getTelefono() + "]";

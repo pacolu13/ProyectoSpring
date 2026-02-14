@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.proyecto.cliente.dto.ClienteCreateDTO;
 import com.proyecto.cliente.dto.ClienteDTO;
+import com.proyecto.cliente.dto.ClienteUpdateDTO;
 import com.proyecto.cliente.entity.Cliente;
 import com.proyecto.cliente.mapper.ClienteMapper;
 import com.proyecto.cliente.repository.RepoCliente;
@@ -24,7 +25,7 @@ public class ServicioCliente {
 
     public List<ClienteDTO> obtenerClientes() {
         List<Cliente> clientes = repoCliente.findAll();
-        if (clientes.isEmpty() || clientes == null) {
+        if (clientes.isEmpty()) {
             throw new RuntimeException("Error al obtener clientes");
         }
         return clienteMapper.toDTOList(clientes);
@@ -42,4 +43,18 @@ public class ServicioCliente {
         return clienteMapper.toDTO(resultado);
     }
 
+    /*
+        Implementar excepciones personalizadas
+    */
+
+    public void eliminarCliente(Long id) {
+        if(!repoCliente.existsById(id))
+            throw new IllegalArgumentException("Cliente no encontrado");
+        repoCliente.deleteById(id);
+    }
+
+    public ClienteDTO  actualizarCliente(Long id, ClienteUpdateDTO dto) {
+        ClienteDTO cli = new ClienteDTO();
+        return cli;
+    }
 }
