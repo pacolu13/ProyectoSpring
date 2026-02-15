@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import com.proyecto.cliente.dto.ClienteCreateDTO;
@@ -16,6 +15,8 @@ import com.proyecto.cliente.entity.Cliente;
 
 @Mapper(componentModel = "spring")
 public interface ClienteMapper {
+
+    Cliente toEntity(ClienteCreateDTO cliente);
 
     ClienteDTO toDTO(Cliente cliente);
 
@@ -33,8 +34,9 @@ public interface ClienteMapper {
         if (cliente.getFechaRegistro() == null) {
             cliente.setFechaRegistro(LocalDateTime.now());
         }
+        if (cliente.getActivo() == null) {
+            cliente.setActivo(true);
+        }
     }
 
-
 }
-

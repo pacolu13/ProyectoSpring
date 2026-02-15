@@ -19,8 +19,6 @@ import com.proyecto.cliente.dto.ClienteDTO;
 import com.proyecto.cliente.dto.ClienteUpdateDTO;
 import com.proyecto.cliente.service.ServicioCliente;
 
-import jakarta.validation.Valid;
-
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/clientes")
@@ -44,7 +42,7 @@ public class ControladorCliente {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteDTO> añadirCliente(@Valid @RequestBody ClienteCreateDTO cliente) {
+    public ResponseEntity<ClienteDTO> añadirCliente(@RequestBody ClienteCreateDTO cliente) {
         ClienteDTO resultado = servicioCliente.añadirCliente(cliente);
         return new ResponseEntity<>(resultado, HttpStatus.CREATED);
     }

@@ -15,13 +15,13 @@ import com.proyecto.producto.entity.Producto;
 @Mapper(componentModel = "spring")
 public interface ProductoMapper {
 
+    Producto toEntity(ProductoCreateDTO dto);
+
     ProductoDTO toDTO(Producto producto);
 
     ProductoCreateDTO toCreateDTO(Producto producto);
 
     ProductoUpdateDTO toUpdateDTO(Producto producto);
-
-    Producto toEntity(ProductoCreateDTO dto);
 
     List<ProductoDTO> toDTOList(List<Producto> productos);
     

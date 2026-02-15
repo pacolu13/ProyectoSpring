@@ -13,8 +13,6 @@ import com.proyecto.cliente.mapper.ClienteMapper;
 import com.proyecto.cliente.repository.RepoCliente;
 import com.proyecto.excepciones.ResourceNotFoundException;
 
-import jakarta.validation.Valid;
-
 @Service
 public class ServicioCliente {
 
@@ -42,12 +40,7 @@ public class ServicioCliente {
     }
 
     public ClienteDTO añadirCliente(ClienteCreateDTO cliente) {
-        Cliente nuevo = new Cliente();
-        nuevo.setNombre(cliente.getNombre());
-        nuevo.setApellido(cliente.getApellido());
-        nuevo.setEmail(cliente.getEmail());
-        nuevo.setTelefono(cliente.getTelefono());
-        nuevo.setContrasenia(cliente.getContrasenia());
+        Cliente nuevo = clienteMapper.toEntity(cliente);
         Cliente resultado = repoCliente.save(nuevo);
         return clienteMapper.toDTO(resultado);
     }

@@ -68,7 +68,6 @@ public class servicioClienteTests {
 
         ClienteDTO resultado = servicioCliente.obtenerClientePorId(1L);
 
-        //assertEquals(esperado.getId(), resultado.getId());
-        assertEquals(esperado.getNombre(), resultado.getNombre());
+        assertEquals(esperado, resultado);
     }
 }
