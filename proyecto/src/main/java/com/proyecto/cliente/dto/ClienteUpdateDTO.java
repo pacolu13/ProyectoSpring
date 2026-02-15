@@ -6,7 +6,6 @@ public class ClienteUpdateDTO extends ClienteAbstractDTO {
     }
 
     public ClienteUpdateDTO(Long id, String nombre, String apellido, String email, String telefono) {
-        setId(id);
         setNombre(nombre);
         setApellido(apellido);
         setEmail(email);

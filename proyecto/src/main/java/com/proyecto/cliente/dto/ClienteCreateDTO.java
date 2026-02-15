@@ -5,8 +5,7 @@ public class ClienteCreateDTO extends ClienteAbstractDTO {
     public ClienteCreateDTO() {
     }
 
-    public ClienteCreateDTO(Long id, String nombre, String apellido, String email, String telefono, String contrasenia) {
-        setId(id);
+    public ClienteCreateDTO(String nombre, String apellido, String email, String telefono, String contrasenia) {
         setNombre(nombre);
         setApellido(apellido);
         setEmail(email);

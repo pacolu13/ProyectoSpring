@@ -10,17 +10,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.proyecto.usuario.service.ServicioUsuario;
-
 @Configuration
 @EnableWebSecurity // Habilita la seguridad web en la aplicación
 public class SecurityConfig {
 
     // Inyectamos el servicio de usuario para cargar los detalles del usuario
+    /* 
     private final ServicioUsuario servicioUsuario;
 
     public SecurityConfig(ServicioUsuario servicioUsuario) {
         this.servicioUsuario = servicioUsuario;
+    }
+     */
+    public SecurityConfig() {
+
     }
 
     @Bean
@@ -36,12 +39,12 @@ public class SecurityConfig {
 
     @Bean // Configura la cadena de filtros de seguridad
     public SecurityFilterChain securityChain(HttpSecurity http) throws Exception {
-    http
-        .csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(auth -> auth
-            .anyRequest().permitAll()
-        );
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                .anyRequest().permitAll()
+                );
 
-    return http.build();
+        return http.build();
     }
 }

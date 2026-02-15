@@ -2,18 +2,14 @@ package com.proyecto.producto.controller;
 
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.producto.entity.Producto;
 import com.proyecto.producto.service.ServicioProducto;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -38,9 +34,10 @@ public class ControladorProducto {
         return servicioProducto.obtenerProductoPorId(id);
     }
 
+    /* 
     @PostMapping
     public ResponseEntity<ProductoDTO> añadirProducto(@RequestBody Producto producto) {
         ProductoDTO producto = servicioProducto.añadirProducto(producto);
-    }
+    }*/
     
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import com.proyecto.cliente.dto.ClienteCreateDTO;
@@ -21,8 +22,6 @@ public interface ClienteMapper {
     ClienteCreateDTO toCreateDTO(Cliente cliente);
 
     ClienteUpdateDTO toUpdateDTO(Cliente cliente);
-
-    Cliente toEntity(ClienteCreateDTO dto);
 
     List<ClienteDTO> toDTOList(List<Cliente> clientes);
 

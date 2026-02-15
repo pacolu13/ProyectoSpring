@@ -11,6 +11,9 @@ import com.proyecto.cliente.dto.ClienteUpdateDTO;
 import com.proyecto.cliente.entity.Cliente;
 import com.proyecto.cliente.mapper.ClienteMapper;
 import com.proyecto.cliente.repository.RepoCliente;
+import com.proyecto.excepciones.ResourceNotFoundException;
+
+import jakarta.validation.Valid;
 
 @Service
 public class ServicioCliente {
@@ -33,27 +36,33 @@ public class ServicioCliente {
 
     public ClienteDTO obtenerClientePorId(long id) {
         Cliente cliente = repoCliente.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con id:" + id));
+                .orElseThrow(
+                () -> new ResourceNotFoundException("Cliente",id));
         return clienteMapper.toDTO(cliente);
     }
 
     public ClienteDTO añadirCliente(ClienteCreateDTO cliente) {
-        Cliente nuevo = clienteMapper.toEntity(cliente);
+        Cliente nuevo = new Cliente();
+        nuevo.setNombre(cliente.getNombre());
+        nuevo.setApellido(cliente.getApellido());
+        nuevo.setEmail(cliente.getEmail());
+        nuevo.setTelefono(cliente.getTelefono());
+        nuevo.setContrasenia(cliente.getContrasenia());
         Cliente resultado = repoCliente.save(nuevo);
         return clienteMapper.toDTO(resultado);
     }
 
     public ClienteDTO  actualizarCliente(Long id, ClienteUpdateDTO dto) {
         Cliente cliente = repoCliente.findById(id)
-        .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+        .orElseThrow(() -> new ResourceNotFoundException("Cliente", id));
         return clienteMapper.toDTO(cliente);
     }
     
     public void eliminarCliente(Long id) {
         if(!repoCliente.existsById(id))
-            throw new IllegalArgumentException("Cliente no encontrado");
+            throw new ResourceNotFoundException("Cliente",id);
         repoCliente.deleteById(id);
     }
 
-    
+
 }

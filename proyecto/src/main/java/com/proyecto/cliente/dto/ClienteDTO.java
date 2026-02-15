@@ -14,7 +14,6 @@ public class ClienteDTO extends ClienteAbstractDTO {
     }
 
     public ClienteDTO(Long id, String nombre, String apellido, String email, String telefono, String contrasenia, BigDecimal saldo, Boolean activo, LocalDateTime fechaRegistro) {
-        setId(id);
         setNombre(nombre);
         setApellido(apellido);
         setEmail(email);
