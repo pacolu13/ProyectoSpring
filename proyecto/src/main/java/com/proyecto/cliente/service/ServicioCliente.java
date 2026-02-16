@@ -56,6 +56,4 @@ public class ServicioCliente {
             throw new ResourceNotFoundException("Cliente",id);
         repoCliente.deleteById(id);
     }
-
-
 }

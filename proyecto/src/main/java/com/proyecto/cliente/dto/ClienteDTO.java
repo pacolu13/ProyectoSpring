@@ -13,5 +13,8 @@ public record ClienteDTO(
         BigDecimal saldo,
         Boolean activo,
         LocalDateTime fechaRegistro
-){}
+){
+
+   
+}
 
