@@ -23,11 +23,6 @@ public class ClienteProvider {
         return clientes;
     }
 
-    public static ClienteDTO clienteMockDTO() {
-        ClienteDTO cliente = new ClienteDTO();
-        return cliente;
-    }
-
     public static List<ClienteDTO> listaClientesMockDTOs() {
         List<ClienteDTO> clientes = new ArrayList<>();
         return clientes;
