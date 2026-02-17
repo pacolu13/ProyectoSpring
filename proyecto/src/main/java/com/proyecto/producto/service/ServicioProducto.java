@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.proyecto.producto.dto.ProductoCreateDTO;
 import com.proyecto.producto.dto.ProductoDTO;
+import com.proyecto.producto.dto.ProductoUpdateDTO;
 import com.proyecto.producto.entity.Producto;
 import com.proyecto.producto.mapper.ProductoMapper;
 import com.proyecto.producto.repository.RepoProducto;
@@ -21,31 +22,34 @@ public class ServicioProducto {
         this.productoMapper = productoMapper;
     }
 
-    public List<Producto> obtenerTodosLosProductos() {
-        return repoProducto.findAll();
+    public List<ProductoDTO> obtenerTodosLosProductos() {
+        List<ProductoDTO> response = productoMapper.toDTOList(repoProducto.findAll());
+        return response;
     }
 
-    public Producto obtenerProductoPorId(Long id) {
-        return repoProducto.findById(id).orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+    public ProductoDTO obtenerProductoPorId(Long id) {
+        Producto response = repoProducto.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        return productoMapper.toDTO(response);
     }
-    
+
     public ProductoDTO añadirProducto(ProductoCreateDTO prod) {
         Producto producto = productoMapper.toEntity(prod);
         Producto resultado = repoProducto.save(producto);
         return productoMapper.toDTO(resultado);
     }
 
-    public List<Producto> crearListaProductos(List<Producto> productos) {
-        return repoProducto.saveAll(productos);
+    public List<ProductoDTO> crearListaProductos(List<Producto> productos) {
+        List<ProductoDTO> response = productoMapper.toDTOList(repoProducto.saveAll(productos));
+        return response;
     }
 
-    public Producto actualizarProducto(Long id, Producto productoActualizado) {
+    public ProductoDTO actualizarProducto(Long id, ProductoUpdateDTO dto) {
         Producto productoExistente = repoProducto.findById(id).orElseThrow(
                 () -> new RuntimeException("Producto no encontrado"));
-        productoExistente.setNombre(productoActualizado.getNombre());
-        productoExistente.setCategoria(productoActualizado.getCategoria());
-        productoExistente.setDescripcion(productoActualizado.getDescripcion());
-        return repoProducto.save(productoExistente);
+
+        Producto prodActualizado = productoMapper.updateProductoFromDto(dto, productoExistente);
+        return productoMapper.toDTO(repoProducto.save(prodActualizado));
     }
 
     public void eliminarProducto(Long id) {

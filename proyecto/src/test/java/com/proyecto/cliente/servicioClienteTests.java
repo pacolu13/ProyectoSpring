@@ -1,48 +1,43 @@
 package com.proyecto.cliente;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.anyLong;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import com.proyecto.cliente.dto.ClienteDTO;
 import com.proyecto.cliente.entity.Cliente;
 import com.proyecto.cliente.mapper.ClienteMapper;
 import com.proyecto.cliente.repository.RepoCliente;
 import com.proyecto.cliente.service.ServicioCliente;
+import com.proyecto.excepciones.ResourceNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 public class servicioClienteTests {
 
-    @Mock
+    @MockitoBean
     private RepoCliente repoCliente;
 
-    @Mock
+    @MockitoBean
     private ClienteMapper clienteMapper;
 
     @InjectMocks
     private ServicioCliente servicioCliente;
 
+    // Metodo con error
+    
     @Test
-    public void obtenerClientesNullTest() {
-        when(repoCliente.findAll()).thenReturn(null);
-        assertThrows(RuntimeException.class, () -> servicioCliente.obtenerClientes());
-    }
-
-    @Test
-    public void obtenerClientesVacioTest() {
-        when(repoCliente.findAll()).thenReturn(new ArrayList<>());
-        assertThrows(RuntimeException.class, () -> servicioCliente.obtenerClientes());
+    public void obtenerClientePorIdVacioTest(){
+        when(repoCliente.findById(anyLong())).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class,() -> servicioCliente.obtenerClientePorId(1L));        
     }
 
     @Test
@@ -57,6 +52,7 @@ public class servicioClienteTests {
 
         assertEquals(esperado, resultado);
     }
+
 
     @Test
     public void obtenerClientePorIdTest() {

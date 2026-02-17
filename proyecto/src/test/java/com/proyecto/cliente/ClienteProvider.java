@@ -24,7 +24,6 @@ public class ClienteProvider {
     }
 
     public static ClienteDTO clienteMockDTO() {
-        
         ClienteDTO cliente = new ClienteDTO();
         return cliente;
     }

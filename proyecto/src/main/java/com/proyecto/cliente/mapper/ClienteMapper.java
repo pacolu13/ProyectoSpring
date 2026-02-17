@@ -5,8 +5,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.mapstruct.AfterMapping;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.proyecto.cliente.dto.ClienteCreateDTO;
 import com.proyecto.cliente.dto.ClienteDTO;
@@ -22,7 +24,8 @@ public interface ClienteMapper {
 
     ClienteCreateDTO toCreateDTO(Cliente cliente);
 
-    ClienteUpdateDTO toUpdateDTO(Cliente cliente);
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Cliente updateProductoFromDto(ClienteUpdateDTO dto, @MappingTarget Cliente entity);
 
     List<ClienteDTO> toDTOList(List<Cliente> clientes);
 

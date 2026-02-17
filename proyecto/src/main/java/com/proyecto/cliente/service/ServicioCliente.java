@@ -26,9 +26,6 @@ public class ServicioCliente {
 
     public List<ClienteDTO> obtenerClientes() {
         List<Cliente> clientes = repoCliente.findAll();
-        if (clientes.isEmpty()) {
-            throw new RuntimeException("Error al obtener clientes");
-        }
         return clienteMapper.toDTOList(clientes);
     }
 
@@ -48,7 +45,9 @@ public class ServicioCliente {
     public ClienteDTO  actualizarCliente(Long id, ClienteUpdateDTO dto) {
         Cliente cliente = repoCliente.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Cliente", id));
-        return clienteMapper.toDTO(cliente);
+
+        Cliente actualizado = clienteMapper.updateProductoFromDto(dto, cliente);
+        return clienteMapper.toDTO(repoCliente.save(actualizado));
     }
     
     public void eliminarCliente(Long id) {
