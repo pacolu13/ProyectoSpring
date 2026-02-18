@@ -32,8 +32,8 @@ public class ControladorProducto {
     }
 
     @PostMapping
-    public ResponseEntity<ProductoDTO> añadirProducto(@RequestBody ProductoCreateDTO producto) {
-        ProductoDTO response = servicioProducto.añadirProducto(producto);
+    public ResponseEntity<List<ProductoDTO>> añadirListaProducto(@RequestBody List<ProductoCreateDTO> listaProductos) {
+        List<ProductoDTO> response = servicioProducto.añadirListaProducto(listaProductos);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

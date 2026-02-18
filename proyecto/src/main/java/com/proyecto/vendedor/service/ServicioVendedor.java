@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.proyecto.excepciones.ResourceNotFoundException;
+import com.proyecto.vendedor.dto.VendedorCreateDTO;
 import com.proyecto.vendedor.dto.VendedorDTO;
 import com.proyecto.vendedor.entity.Vendedor;
 import com.proyecto.vendedor.mapper.VendedorMapper;
@@ -39,5 +41,18 @@ public class ServicioVendedor {
             throw new RuntimeException("No se encontraron vendedores con los filtros especificados");
         }
         return vendedorMapper.toDTOList(vendedores);
+    }
+
+    public List<VendedorDTO> añadirVendedores(List<VendedorCreateDTO> vendedores) {
+        List<Vendedor> nuevo = vendedorMapper.toEntityList(vendedores);
+        List<Vendedor> resultado = repoVendedor.saveAll(nuevo);
+        return vendedorMapper.toDTOList(resultado);
+    }
+
+    public void eliminarCliente(Long id) {
+        if(!repoVendedor.existsById(id)){
+            throw new ResourceNotFoundException("No se pudo encontrar un vendedor para ese id");
+        }
+        repoVendedor.deleteById(id);
     }
 }

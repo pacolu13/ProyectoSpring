@@ -36,10 +36,10 @@ public class ServicioCliente {
         return clienteMapper.toDTO(cliente);
     }
 
-    public ClienteDTO añadirCliente(ClienteCreateDTO cliente) {
-        Cliente nuevo = clienteMapper.toEntity(cliente);
-        Cliente resultado = repoCliente.save(nuevo);
-        return clienteMapper.toDTO(resultado);
+    public List<ClienteDTO> añadirListaCliente(List<ClienteCreateDTO> listaClientes) {
+        List<Cliente> nuevo = clienteMapper.toEntityList(listaClientes);
+        List<Cliente> resultado = repoCliente.saveAll(nuevo);
+        return clienteMapper.toDTOList(resultado);
     }
 
     public ClienteDTO  actualizarCliente(Long id, ClienteUpdateDTO dto) {

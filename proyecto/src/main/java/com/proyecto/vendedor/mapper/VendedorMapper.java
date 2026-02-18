@@ -17,7 +17,9 @@ import com.proyecto.vendedor.entity.Vendedor;
 @Mapper(componentModel="spring")
 public interface VendedorMapper {
 
-    Vendedor toEntity(VendedorCreateDTO vendedor);
+    Vendedor toEntity(VendedorCreateDTO dto);
+
+    List<Vendedor> toEntityList(List<VendedorCreateDTO> dtoList);
 
     VendedorDTO toDTO(Vendedor vendedor);
 

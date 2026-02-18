@@ -33,14 +33,9 @@ public class ServicioProducto {
         return productoMapper.toDTO(response);
     }
 
-    public ProductoDTO añadirProducto(ProductoCreateDTO prod) {
-        Producto producto = productoMapper.toEntity(prod);
-        Producto resultado = repoProducto.save(producto);
-        return productoMapper.toDTO(resultado);
-    }
-
-    public List<ProductoDTO> crearListaProductos(List<Producto> productos) {
-        List<ProductoDTO> response = productoMapper.toDTOList(repoProducto.saveAll(productos));
+    public List<ProductoDTO> añadirListaProducto(List<ProductoCreateDTO> productos) {
+        List<Producto> listaProductos = productoMapper.toEntityList(productos);
+        List<ProductoDTO> response = productoMapper.toDTOList(repoProducto.saveAll(listaProductos));
         return response;
     }
 

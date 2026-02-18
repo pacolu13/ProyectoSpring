@@ -32,8 +32,8 @@ public class ControladorCliente {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteDTO> añadirCliente(@RequestBody ClienteCreateDTO cliente) {
-        ClienteDTO resultado = servicioCliente.añadirCliente(cliente);
+    public ResponseEntity<List<ClienteDTO>> añadirListaClientes(@RequestBody List<ClienteCreateDTO> listaCliente) {
+        List<ClienteDTO> resultado = servicioCliente.añadirListaCliente(listaCliente);
         return new ResponseEntity<>(resultado, HttpStatus.CREATED);
     }
 

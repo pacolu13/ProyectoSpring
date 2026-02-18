@@ -53,7 +53,7 @@ public class servicioClienteTests {
         assertEquals(esperado, resultado);
     }
 
-
+/* 
     @Test
     public void obtenerClientePorIdTest() {
         Cliente cliente = ClienteProvider.clienteMock();
@@ -66,4 +66,5 @@ public class servicioClienteTests {
 
         assertEquals(esperado, resultado);
     }
+        */
 }

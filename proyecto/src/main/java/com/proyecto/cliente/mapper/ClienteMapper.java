@@ -18,7 +18,9 @@ import com.proyecto.cliente.entity.Cliente;
 @Mapper(componentModel = "spring")
 public interface ClienteMapper {
 
-    Cliente toEntity(ClienteCreateDTO cliente);
+    Cliente toEntity(ClienteCreateDTO dto);
+
+    List<Cliente> toEntityList(List<ClienteCreateDTO> dtoList);
 
     ClienteDTO toDTO(Cliente cliente);
 
