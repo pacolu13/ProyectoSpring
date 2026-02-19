@@ -2,10 +2,12 @@ package com.proyecto.cliente.entity;
 
 import java.math.BigDecimal;
 
+import com.proyecto.carrito.entity.Carrito;
 import com.proyecto.usuario.entity.User;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,8 @@ import lombok.Setter;
 public class Cliente extends User {
     
     private BigDecimal saldo;
-    
+
+    @OneToOne
+    private Carrito carrito;
      
 }
