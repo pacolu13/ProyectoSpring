@@ -13,6 +13,7 @@ import com.proyecto.vendedor.repository.RepoVendedor;
 import com.proyecto.vendedor.spec.BusquedaVendedor;
 
 @Service
+@SuppressWarnings("null")
 public class ServicioVendedor {
 
     private final RepoVendedor repoVendedor;

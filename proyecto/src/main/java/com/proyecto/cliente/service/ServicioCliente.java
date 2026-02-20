@@ -14,6 +14,7 @@ import com.proyecto.cliente.repository.RepoCliente;
 import com.proyecto.excepciones.ResourceNotFoundException;
 
 @Service
+@SuppressWarnings("null")
 public class ServicioCliente {
 
     private final RepoCliente repoCliente;

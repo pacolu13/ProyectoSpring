@@ -13,6 +13,7 @@ import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
+@SuppressWarnings("null")
 public class BusquedaVendedor implements Specification<Vendedor> {
     private String nombre;
     private String apellido;

@@ -12,6 +12,7 @@ import com.proyecto.producto.mapper.ProductoMapper;
 import com.proyecto.producto.repository.RepoProducto;
 
 @Service
+@SuppressWarnings("null")
 public class ServicioProducto {
 
     private final RepoProducto repoProducto;

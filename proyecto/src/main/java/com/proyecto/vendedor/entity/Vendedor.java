@@ -20,6 +20,5 @@ import lombok.Setter;
 public class Vendedor extends User {
 
     private String cuit;
-    private boolean activo;
 
 }
