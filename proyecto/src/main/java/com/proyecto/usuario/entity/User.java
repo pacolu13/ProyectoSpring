@@ -1,18 +1,20 @@
 package com.proyecto.usuario.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,8 +40,13 @@ public abstract class User {
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;   
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @ManyToMany
+    @JoinTable(
+        name = "usuario_rol",
+        joinColumns = @JoinColumn(name="usuario_id"),
+        inverseJoinColumns = @JoinColumn(name="rol_id")
+    )
+    private List<Rol> rolesLista;
 
     @Override
     public int hashCode() {

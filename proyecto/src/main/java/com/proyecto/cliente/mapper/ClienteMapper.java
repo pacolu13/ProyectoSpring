@@ -22,7 +22,7 @@ public interface ClienteMapper {
     @Mapping(target = "activo", ignore = true)
     @Mapping(target = "fechaRegistro", ignore = true)
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "rolesLista", ignore = true)
     @Mapping(target = "carrito", ignore = true)
     @Mapping(target = "saldo", ignore = true)
     Cliente toEntity(ClienteCreateDTO dto);
@@ -37,7 +37,7 @@ public interface ClienteMapper {
     @Mapping(target = "activo", ignore = true)
     @Mapping(target = "fechaRegistro", ignore = true)
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "rolesLista", ignore = true)
     @Mapping(target = "carrito", ignore = true)
     @Mapping(target = "saldo", ignore = true)
     Cliente updateProductoFromDto(ClienteUpdateDTO dto, @MappingTarget Cliente entity);

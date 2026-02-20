@@ -21,7 +21,7 @@ public interface VendedorMapper {
     @Mapping(target = "activo", ignore = true)
     @Mapping(target = "fechaRegistro", ignore = true)
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "rolesLista", ignore = true)
     Vendedor toEntity(VendedorCreateDTO dto);
 
     List<Vendedor> toEntityList(List<VendedorCreateDTO> dtoList);
@@ -34,7 +34,7 @@ public interface VendedorMapper {
     @Mapping(target = "activo", ignore = true)
     @Mapping(target = "fechaRegistro", ignore = true)
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "rolesLista", ignore = true)
     Vendedor updateProductoFromDto(VendedorUpdateDTO dto, @MappingTarget Vendedor entity);
 
     List<VendedorDTO> toDTOList(List<Vendedor> vendedor);
