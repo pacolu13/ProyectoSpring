@@ -3,6 +3,8 @@ package com.proyecto.cliente.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.proyecto.carrito.entity.Carrito;
+
 public record ClienteDTO(
         Long id,
         String nombre,
@@ -12,7 +14,8 @@ public record ClienteDTO(
         String contrasenia,
         BigDecimal saldo,
         Boolean activo,
-        LocalDateTime fechaRegistro
+        LocalDateTime fechaRegistro,
+        Carrito carrito
 ){
 
    

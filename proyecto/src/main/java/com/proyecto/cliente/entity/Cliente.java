@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import com.proyecto.carrito.entity.Carrito;
 import com.proyecto.usuario.entity.User;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
@@ -24,7 +25,7 @@ public class Cliente extends User {
     
     private BigDecimal saldo;
 
-    @OneToOne
+    @OneToOne(mappedBy="cliente",cascade= CascadeType.ALL)
     private Carrito carrito;
      
 }

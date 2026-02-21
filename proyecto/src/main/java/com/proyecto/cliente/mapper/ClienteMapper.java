@@ -11,6 +11,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
+import com.proyecto.carrito.entity.Carrito;
 import com.proyecto.cliente.dto.ClienteCreateDTO;
 import com.proyecto.cliente.dto.ClienteDTO;
 import com.proyecto.cliente.dto.ClienteUpdateDTO;
@@ -54,6 +55,9 @@ public interface ClienteMapper {
         }
         if (cliente.getActivo() == null) {
             cliente.setActivo(true);
+        }
+        if(cliente.getCarrito() == null){
+            cliente.setCarrito(new Carrito());
         }
     }
 
