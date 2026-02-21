@@ -16,16 +16,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor  // Genera un constructor sin argumentos
+@NoArgsConstructor // Genera un constructor sin argumentos
 @AllArgsConstructor // Genera un constructor con todos los argumentos
 
 @Entity
 @DiscriminatorValue("CLIENTE")
 public class Cliente extends User {
-    
+
     private BigDecimal saldo;
 
-    @OneToOne(mappedBy="cliente",cascade= CascadeType.ALL)
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL) // Crea automaticamente el Carrito
     private Carrito carrito;
-     
+
 }

@@ -1,17 +1,12 @@
 package com.proyecto.carrito.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.proyecto.cliente.entity.Cliente;
 import com.proyecto.productoCarrito.entity.ProductoCarrito;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,9 +26,9 @@ public class Carrito {
     private Long id;
 
     @OneToOne
+    @JoinColumn(name = "cliente_Id")
     private Cliente cliente;
     
     @OneToMany(mappedBy = "carrito")
-    private List<ProductoCarrito> productosList;
-
+    private List<ProductoCarrito> productosList = new ArrayList<>();
 }

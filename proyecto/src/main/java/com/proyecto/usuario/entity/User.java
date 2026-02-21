@@ -15,6 +15,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,6 +48,12 @@ public abstract class User {
         inverseJoinColumns = @JoinColumn(name="rol_id")
     )
     private List<Rol> rolesLista;
+
+    @PrePersist //Metodo que se ejecuta antes de guardar el usuario en la bd
+    public void prePersist() {
+        this.fechaRegistro = LocalDateTime.now();
+        this.activo = true;
+    }
 
     @Override
     public int hashCode() {

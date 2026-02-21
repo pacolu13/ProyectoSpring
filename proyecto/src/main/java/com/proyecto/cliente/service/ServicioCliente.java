@@ -1,10 +1,12 @@
 package com.proyecto.cliente.service;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.proyecto.carrito.entity.Carrito;
 import com.proyecto.cliente.dto.ClienteCreateDTO;
 import com.proyecto.cliente.dto.ClienteDTO;
 import com.proyecto.cliente.dto.ClienteUpdateDTO;
@@ -38,8 +40,14 @@ public class ServicioCliente {
     }
 
     public List<ClienteDTO> añadirListaCliente(List<ClienteCreateDTO> listaClientes) {
-        List<Cliente> nuevo = clienteMapper.toEntityList(listaClientes);
-        List<Cliente> resultado = repoCliente.saveAll(nuevo);
+        List<Cliente> nuevosClientes = clienteMapper.toEntityList(listaClientes);
+        for(Cliente cli: nuevosClientes){
+            cli.setSaldo(BigDecimal.ZERO);
+            Carrito carrito = new Carrito();
+            carrito.setCliente(cli);
+            cli.setCarrito(carrito);
+        }
+        List<Cliente> resultado = repoCliente.saveAll(nuevosClientes);
         return clienteMapper.toDTOList(resultado);
     }
 
