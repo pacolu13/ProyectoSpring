@@ -2,8 +2,8 @@ package com.proyecto.productoCarrito.dto;
 
 public record ProductoCarritoDTO(
         Long id,
-        Long CarritoId,
-        Long ProductoId,
+        Long carritoId,
+        Long productoId,
         Integer cantidad) {
 
 }
