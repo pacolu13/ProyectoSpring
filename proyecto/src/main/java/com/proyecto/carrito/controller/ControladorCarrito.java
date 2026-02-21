@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/carritos")
-public class CarritoController {
+public class ControladorCarrito {
 
     private final ServicioCarrito servicioCarrito;
 
-    public CarritoController(ServicioCarrito servicioCarrito){
+    public ControladorCarrito(ServicioCarrito servicioCarrito){
         this.servicioCarrito = servicioCarrito;
     }
 
