@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.proyecto.cliente.entity.Cliente;
 import com.proyecto.productoCarrito.entity.ProductoCarrito;
+import com.proyecto.productoVenta.entity.ProductoVenta;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,7 +29,25 @@ public class Carrito {
     @OneToOne
     @JoinColumn(name = "cliente_Id")
     private Cliente cliente;
-    
+
     @OneToMany(mappedBy = "carrito")
     private List<ProductoCarrito> productosList = new ArrayList<>();
+
+    public void agregarProducto(ProductoVenta productoVenta, Integer cantidad) {
+        ProductoCarrito itemExistente = getProductosList()
+                .stream()
+                .filter(pc -> pc.getProductoVenta().getId().equals(productoVenta.getId()))
+                .findFirst()
+                .orElse(null);
+
+        if (itemExistente != null) {
+            itemExistente.setCantidad(itemExistente.getCantidad() + cantidad);
+        } else {
+            ProductoCarrito nuevo = new ProductoCarrito();
+            nuevo.setCarrito(this);
+            nuevo.setProductoVenta(productoVenta);
+            nuevo.setCantidad(cantidad);
+            getProductosList().add(nuevo);
+        }
+    }
 }

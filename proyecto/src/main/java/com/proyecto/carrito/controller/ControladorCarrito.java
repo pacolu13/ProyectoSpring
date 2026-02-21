@@ -10,7 +10,8 @@ import com.proyecto.carrito.service.ServicioCarrito;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -19,7 +20,7 @@ public class ControladorCarrito {
 
     private final ServicioCarrito servicioCarrito;
 
-    public ControladorCarrito(ServicioCarrito servicioCarrito){
+    public ControladorCarrito(ServicioCarrito servicioCarrito) {
         this.servicioCarrito = servicioCarrito;
     }
 
@@ -28,5 +29,12 @@ public class ControladorCarrito {
         CarritoDTO carrito = servicioCarrito.obtenerCarrito(clienteId);
         return ResponseEntity.ok(carrito);
     }
-    
+
+    @PostMapping
+    public ResponseEntity<CarritoDTO> añadirProductoAlCarrito(@RequestBody Long clienteId, Long productoVentaId,
+            Integer cantidad) {
+        CarritoDTO response = servicioCarrito.añadirProducto(clienteId, productoVentaId, cantidad);
+        return ResponseEntity.ok(response);
+    }
+
 }

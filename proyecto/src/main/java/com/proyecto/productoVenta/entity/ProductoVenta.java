@@ -39,5 +39,9 @@ public class ProductoVenta {
     @ManyToOne
     @JoinColumn(name = "vendedor_id", nullable = false)
     private Vendedor vendedor;
+
+    public boolean hayCantidad(Integer cantidad) {
+        return getStock() >= cantidad;
+    }
     
 }
