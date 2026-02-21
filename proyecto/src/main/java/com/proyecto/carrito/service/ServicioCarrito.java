@@ -9,11 +9,11 @@ import com.proyecto.carrito.repository.RepoCarrito;
 import com.proyecto.cliente.entity.Cliente;
 import com.proyecto.cliente.repository.RepoCliente;
 import com.proyecto.excepciones.ResourceNotFoundException;
-import com.proyecto.productoCarrito.entity.ProductoCarrito;
 import com.proyecto.productoVenta.entity.ProductoVenta;
 import com.proyecto.productoVenta.repository.RepoProductoVenta;
 
 @Service
+@SuppressWarnings("null")
 public class ServicioCarrito {
 
     private final RepoCarrito repoCarrito;

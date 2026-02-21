@@ -3,6 +3,7 @@ package com.proyecto.carrito.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.carrito.dto.CarritoDTO;
@@ -11,7 +12,6 @@ import com.proyecto.carrito.service.ServicioCarrito;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -31,8 +31,10 @@ public class ControladorCarrito {
     }
 
     @PostMapping
-    public ResponseEntity<CarritoDTO> añadirProductoAlCarrito(@RequestBody Long clienteId, Long productoVentaId,
-            Integer cantidad) {
+    public ResponseEntity<CarritoDTO> añadirProductoAlCarrito(
+            @RequestParam Long clienteId,
+            @RequestParam Long productoVentaId,
+            @RequestParam Integer cantidad) {
         CarritoDTO response = servicioCarrito.añadirProducto(clienteId, productoVentaId, cantidad);
         return ResponseEntity.ok(response);
     }

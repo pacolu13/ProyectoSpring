@@ -28,7 +28,7 @@ public class ProductoVenta {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    private Integer stock;
+    private Integer cantidad;
 
     private BigDecimal precio;
 
@@ -41,7 +41,7 @@ public class ProductoVenta {
     private Vendedor vendedor;
 
     public boolean hayCantidad(Integer cantidad) {
-        return getStock() >= cantidad;
+        return getCantidad() >= cantidad;
     }
     
 }

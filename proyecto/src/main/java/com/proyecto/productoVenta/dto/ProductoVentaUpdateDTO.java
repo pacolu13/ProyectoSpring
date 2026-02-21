@@ -2,7 +2,7 @@ package com.proyecto.productoVenta.dto;
 
 import java.math.BigDecimal;
 
-public record ProductoVentaCreateDTO(
+public record ProductoVentaUpdateDTO(
         Long vendedorId,
         Long productoId,
         Integer cantidad,
