@@ -20,12 +20,15 @@ public interface ProductoVentaMapper {
     @Mapping(source = "vendedorId", target = "vendedor.id")
     ProductoVenta toEntity(ProductoVentaCreateDTO dto);
 
+    
     List<ProductoVenta> toEntityList(List<ProductoVentaCreateDTO> dtoList);
 
-    @Mapping(source = "producto.id", target = "productoId")
-    @Mapping(source = "vendedor.id", target = "vendedorId")
+    @Mapping(source = "producto.nombre", target = "nombreProducto")
+    @Mapping(source = "vendedor.nombre", target = "nombreVendedor")
     ProductoVentaDTO toDTO(ProductoVenta entity);
 
+    @Mapping(source = "producto.nombre", target = "nombreProducto")
+    @Mapping(source = "vendedor.nombre", target = "nombreVendedor")
     List<ProductoVentaDTO> toDTOlList(List<ProductoVenta> entityList);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,22 +35,16 @@ public abstract class User {
     private String telefono;
     private String email;
     private String contrasenia;
-    private Boolean activo;
-
-    @Column(name = "fecha_registro")
-    private LocalDateTime fechaRegistro;   
+    private Boolean activo = true;
+    private LocalDateTime fechaCreacion = LocalDateTime.now();
 
     @ManyToMany
-    @JoinTable(
-        name = "usuario_rol",
-        joinColumns = @JoinColumn(name="usuario_id"),
-        inverseJoinColumns = @JoinColumn(name="rol_id")
-    )
+    @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private List<Rol> rolesLista;
 
-    @PrePersist //Metodo que se ejecuta antes de guardar el usuario en la bd
+    @PrePersist // Metodo que se ejecuta antes de guardar el usuario en la bd
     public void prePersist() {
-        this.fechaRegistro = LocalDateTime.now();
+        this.fechaCreacion = LocalDateTime.now();
         this.activo = true;
     }
 

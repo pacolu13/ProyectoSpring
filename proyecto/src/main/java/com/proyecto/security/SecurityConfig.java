@@ -14,14 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity // Habilita la seguridad web en la aplicación
 public class SecurityConfig {
 
-        // Inyectamos el servicio de usuario para cargar los detalles del usuario
-        /*
-         * private final ServicioUsuario servicioUsuario;
-         * 
-         * public SecurityConfig(ServicioUsuario servicioUsuario) {
-         * this.servicioUsuario = servicioUsuario;
-         * }
-         */
         public SecurityConfig() {
 
         }

@@ -11,12 +11,13 @@ import com.proyecto.productoCarrito.entity.ProductoCarrito;
 @Mapper(componentModel = "spring")
 public interface ProductoCarritoMapper {
 
-    @Mapping(source = "carrito.id", target = "carritoId")
+    @Mapping(source = "cantidad", target = "cantidad")
+    @Mapping(source = "productoVenta.id", target = "productoVentaId")
+    @Mapping(source = "productoVenta.producto.nombre", target = "nombre")
     ProductoCarritoDTO toDTO(ProductoCarrito carrito);
 
     ProductoCarrito toEntity(ProductoCarritoDTO dto);
 
-    @Mapping(source = "carrito.id", target = "carritoId")
     List<ProductoCarritoDTO> toDTOList(List<ProductoCarrito> entityList);
 
     List<ProductoCarrito> toEntityList(List<ProductoCarritoDTO> dtoList);

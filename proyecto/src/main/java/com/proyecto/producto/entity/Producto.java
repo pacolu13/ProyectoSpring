@@ -29,20 +29,13 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "nombre")
     private String nombre;
-    @Column(name = "descripcion")
     private String descripcion;
-    @Column(name = "marca")
     private String marca;
-    @Column(name = "categoria")
     private String categoria;
-    @Column(name = "imagen")
     private String imagen;
-    @Column(name = "activo")
-    private Boolean activo;
-    @Column(name = "fecha_creacion")
-    private LocalDateTime fechaCreacion;
+    private Boolean activo = true;
+    private LocalDateTime fechaCreacion = LocalDateTime.now();
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductoVenta> ventasProductos;

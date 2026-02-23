@@ -2,6 +2,7 @@ package com.proyecto.carrito.service;
 
 import org.springframework.stereotype.Service;
 
+import com.proyecto.carrito.dto.AgregarProductoCarritoDTO;
 import com.proyecto.carrito.dto.CarritoDTO;
 import com.proyecto.carrito.entity.Carrito;
 import com.proyecto.carrito.mapper.CarritoMapper;
@@ -35,20 +36,21 @@ public class ServicioCarrito {
         return carritoMapper.toDTO(carrito);
     }
 
-    public CarritoDTO añadirProducto(Long clienteId, Long productoVentaId, Integer cantidad) {
-        Cliente cliente = repoCliente.findById(clienteId)
+    public CarritoDTO añadirProducto(AgregarProductoCarritoDTO dto) {
+        Cliente cliente = repoCliente.findById(dto.clienteId())
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado"));
-        ProductoVenta productoVenta = repoProductoVenta.findById(productoVentaId)
+
+        ProductoVenta productoVenta = repoProductoVenta.findById(dto.productoVentaId())
                 .orElseThrow(() -> new ResourceNotFoundException("Producto Venta no encontrado"));
 
         Carrito carrito = cliente.getCarrito();
 
-        if (!productoVenta.hayCantidad(cantidad)) {
-            throw new IllegalArgumentException("Stock insuficiente");
+        if (!productoVenta.hayCantidad(dto.cantidad())) {
+            throw new ResourceNotFoundException("Stock insuficiente");
         }
 
-        carrito.agregarProducto(productoVenta,cantidad);
-
+        carrito.agregarProducto(productoVenta, dto.cantidad());
+        repoCarrito.save(carrito);
         return carritoMapper.toDTO(carrito);
     }
 

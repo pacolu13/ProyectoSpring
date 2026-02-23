@@ -17,7 +17,7 @@ import com.proyecto.cliente.entity.Cliente;
 public interface ClienteMapper {
 
     @Mapping(target = "activo", ignore = true)
-    @Mapping(target = "fechaRegistro", ignore = true)
+    @Mapping(target = "fechaCreacion", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "rolesLista", ignore = true)
     @Mapping(target = "carrito", ignore = true)
@@ -32,7 +32,7 @@ public interface ClienteMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "activo", ignore = true)
-    @Mapping(target = "fechaRegistro", ignore = true)
+    @Mapping(target = "fechaCreacion", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "rolesLista", ignore = true)
     @Mapping(target = "carrito", ignore = true)

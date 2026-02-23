@@ -8,5 +8,5 @@ public record ClienteDTO(
         String nombre,
         String apellido,
         BigDecimal saldo,
-        LocalDateTime fechaRegistro) {
+        LocalDateTime fechaCreacion) {
 }

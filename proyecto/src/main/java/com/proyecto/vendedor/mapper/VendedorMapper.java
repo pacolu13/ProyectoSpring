@@ -1,9 +1,7 @@
 package com.proyecto.vendedor.mapper;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-import org.mapstruct.AfterMapping;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -19,7 +17,7 @@ import com.proyecto.vendedor.entity.Vendedor;
 public interface VendedorMapper {
 
     @Mapping(target = "activo", ignore = true)
-    @Mapping(target = "fechaRegistro", ignore = true)
+    @Mapping(target = "fechaCreacion", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "rolesLista", ignore = true)
     Vendedor toEntity(VendedorCreateDTO dto);
@@ -32,21 +30,11 @@ public interface VendedorMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "activo", ignore = true)
-    @Mapping(target = "fechaRegistro", ignore = true)
+    @Mapping(target = "fechaCreacion", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "rolesLista", ignore = true)
     Vendedor updateProductoFromDto(VendedorUpdateDTO dto, @MappingTarget Vendedor entity);
 
     List<VendedorDTO> toDTOList(List<Vendedor> vendedor);
 
-    @AfterMapping
-    default void setDefaults(@MappingTarget Vendedor vendedor) {
-        
-        if (vendedor.getFechaRegistro() == null) {
-            vendedor.setFechaRegistro(LocalDateTime.now());
-        }
-        if (vendedor.getActivo() == null) {
-            vendedor.setActivo(true);
-        }
-    }
 }

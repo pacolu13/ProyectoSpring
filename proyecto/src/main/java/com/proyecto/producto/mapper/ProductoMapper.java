@@ -1,9 +1,7 @@
 package com.proyecto.producto.mapper;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-import org.mapstruct.AfterMapping;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -36,15 +34,5 @@ public interface ProductoMapper {
     Producto updateProductoFromDto(ProductoUpdateDTO dto, @MappingTarget Producto entity);
 
     List<ProductoDTO> toDTOList(List<Producto> productos);
-
-    @AfterMapping
-    default void setDefaults(@MappingTarget Producto producto) {
-        if (producto.getActivo() == null) {
-            producto.setActivo(true);
-        }
-        if (producto.getFechaCreacion() == null) {
-            producto.setFechaCreacion(LocalDateTime.now());
-        }
-    }
 
 }

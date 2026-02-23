@@ -30,7 +30,9 @@ public class Carrito {
     @JoinColumn(name = "cliente_Id")
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "carrito")
+    //Sin el formato cascade no se generan las entidades anidadas
+    
+    @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductoCarrito> productosList = new ArrayList<>();
 
     public void agregarProducto(ProductoVenta productoVenta, Integer cantidad) {
@@ -43,7 +45,7 @@ public class Carrito {
         if (itemExistente != null) {
             itemExistente.setCantidad(itemExistente.getCantidad() + cantidad);
         } else {
-            ProductoCarrito nuevo = new ProductoCarrito();
+            ProductoCarrito nuevo = new ProductoCarrito(); 
             nuevo.setCarrito(this);
             nuevo.setProductoVenta(productoVenta);
             nuevo.setCantidad(cantidad);

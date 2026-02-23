@@ -38,5 +38,10 @@ public class ProductoCarrito {
     @JoinColumn(name="carrito_id")
     private Carrito carrito;
 
+    @Override
+    public String toString() {
+        return "ProductoCarrito [id=" + id + ", cantidad=" + cantidad + "]";
+    }
+
 
 }
