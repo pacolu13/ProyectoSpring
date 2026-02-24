@@ -2,6 +2,7 @@ package com.proyecto.productoVenta.entity;
 
 import java.math.BigDecimal;
 
+import com.proyecto.detalleCompra.entity.DetalleCompra;
 import com.proyecto.producto.entity.Producto;
 import com.proyecto.vendedor.entity.Vendedor;
 
@@ -11,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +33,10 @@ public class ProductoVenta {
     private Integer cantidad;
 
     private BigDecimal precio;
+
+    @OneToOne
+    @JoinColumn(name = "detalle_compra_id")
+    private DetalleCompra detalleCompra;
 
     @ManyToOne
     @JoinColumn(name = "producto_id", nullable = false)

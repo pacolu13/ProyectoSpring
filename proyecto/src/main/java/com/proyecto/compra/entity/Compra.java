@@ -2,6 +2,7 @@ package com.proyecto.compra.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.proyecto.cliente.entity.Cliente;
@@ -37,8 +38,8 @@ public class Compra {
     @JoinColumn(name = "cliente_Id")
     private Cliente cliente;
     private BigDecimal total;
-    private LocalDateTime fecha;
+    private LocalDateTime fecha = LocalDateTime.now();
 
     @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DetalleCompra> detalles;
+    private List<DetalleCompra> detalles = new ArrayList<>();
 }

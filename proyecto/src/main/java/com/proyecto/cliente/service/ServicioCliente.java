@@ -1,6 +1,5 @@
 package com.proyecto.cliente.service;
 
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -35,14 +34,15 @@ public class ServicioCliente {
     public ClienteDTO obtenerClientePorId(long id) {
         Cliente cliente = repoCliente.findById(id)
                 .orElseThrow(
-                () -> new ResourceNotFoundException("Cliente",id));
+                        () -> new ResourceNotFoundException("Cliente", id));
         return clienteMapper.toDTO(cliente);
     }
 
     public List<ClienteDTO> añadirListaCliente(List<ClienteCreateDTO> listaClientes) {
         List<Cliente> nuevosClientes = clienteMapper.toEntityList(listaClientes);
-        for(Cliente cli: nuevosClientes){
-            cli.setSaldo(BigDecimal.ZERO);
+        for (Cliente cli : nuevosClientes) {
+
+            cli.setSaldo(BigDecimal.valueOf(500));
             Carrito carrito = new Carrito();
             carrito.setCliente(cli);
             cli.setCarrito(carrito);
@@ -51,17 +51,17 @@ public class ServicioCliente {
         return clienteMapper.toDTOList(resultado);
     }
 
-    public ClienteDTO  actualizarCliente(Long id, ClienteUpdateDTO dto) {
+    public ClienteDTO actualizarCliente(Long id, ClienteUpdateDTO dto) {
         Cliente cliente = repoCliente.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("Cliente", id));
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente", id));
 
         Cliente actualizado = clienteMapper.updateProductoFromDto(dto, cliente);
         return clienteMapper.toDTO(repoCliente.save(actualizado));
     }
-    
+
     public void eliminarCliente(Long id) {
-        if(!repoCliente.existsById(id))
-            throw new ResourceNotFoundException("Cliente",id);
+        if (!repoCliente.existsById(id))
+            throw new ResourceNotFoundException("Cliente", id);
         repoCliente.deleteById(id);
     }
 }

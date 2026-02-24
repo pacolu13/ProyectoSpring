@@ -1,11 +1,12 @@
 package com.proyecto.detalleCompra.dto;
 
+import java.math.BigDecimal;
+
 public record DetalleCompraDTO(
     Long id,
-    Long compraId,
     String nombreProducto,
     Integer cantidad,
-    Double precioUnitario
+    BigDecimal precioUnitario
 ) {
 
 }

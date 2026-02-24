@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,10 @@ public class DetalleCompra {
     @JoinColumn(name = "compra_id")
     private Compra compra;
 
+    @ManyToOne
+    @JoinColumn(name = "producto_venta_id")
     private ProductoVenta productoVenta;
+
     private BigDecimal precioUnitario;
     private Integer cantidad;
 }

@@ -8,6 +8,6 @@ public record VendedorDTO(
         String email,
         String cuit,
         Boolean activo,
-        LocalDateTime fechaRegistro) {
+        LocalDateTime fechaCreacion) {
 
 }

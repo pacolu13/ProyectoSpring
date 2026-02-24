@@ -37,6 +37,10 @@ public class ServicioCompra {
         List<ProductoCarrito> listaProductos = cliente.getCarrito().getProductosList();
 
         for (ProductoCarrito producto : listaProductos) {
+            if (producto.getProductoVenta().getCantidad() < producto.getCantidad()) {
+                throw new IllegalStateException("Stock insuficiente para el producto: "
+                        + producto.getProductoVenta().getProducto().getNombre());
+            }
             BigDecimal precioUnitario = producto.getProductoVenta().getPrecio();
             total = total.add(precioUnitario.multiply(BigDecimal.valueOf(producto.getCantidad())));
         }
@@ -57,6 +61,7 @@ public class ServicioCompra {
             DetalleCompra detalle = new DetalleCompra();
             detalle.setCompra(compra);
             detalle.setProductoVenta(producto.getProductoVenta());
+            detalle.setPrecioUnitario(producto.getProductoVenta().getPrecio());
             detalle.setCantidad(producto.getCantidad());
             compra.getDetalles().add(detalle);
         }
@@ -65,7 +70,8 @@ public class ServicioCompra {
     }
 
     /*
-        Falta verificar stock de cada producto y actualizarlo despues de confirmar la compra
-        ademas, se deberia limpiar el carrito del cliente despues de la compra.
-    */
+     * Falta verificar stock de cada producto y actualizarlo despues de confirmar la
+     * compra
+     * ademas, se deberia limpiar el carrito del cliente despues de la compra.
+     */
 }

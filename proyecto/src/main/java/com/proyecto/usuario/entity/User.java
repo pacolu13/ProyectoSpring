@@ -42,12 +42,6 @@ public abstract class User {
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private List<Rol> rolesLista;
 
-    @PrePersist // Metodo que se ejecuta antes de guardar el usuario en la bd
-    public void prePersist() {
-        this.fechaCreacion = LocalDateTime.now();
-        this.activo = true;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
