@@ -15,7 +15,10 @@ import com.proyecto.detalleCompra.entity.DetalleCompra;
 import com.proyecto.excepciones.ResourceNotFoundException;
 import com.proyecto.productoCarrito.entity.ProductoCarrito;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@SuppressWarnings("null")
 public class ServicioCompra {
 
     private final RepoCompra repoCompra;
@@ -28,12 +31,16 @@ public class ServicioCompra {
         this.compraMapper = compraMapper;
     }
 
+    @Transactional // O se ejecuta todo o no se ejecuta nada, rollback en caso de error
     public CompraDTO confirmarCompra(Long clienteId) {
         Cliente cliente = repoCliente.findById(clienteId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado"));
 
+        if (cliente.getCarrito() == null || cliente.getCarrito().getProductosList().isEmpty()) {
+            throw new IllegalStateException("El carrito está vacío");
+        }
+
         BigDecimal total = BigDecimal.ZERO;
-        Compra compra = new Compra();
         List<ProductoCarrito> listaProductos = cliente.getCarrito().getProductosList();
 
         for (ProductoCarrito producto : listaProductos) {
@@ -41,19 +48,19 @@ public class ServicioCompra {
                 throw new IllegalStateException("Stock insuficiente para el producto: "
                         + producto.getProductoVenta().getProducto().getNombre());
             }
+            Integer cantComprada = producto.getCantidad();
+            Integer stockActual = producto.getProductoVenta().getCantidad();
             BigDecimal precioUnitario = producto.getProductoVenta().getPrecio();
-            total = total.add(precioUnitario.multiply(BigDecimal.valueOf(producto.getCantidad())));
-        }
 
-        if (total.compareTo(BigDecimal.ZERO) == 0) {
-            throw new IllegalStateException("El carrito está vacío");
+            producto.getProductoVenta().setCantidad(stockActual - cantComprada);
+            total = total.add(precioUnitario.multiply(BigDecimal.valueOf(cantComprada)));
         }
 
         if (total.compareTo(cliente.getSaldo()) > 0) {
             throw new IllegalStateException("Saldo insuficiente para realizar la compra");
         }
 
-        cliente.setSaldo(cliente.getSaldo().subtract(total));
+        Compra compra = new Compra();
         compra.setCliente(cliente);
         compra.setTotal(total);
 
@@ -66,12 +73,9 @@ public class ServicioCompra {
             compra.getDetalles().add(detalle);
         }
 
+        cliente.setSaldo(cliente.getSaldo().subtract(total));
+        cliente.getCarrito().getProductosList().clear();
+
         return compraMapper.toDTO(repoCompra.save(compra));
     }
-
-    /*
-     * Falta verificar stock de cada producto y actualizarlo despues de confirmar la
-     * compra
-     * ademas, se deberia limpiar el carrito del cliente despues de la compra.
-     */
 }
