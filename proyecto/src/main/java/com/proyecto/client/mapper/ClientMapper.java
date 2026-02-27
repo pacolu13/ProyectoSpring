@@ -8,9 +8,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-import com.proyecto.client.dto.ClientCreateDTO;
-import com.proyecto.client.dto.ClientDTO;
-import com.proyecto.client.dto.ClientUpdateDTO;
+import com.proyecto.client.dto.*;
 import com.proyecto.client.entity.Client;
 
 @Mapper(componentModel = "spring")
@@ -22,6 +20,7 @@ public interface ClientMapper {
     @Mapping(target = "rolesList", ignore = true)
     @Mapping(target = "cart", ignore = true)
     @Mapping(target = "balance", ignore = true)
+    @Mapping(target = "ordersList", ignore = true)
     Client toEntity(ClientCreateDTO dto);
 
     List<Client> toEntityList(List<ClientCreateDTO> dtoList);
@@ -37,6 +36,7 @@ public interface ClientMapper {
     @Mapping(target = "rolesList", ignore = true)
     @Mapping(target = "cart", ignore = true)
     @Mapping(target = "balance", ignore = true)
+    @Mapping(target = "ordersList", ignore = true)
     Client updateClientFromDto(ClientUpdateDTO dto, @MappingTarget Client entity);
 
     List<ClientDTO> toDTOList(List<Client> clientes);

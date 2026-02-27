@@ -20,6 +20,7 @@ public interface SellerMapper {
     @Mapping(target = "creationDate", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "rolesList", ignore = true)
+    @Mapping(target = "productsListingList", ignore = true)
     Seller toEntity(SellerCreateDTO dto);
 
     List<Seller> toEntityList(List<SellerCreateDTO> dtoList);
@@ -33,6 +34,7 @@ public interface SellerMapper {
     @Mapping(target = "creationDate", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "rolesList", ignore = true)
+    @Mapping(target = "productsListingList", ignore = true)
     Seller updateSellerFromDto(SellerUpdateDTO dto, @MappingTarget Seller entity);
 
     List<SellerDTO> toDTOList(List<Seller> vendedor);

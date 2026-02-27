@@ -18,6 +18,8 @@ public interface ProductListingMapper {
 
     @Mapping(source = "productId", target = "product.id")
     @Mapping(source = "sellerId", target = "seller.id")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "orderDetails", ignore = true)
     ProductListing toEntity(ProductListingCreateDTO dto);
 
     
@@ -31,6 +33,10 @@ public interface ProductListingMapper {
     @Mapping(source = "seller.name", target = "nameSeller")
     List<ProductListingDTO> toDTOList(List<ProductListing> entityList);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "orderDetails", ignore = true)
+    @Mapping(target = "product", ignore = true)
+    @Mapping(target = "seller", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     ProductListing updateProductFromDto(ProductListingUpdateDTO dto, @MappingTarget ProductListing entity);
 

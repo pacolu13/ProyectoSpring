@@ -16,6 +16,10 @@ public interface CartProductMapper {
     @Mapping(source = "productListing.product.name", target = "name")
     CartProductDTO toDTO(CartProduct carrito);
 
+    //vamos a ignorar el carrito y el id porque no los necesitamos para crear un nuevo CartProduct
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "cart", ignore = true)
+    @Mapping(target = "productListing", ignore = true)
     CartProduct toEntity(CartProductDTO dto);
 
     List<CartProductDTO> toDTOList(List<CartProduct> entityList);

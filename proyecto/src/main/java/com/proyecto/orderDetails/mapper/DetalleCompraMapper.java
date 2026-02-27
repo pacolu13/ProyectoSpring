@@ -14,5 +14,7 @@ public interface DetalleCompraMapper {
     @Mapping(source = "orderDetail.unitPrice", target = "unitPrice")
     OrderDetailsDTO toDTO(OrderDetails orderDetail);
 
+    @Mapping(target = "order", ignore = true)
+    @Mapping(target = "productListing", ignore = true)
     OrderDetails toEntity(OrderDetailsDTO detalleCompraDTO);
 }
