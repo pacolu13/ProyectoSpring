@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.proyecto.auth.entity.Token;
+
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,6 +18,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,6 +45,9 @@ public abstract class User {
     @ManyToMany
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private List<Rol> rolesList;
+
+    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
+    private List<Token> tokens;
 
     @Override
     public int hashCode() {
