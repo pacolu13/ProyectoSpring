@@ -1,5 +1,7 @@
 package com.proyecto.cart.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import com.proyecto.cart.dto.CartAddProductDTO;
@@ -25,7 +27,7 @@ public class CartService {
     private final ProductListingRepository productListingRepository;
     private final CartMapper cartMapper;
 
-    public CartDTO findCart(Long clientId) {
+    public CartDTO findCart(UUID clientId) {
         Cart cart = cartRepository.findByClientId(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Carrito no encontrado"));
         return cartMapper.toDTO(cart);

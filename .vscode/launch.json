@@ -2,13 +2,21 @@
     "configurations": [
         {
             "type": "java",
+            "name": "KeyGenerator",
+            "request": "launch",
+            "mainClass": "com.proyecto.KeyGenerator",
+            "projectName": "proyecto"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-ProyectoApplication<proyecto>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "mainClass": "com.proyecto.ProyectoApplication",
             "projectName": "proyecto",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=51254 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=proyecto"
         }
     ]
 }

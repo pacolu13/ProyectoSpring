@@ -26,11 +26,11 @@ public interface ProductListingMapper {
     List<ProductListing> toEntityList(List<ProductListingCreateDTO> dtoList);
 
     @Mapping(source = "product.name", target = "nameProduct")
-    @Mapping(source = "seller.name", target = "nameSeller")
+    @Mapping(source = "seller.userName", target = "nameSeller")
     ProductListingDTO toDTO(ProductListing entity);
 
     @Mapping(source = "product.name", target = "nameProduct")
-    @Mapping(source = "seller.name", target = "nameSeller")
+    @Mapping(source = "seller.userName", target = "nameSeller")
     List<ProductListingDTO> toDTOList(List<ProductListing> entityList);
 
     @Mapping(target = "id", ignore = true)

@@ -1,6 +1,6 @@
 package com.proyecto.auth.entity;
 
-import com.proyecto.user.entity.User;
+import com.proyecto.client.entity.Client;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,6 +43,6 @@ public class Token {
     private Boolean expired;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "client_id")
+    private Client client;
 }

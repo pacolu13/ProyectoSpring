@@ -1,8 +1,7 @@
 package com.proyecto.seller.dto;
 
 public record SellerUpdateDTO(
-        String name,
-        String lastName,
+        String userName,
         String phoneNumber,
         String email,
         String password,

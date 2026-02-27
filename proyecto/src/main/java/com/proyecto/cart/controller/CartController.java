@@ -1,5 +1,7 @@
 package com.proyecto.cart.controller;
 
+import java.util.UUID;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +27,7 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping("/{clientId}")
-    public ResponseEntity<CartDTO> findCart(@PathVariable Long clientId) {
+    public ResponseEntity<CartDTO> findCart(@PathVariable UUID clientId) {
         CartDTO response = cartService.findCart(clientId);
         return ResponseEntity.ok(response);
     }

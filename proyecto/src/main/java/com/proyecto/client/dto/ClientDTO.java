@@ -6,8 +6,7 @@ import java.util.UUID;
 
 public record ClientDTO(
         UUID id,
-        String name,
-        String lastName,
+        String userName,
         BigDecimal balance,
         LocalDateTime creationDate) {
 }

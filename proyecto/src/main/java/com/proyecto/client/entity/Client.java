@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.proyecto.auth.entity.Token;
 import com.proyecto.cart.entity.Cart;
 import com.proyecto.order.entity.Order;
 import com.proyecto.user.entity.User;
@@ -11,6 +12,7 @@ import com.proyecto.user.entity.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -34,4 +36,9 @@ public class Client extends User {
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> ordersList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "client", fetch=FetchType.LAZY)
+    private List<Token> tokens;
+
+
 }
