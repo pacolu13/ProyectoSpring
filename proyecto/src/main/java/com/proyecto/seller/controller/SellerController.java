@@ -1,6 +1,7 @@
 package com.proyecto.seller.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -43,9 +44,9 @@ public class SellerController {
 
     @GetMapping("/filtrar")
     public List<SellerDTO> obtenerVendedoresPorFiltro(
-            @RequestParam String nombre,
-            @RequestParam String apellido,
-            @RequestParam String email) {
+            @RequestParam(required = false) Optional<String> nombre,
+            @RequestParam(required = false) Optional<String> apellido,
+            @RequestParam(required = false) Optional<String> email) {
         return servicioVendedor.obtenerVendedorPorFiltro(nombre, apellido, email);
     }
 

@@ -1,6 +1,7 @@
 package com.proyecto.seller.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class SellerService {
         return vendedorMapper.toDTO(vendedor);
     }
 
-    public List<SellerDTO> obtenerVendedorPorFiltro(String nombre, String apellido, String email) {
+    public List<SellerDTO> obtenerVendedorPorFiltro(Optional<String> nombre, Optional<String> apellido, Optional<String> email) {
         SellerSearch busqueda = new SellerSearch(nombre, apellido, email);
         List<Seller> vendedores = repoVendedor.findAll(busqueda);
         if (vendedores == null || vendedores.isEmpty()) {
