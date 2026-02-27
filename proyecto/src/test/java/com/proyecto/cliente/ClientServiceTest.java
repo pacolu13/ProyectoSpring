@@ -2,12 +2,12 @@ package com.proyecto.cliente;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import static org.mockito.ArgumentMatchers.anyLong;
 import org.mockito.InjectMocks;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -36,8 +36,8 @@ public class ClientServiceTest {
 
     @Test
     public void obtenerClientePorIdVacioTest() {
-        when(repoCliente.findById(anyLong())).thenReturn(Optional.empty());
-        assertThrows(ResourceNotFoundException.class, () -> servicioCliente.findClientById(1L));
+        when(repoCliente.findById(UUID.randomUUID())).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class, () -> servicioCliente.findClientById(UUID.randomUUID()));
     }
 
     @Test

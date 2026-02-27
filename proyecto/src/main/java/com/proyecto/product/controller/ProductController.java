@@ -9,27 +9,28 @@ import org.springframework.web.bind.annotation.*;
 import com.proyecto.product.dto.*;
 import com.proyecto.product.service.ProductService;
 
+import lombok.RequiredArgsConstructor;
 
 // Controlador para manejar las operaciones relacionadas con los productos
-@CrossOrigin(origins = "*", allowedHeaders = "*") // Permite solicitudes desde cualquier origen (útil para desarrollo, pero revisar en producción)
+@CrossOrigin(origins = "*", allowedHeaders = "*") // Permite solicitudes desde cualquier origen (útil para desarrollo,
+                                                  // pero revisar en producción)
 @RestController
 @RequestMapping("/productos")
+@RequiredArgsConstructor
+
 public class ProductController {
 
     private final ProductService servicioProducto;
-    public ProductController(ProductService servicioProducto) {
-        this.servicioProducto = servicioProducto;
-    }
 
     @GetMapping
     public List<ProductDTO> ObtenerTodosLosProductos() {
         return servicioProducto.obtenerTodosLosProductos();
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> ObtenerProductoPorId(@PathVariable Long id) {
         ProductDTO response = servicioProducto.obtenerProductoPorId(id);
-    return ResponseEntity.ok(response);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
@@ -39,11 +40,12 @@ public class ProductController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ProductDTO> actualizarParcial(
+    public ResponseEntity<Void> actualizarParcial(
             @PathVariable Long id,
             @RequestBody ProductUpdateDTO dto) {
 
-        return ResponseEntity.ok(servicioProducto.actualizarProducto(id, dto));
+        servicioProducto.actualizarProducto(id, dto);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")

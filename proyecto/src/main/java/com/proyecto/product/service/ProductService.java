@@ -11,17 +11,16 @@ import com.proyecto.product.entity.Product;
 import com.proyecto.product.mapper.ProductMapper;
 import com.proyecto.product.repository.ProductRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
 @SuppressWarnings("null")
+@RequiredArgsConstructor
+
 public class ProductService {
 
     private final ProductRepository repoProducto;
     private final ProductMapper productoMapper;
-
-    public ProductService(ProductRepository repoProducto, ProductMapper productoMapper) {
-        this.repoProducto = repoProducto;
-        this.productoMapper = productoMapper;
-    }
 
     public List<ProductDTO> obtenerTodosLosProductos() {
         List<ProductDTO> response = productoMapper.toDTOList(repoProducto.findAll());
@@ -40,12 +39,11 @@ public class ProductService {
         return response;
     }
 
-    public ProductDTO actualizarProducto(Long id, ProductUpdateDTO dto) {
+    public void actualizarProducto(Long id, ProductUpdateDTO dto) {
         Product productoExistente = repoProducto.findById(id).orElseThrow(
                 () -> new RuntimeException("Producto no encontrado"));
 
-        Product prodActualizado = productoMapper.updateProductoFromDto(dto, productoExistente);
-        return productoMapper.toDTO(repoProducto.save(prodActualizado));
+        productoMapper.updateProductFromDto(dto, productoExistente);
     }
 
     public void eliminarProducto(Long id) {

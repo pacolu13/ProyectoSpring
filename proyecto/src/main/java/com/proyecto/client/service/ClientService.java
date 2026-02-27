@@ -2,6 +2,7 @@ package com.proyecto.client.service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class ClientService {
         return clientMapper.toDTOList(clientes);
     }
 
-    public ClientDTO findClientById(long id) {
+    public ClientDTO findClientById(UUID id) {
         Client client = clientRepository.findById(id)
                 .orElseThrow(
                         () -> new ResourceNotFoundException("Cliente", id));
@@ -49,7 +50,7 @@ public class ClientService {
         return clientMapper.toDTOList(resultado);
     }
 
-    public ClientDTO updateClient(Long id, ClientUpdateDTO dto) {
+    public ClientDTO updateClient(UUID id, ClientUpdateDTO dto) {
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente", id));
 
@@ -57,7 +58,7 @@ public class ClientService {
         return clientMapper.toDTO(clientRepository.save(clientUpdated));
     }
 
-    public void deleteClient(Long id) {
+    public void deleteClient(UUID id) {
         if (!clientRepository.existsById(id))
             throw new ResourceNotFoundException("Cliente", id);
         clientRepository.deleteById(id);

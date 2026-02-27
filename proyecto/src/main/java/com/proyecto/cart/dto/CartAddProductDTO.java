@@ -1,7 +1,9 @@
 package com.proyecto.cart.dto;
 
+import java.util.UUID;
+
 public record CartAddProductDTO(
-        Long clientId,
+        UUID clientId,
         Long productListingId,
         Integer quantity) {
 

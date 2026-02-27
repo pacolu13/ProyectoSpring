@@ -1,9 +1,10 @@
 package com.proyecto.productListing.dto;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public record ProductListingCreateDTO(
-        Long sellerId,
+        UUID sellerId,
         Long productId,
         Integer quantity,
         BigDecimal price) {

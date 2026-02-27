@@ -16,16 +16,16 @@ import com.proyecto.productListing.dto.ProductListingCreateDTO;
 import com.proyecto.productListing.dto.ProductListingDTO;
 import com.proyecto.productListing.service.ProductListingService;
 
+import lombok.RequiredArgsConstructor;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/productosventa")
+@RequestMapping("/api/v1/product-listings")
+@RequiredArgsConstructor
+
 public class ProductListingController {
 
     private final ProductListingService servicioProductoVenta;
-
-    public ProductListingController(ProductListingService servicioProductoVenta) {
-        this.servicioProductoVenta = servicioProductoVenta;
-    }
 
     @GetMapping
     public List<ProductListingDTO> obtenerProductosVenta() {

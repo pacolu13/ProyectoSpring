@@ -3,6 +3,7 @@ package com.proyecto.user.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
@@ -27,8 +28,8 @@ import lombok.Setter;
 public abstract class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id; // UUID es un identificador único universal mas seguro.
     private String name;
     private String lastName;
     private String phoneNumber;

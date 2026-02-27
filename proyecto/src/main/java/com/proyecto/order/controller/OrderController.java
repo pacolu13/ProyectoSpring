@@ -1,5 +1,7 @@
 package com.proyecto.order.controller;
 
+import java.util.UUID;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/compras")
+@RequestMapping("/api/v1/orders")
 public class OrderController {
 
     private final OrderService orderService;
@@ -23,9 +25,9 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping("/confirmar/{clienteId}")
-    public ResponseEntity<OrderDTO> confirmarCompra(@PathVariable Long clienteId) {
-        OrderDTO compraDTO = orderService.confirmarCompra(clienteId);
+    @PostMapping("/confirmar/{clientId}")
+    public ResponseEntity<OrderDTO> confirmarCompra(@PathVariable UUID clientId) {
+        OrderDTO compraDTO = orderService.confirmarCompra(clientId);
         return ResponseEntity.ok(compraDTO);
     }
 }

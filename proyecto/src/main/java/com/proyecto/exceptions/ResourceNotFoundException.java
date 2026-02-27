@@ -1,5 +1,7 @@
 package com.proyecto.exceptions;
 
+import java.util.UUID;
+
 public class ResourceNotFoundException extends RuntimeException {
 
     public ResourceNotFoundException(String message) {
@@ -7,7 +9,7 @@ public class ResourceNotFoundException extends RuntimeException {
     }
     
     // Constructor conveniente para entidades
-    public ResourceNotFoundException(String entity, Long id) {
+    public ResourceNotFoundException(String entity, UUID id) {
         super(String.format("%s con ID %d no encontrado", entity, id));
     }
 }

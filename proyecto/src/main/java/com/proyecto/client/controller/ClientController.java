@@ -1,6 +1,7 @@
 package com.proyecto.client.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,16 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import com.proyecto.client.dto.*;
 import com.proyecto.client.service.ClientService;
 
+import lombok.RequiredArgsConstructor;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping("/api/v1/clients")
+@RequiredArgsConstructor
 public class ClientController {
 
     private final ClientService clientService;
-
-    public ClientController(ClientService clientService) {
-        this.clientService = clientService;
-    }
 
     @GetMapping
     public List<ClientDTO> findClients() {
@@ -26,7 +26,7 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClientDTO> findClientById(@PathVariable Long id) {
+    public ResponseEntity<ClientDTO> findClientById(@PathVariable UUID id) {
         ClientDTO cliente = clientService.findClientById(id);
         return ResponseEntity.ok(cliente);
     }
@@ -39,14 +39,14 @@ public class ClientController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<ClientDTO> updateClient(
-            @PathVariable Long id,
+            @PathVariable UUID id,
             @RequestBody ClientUpdateDTO dto) {
 
         return ResponseEntity.ok(clientService.updateClient(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteClient(@PathVariable UUID id) {
         clientService.deleteClient(id);
         return ResponseEntity.noContent().build();
     }

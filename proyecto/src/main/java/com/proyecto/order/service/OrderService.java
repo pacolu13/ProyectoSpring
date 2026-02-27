@@ -2,6 +2,7 @@ package com.proyecto.order.service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class OrderService {
     private final OrderMapper orderMapper;
 
     @Transactional // O se ejecuta todo o no se ejecuta nada, rollback en caso de error
-    public OrderDTO confirmarCompra(Long clientId) {
+    public OrderDTO confirmarCompra(UUID clientId) {
         Client client = clientRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado"));
 
