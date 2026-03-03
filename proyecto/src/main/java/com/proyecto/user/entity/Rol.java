@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 public class Rol {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID) // ¿ En que se diferencia?
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToMany(mappedBy = "rolesList")

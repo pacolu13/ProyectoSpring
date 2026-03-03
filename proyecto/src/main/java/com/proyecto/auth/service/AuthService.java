@@ -1,5 +1,7 @@
 package com.proyecto.auth.service;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import com.proyecto.user.entity.User;
 import com.proyecto.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.var;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +23,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
     public TokenResponseDTO register(RegisterDTO request) {
         var client = User.builder().build();
@@ -36,8 +40,29 @@ public class AuthService {
 
     public TokenResponseDTO login(LoginDTO request) {
 
-        throw new UnsupportedOperationException("Unimplemented method 'login'");
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.email(),
+                        request.password()));
+        var user = userRepository.findByEmail(request.email())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        var token = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        revokeAllUserTokens(user);
+        saveUserToken(user, token);
 
+        return new TokenResponseDTO(token, refreshToken);
+    }
+
+    private void revokeAllUserTokens(User user) {
+        var validUserTokens = tokenRepository.findAllValidIsFalseOrRevokedIsFalseTokenByUserId(user.getId());
+        if (validUserTokens.isEmpty())
+            return;
+        validUserTokens.forEach(token -> {
+            token.setExpired(true);
+            token.setRevoked(true);
+        });
+        tokenRepository.saveAll(validUserTokens);
     }
 
     public TokenResponseDTO refreshToken(String authHeader) {
