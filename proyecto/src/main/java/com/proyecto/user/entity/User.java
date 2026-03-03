@@ -10,6 +10,7 @@ import java.util.UUID;
 import com.proyecto.auth.entity.Token;
 import com.proyecto.cart.entity.Cart;
 import com.proyecto.order.entity.Order;
+import com.proyecto.productListing.entity.ProductListing;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorColumn;
@@ -26,32 +27,46 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+
+@Builder
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "user_type")
 @Table(name = "usuarios")
+@NoArgsConstructor  // ← JPA necesita este
+@AllArgsConstructor // ← Builder necesita este
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id; // UUID es un identificador único universal mas seguro.
-    private String userName;
+    private String username;
     private String phoneNumber;
     private String email;
     private String password;
-    private BigDecimal balance = BigDecimal.ZERO;
+    private String cuit;
+
+    @Builder.Default
+    private BigDecimal balance = BigDecimal.valueOf(500);
+    @Builder.Default
     private Boolean active = true;
+    @Builder.Default
     private LocalDateTime creationDate = LocalDateTime.now();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL) // Crea automaticamente el Carrito
     private Cart cart;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<Order> ordersList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
@@ -60,6 +75,10 @@ public class User {
     @ManyToMany
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private List<Rol> rolesList;
+
+    @Builder.Default
+    @OneToMany(mappedBy="user", cascade= CascadeType.ALL, orphanRemoval= true)
+    private List<ProductListing> productsListingList = new ArrayList<>();
 
     @Override
     public int hashCode() {
@@ -86,5 +105,4 @@ public class User {
         }
         return Objects.equals(this.id, other.id);
     }
-
 }

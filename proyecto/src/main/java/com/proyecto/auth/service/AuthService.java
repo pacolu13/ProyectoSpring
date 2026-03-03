@@ -22,8 +22,8 @@ public class AuthService {
     private final JwtService jwtService;
 
     public TokenResponseDTO register(RegisterDTO request) {
-        var client = new User();
-        client.setUserName(request.username());
+        var client = User.builder().build();
+        client.setUsername(request.username());
         client.setEmail(request.email());
         client.setPassword(passwordEncoder.encode(request.password()));
 

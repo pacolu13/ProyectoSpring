@@ -17,7 +17,7 @@ import com.proyecto.productListing.entity.ProductListing;
 public interface ProductListingMapper {
 
     @Mapping(source = "productId", target = "product.id")
-    @Mapping(source = "sellerId", target = "seller.id")
+    @Mapping(source = "sellerId", target = "user.id")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "orderDetails", ignore = true)
     ProductListing toEntity(ProductListingCreateDTO dto);
@@ -26,17 +26,17 @@ public interface ProductListingMapper {
     List<ProductListing> toEntityList(List<ProductListingCreateDTO> dtoList);
 
     @Mapping(source = "product.name", target = "nameProduct")
-    @Mapping(source = "seller.userName", target = "nameSeller")
+    @Mapping(source = "user.username", target = "nameSeller")
     ProductListingDTO toDTO(ProductListing entity);
 
     @Mapping(source = "product.name", target = "nameProduct")
-    @Mapping(source = "seller.userName", target = "nameSeller")
+    @Mapping(source = "user.username", target = "nameSeller")
     List<ProductListingDTO> toDTOList(List<ProductListing> entityList);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "orderDetails", ignore = true)
     @Mapping(target = "product", ignore = true)
-    @Mapping(target = "seller", ignore = true)
+    @Mapping(target = "user", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     ProductListing updateProductFromDto(ProductListingUpdateDTO dto, @MappingTarget ProductListing entity);
 

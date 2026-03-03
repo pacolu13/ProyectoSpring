@@ -10,7 +10,7 @@ import com.proyecto.orderDetails.mapper.DetalleCompraMapper;
 @Mapper(componentModel = "spring", uses = DetalleCompraMapper.class)
 public interface OrderMapper {
 
-    @Mapping(source = "order.user.userName", target = "clientUsername")
+    @Mapping(source = "order.user.username", target = "clientUsername")
     @Mapping(source = "order.totalBalance", target = "totalBalance")
     @Mapping(source = "order.orderDate", target = "orderDate")
     OrderDTO toDTO(Order order);

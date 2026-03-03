@@ -20,5 +20,4 @@ public interface UserMapper {
 
     List<UserDTO> toDTOList(List<User> users);
 
-    
 } 

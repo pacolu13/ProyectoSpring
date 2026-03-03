@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import com.proyecto.orderDetails.entity.OrderDetails;
 import com.proyecto.product.entity.Product;
-import com.proyecto.seller.entity.Seller;
+import com.proyecto.user.entity.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -43,8 +43,8 @@ public class ProductListing {
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "seller_id", nullable = false)
-    private Seller seller;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public boolean hayCantidad(Integer cantidad) {
         return getQuantity() >= cantidad;

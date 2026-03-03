@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public record SellerDTO(
         UUID id,
-        String userName,
+        String username,
         String email,
         String cuit,
         Boolean active,

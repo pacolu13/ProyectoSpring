@@ -11,7 +11,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import com.proyecto.seller.dto.SellerCreateDTO;
 import com.proyecto.seller.dto.SellerDTO;
 import com.proyecto.seller.dto.SellerUpdateDTO;
-import com.proyecto.seller.entity.Seller;
+import com.proyecto.user.entity.User;
 
 @Mapper(componentModel="spring")
 public interface SellerMapper {
@@ -21,13 +21,13 @@ public interface SellerMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "rolesList", ignore = true)
     @Mapping(target = "productsListingList", ignore = true)
-    Seller toEntity(SellerCreateDTO dto);
+    User toEntity(SellerCreateDTO dto);
 
-    List<Seller> toEntityList(List<SellerCreateDTO> dtoList);
+    List<User> toEntityList(List<SellerCreateDTO> dtoList);
 
-    SellerDTO toDTO(Seller vendedor);
+    SellerDTO toDTO(User vendedor);
 
-    SellerCreateDTO toCreateDTO(Seller vendedor);
+    SellerCreateDTO toCreateDTO(User vendedor);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "active", ignore = true)
@@ -35,8 +35,8 @@ public interface SellerMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "rolesList", ignore = true)
     @Mapping(target = "productsListingList", ignore = true)
-    Seller updateSellerFromDto(SellerUpdateDTO dto, @MappingTarget Seller entity);
+    User updateSellerFromDto(SellerUpdateDTO dto, @MappingTarget User entity);
 
-    List<SellerDTO> toDTOList(List<Seller> vendedor);
+    List<SellerDTO> toDTOList(List<User> vendedor);
 
 }

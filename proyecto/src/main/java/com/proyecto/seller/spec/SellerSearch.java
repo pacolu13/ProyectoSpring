@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.proyecto.seller.entity.Seller;
+import com.proyecto.user.entity.User;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -15,7 +15,7 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
 @SuppressWarnings("null")
-public class SellerSearch implements Specification<Seller> {
+public class SellerSearch implements Specification<User> {
     private String nombre;
     private String apellido;
     private String email;
@@ -27,7 +27,7 @@ public class SellerSearch implements Specification<Seller> {
     }
 
     @Override
-    public Predicate toPredicate(Root<Seller> root, CriteriaQuery<?> query,
+    public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query,
             CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
 

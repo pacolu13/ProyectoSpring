@@ -1,7 +1,7 @@
 package com.proyecto.seller.dto;
 
 public record SellerCreateDTO(
-        String userName,
+        String username,
         String phoneNumber,
         String email,
         String password,

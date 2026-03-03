@@ -12,8 +12,8 @@ import com.proyecto.productListing.dto.ProductListingDTO;
 import com.proyecto.productListing.entity.ProductListing;
 import com.proyecto.productListing.mapper.ProductListingMapper;
 import com.proyecto.productListing.repository.ProductListingRepository;
-import com.proyecto.seller.entity.Seller;
-import com.proyecto.seller.repository.SellerRepository;
+import com.proyecto.user.entity.User;
+import com.proyecto.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class ProductListingService {
 
     private final ProductRepository productRepository;
-    private final SellerRepository sellerRepository;
+    private final UserRepository userRepository;
     private final ProductListingRepository productListingRepository;
     private final ProductListingMapper productListingMapper;
 
@@ -44,13 +44,13 @@ public class ProductListingService {
                     Product product = productRepository.findById(dto.productId())
                             .orElseThrow(() -> new ResourceNotFoundException(
                                     "Producto no encontrado: " + dto.productId()));
-                    Seller seller = sellerRepository.findById(dto.sellerId())
+                    User seller = userRepository.findById(dto.sellerId())
                             .orElseThrow(() -> new ResourceNotFoundException(
                                     "Vendedor no encontrado: " + dto.sellerId()));
 
                     ProductListing entity = productListingMapper.toEntity(dto);
                     entity.setProduct(product);
-                    entity.setSeller(seller);
+                    entity.setUser(seller);
                     return entity;
                 })
                 .toList();

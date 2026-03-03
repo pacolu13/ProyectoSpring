@@ -1,5 +1,15 @@
 package com.proyecto.user.dto;
 
-public record UserDTO() {
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+public record UserDTO(
+    String id,
+    String username,
+    String email,
+    LocalDateTime creationDate,
+    Boolean active,
+    BigDecimal balance
+) {
 
 }
