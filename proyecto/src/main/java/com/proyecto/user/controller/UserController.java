@@ -11,10 +11,10 @@ import com.proyecto.user.service.UserService;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserDTO getUserById(@RequestParam Long id) {
+    public UserDTO getUserById(@PathVariable UUID id) {
         return userService.getUserById(id);
     }
 
@@ -47,12 +47,12 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public UserDTO updateUser(@PathVariable Long id, @RequestBody UserUpdateDTO updateUserDTO) {
+    public UserDTO updateUser(@PathVariable UUID id, @RequestBody UserUpdateDTO updateUserDTO) {
         return userService.updateUser(id, updateUserDTO);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@RequestParam Long id) {
+    public void deleteUser(@PathVariable UUID id) {
         userService.deleteUser(id);
     }
 
