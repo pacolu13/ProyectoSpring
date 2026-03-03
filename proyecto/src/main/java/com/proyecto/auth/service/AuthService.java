@@ -8,8 +8,8 @@ import com.proyecto.auth.dto.RegisterDTO;
 import com.proyecto.auth.dto.TokenResponseDTO;
 import com.proyecto.auth.entity.Token;
 import com.proyecto.auth.repository.TokenRepository;
-import com.proyecto.client.entity.Client;
-import com.proyecto.client.repository.ClientRepository;
+import com.proyecto.user.entity.User;
+import com.proyecto.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,17 +17,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthService {
     private final TokenRepository tokenRepository;
-    private final ClientRepository clientRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
     public TokenResponseDTO register(RegisterDTO request) {
-        var client = new Client();
+        var client = new User();
         client.setUserName(request.username());
         client.setEmail(request.email());
         client.setPassword(passwordEncoder.encode(request.password()));
 
-        var clientSaved = clientRepository.save(client);
+        var clientSaved = userRepository.save(client);
         var token = jwtService.generateToken(clientSaved);
         var refreshToken = jwtService.generateRefreshToken(clientSaved);
         saveUserToken(clientSaved, token);
@@ -45,9 +45,9 @@ public class AuthService {
         throw new UnsupportedOperationException("Unimplemented method 'refreshToken'");
     }
 
-    private void saveUserToken(Client client, String token) {
+    private void saveUserToken(User user, String token) {
         var tokenEntity = Token.builder()
-                .client(client)
+                .user(user)
                 .token(token)
                 .type(Token.TokenType.BEARER)
                 .expired(false)

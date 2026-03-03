@@ -7,14 +7,14 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.proyecto.cartProduct.entity.CartProduct;
-import com.proyecto.client.entity.Client;
-import com.proyecto.client.repository.ClientRepository;
 import com.proyecto.exceptions.ResourceNotFoundException;
 import com.proyecto.order.dto.OrderDTO;
 import com.proyecto.order.entity.Order;
 import com.proyecto.order.mapper.OrderMapper;
 import com.proyecto.order.repository.OrderRepository;
 import com.proyecto.orderDetails.entity.OrderDetails;
+import com.proyecto.user.entity.User;
+import com.proyecto.user.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +26,12 @@ import lombok.RequiredArgsConstructor;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final ClientRepository clientRepository;
+    private final UserRepository userRepository;
     private final OrderMapper orderMapper;
 
     @Transactional // O se ejecuta todo o no se ejecuta nada, rollback en caso de error
     public OrderDTO confirmarCompra(UUID clientId) {
-        Client client = clientRepository.findById(clientId)
+        User client = userRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado"));
 
         if (client.getCart() == null || client.getCart().getProductsList().isEmpty()) {
@@ -59,7 +59,7 @@ public class OrderService {
         }
 
         Order compra = new Order();
-        compra.setClient(client);
+        compra.setUser(client);
         compra.setTotalBalance(total);
 
         for (CartProduct producto : productList) {

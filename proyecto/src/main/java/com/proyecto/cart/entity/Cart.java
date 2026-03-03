@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.proyecto.cartProduct.entity.CartProduct;
-import com.proyecto.client.entity.Client;
 import com.proyecto.productListing.entity.ProductListing;
+import com.proyecto.user.entity.User;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,8 +27,8 @@ public class Cart {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     // Sin el formato cascade no se generan las entidades anidadas
 

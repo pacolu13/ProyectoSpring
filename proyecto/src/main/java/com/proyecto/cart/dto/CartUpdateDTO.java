@@ -7,7 +7,7 @@ import com.proyecto.cartProduct.dto.CartProductDTO;
 
 public record CartUpdateDTO(
                 Long id,
-                UUID clientId,
+                UUID userId,
                 List<CartProductDTO> cartProductsList) {
 
 }

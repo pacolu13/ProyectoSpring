@@ -7,7 +7,7 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.proyecto.client.entity.Client;
+import com.proyecto.user.entity.User;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -23,15 +23,15 @@ public class JwtService {
     @Value("${jwt.refreshExpiration}")
     private long refreshExpiration;
 
-    public String generateToken(Client client) {
+    public String generateToken(User client) {
         return buildToken(client, jwtExpiration);
     }
 
-    public String generateRefreshToken(Client client) {
+    public String generateRefreshToken(User client) {
         return buildToken(client, refreshExpiration);
     }
 
-    private String buildToken(final Client client, final long expiration) {
+    private String buildToken(final User client, final long expiration) {
         return Jwts.builder()
                 .id(client.getId().toString())
                 .subject(client.getEmail())

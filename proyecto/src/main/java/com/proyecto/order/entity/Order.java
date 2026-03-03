@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.proyecto.client.entity.Client;
 import com.proyecto.orderDetails.entity.OrderDetails;
+import com.proyecto.user.entity.User;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -35,8 +35,8 @@ public class Order {
 
     // Otros atributos y métodos
     @ManyToOne
-    @JoinColumn(name = "client_Id")
-    private Client client;
+    @JoinColumn(name = "user_id")
+    private User user;
     private BigDecimal totalBalance;
     private LocalDateTime orderDate = LocalDateTime.now();
 

@@ -13,16 +13,16 @@ import com.proyecto.cartProduct.mapper.CartProductMapper;
 @Mapper(componentModel = "spring", uses = CartProductMapper.class)
 public interface CartMapper {
 
-    @Mapping(source = "clientId", target = "client.id")
+    @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "cartProductsList", target = "productsList")
     Cart toEntity(CartCreateDTO dto);
 
-    @Mapping(source = "client.id", target = "clientId")
+    @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "productsList", target = "cartProductsList")
     CartDTO toDTO(Cart carrito);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(source = "clientId", target = "client.id")
+    @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "cartProductsList", target = "productsList")
     Cart updateCarritoFromDto(CartUpdateDTO dto, @MappingTarget Cart entity);
 

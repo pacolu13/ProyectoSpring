@@ -9,11 +9,11 @@ import com.proyecto.cart.dto.CartDTO;
 import com.proyecto.cart.entity.Cart;
 import com.proyecto.cart.mapper.CartMapper;
 import com.proyecto.cart.repository.CartRepository;
-import com.proyecto.client.entity.Client;
-import com.proyecto.client.repository.ClientRepository;
 import com.proyecto.exceptions.ResourceNotFoundException;
 import com.proyecto.productListing.entity.ProductListing;
 import com.proyecto.productListing.repository.ProductListingRepository;
+import com.proyecto.user.entity.User;
+import com.proyecto.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,18 +23,18 @@ import lombok.RequiredArgsConstructor;
 public class CartService {
 
     private final CartRepository cartRepository;
-    private final ClientRepository clientRepository;
+    private final UserRepository clientRepository;
     private final ProductListingRepository productListingRepository;
     private final CartMapper cartMapper;
 
     public CartDTO findCart(UUID clientId) {
-        Cart cart = cartRepository.findByClientId(clientId)
+        Cart cart = cartRepository.findByUserId(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Carrito no encontrado"));
         return cartMapper.toDTO(cart);
     }
 
     public CartDTO addProduct(CartAddProductDTO dto) {
-        Client client = clientRepository.findById(dto.clientId())
+        User client = clientRepository.findById(dto.userId())
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado"));
 
         ProductListing productListing = productListingRepository.findById(dto.productListingId())

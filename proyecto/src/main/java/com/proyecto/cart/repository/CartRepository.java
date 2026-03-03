@@ -9,8 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.proyecto.cart.entity.Cart;
 
 @Repository
-public interface CartRepository extends JpaRepository<Cart,Long>{
-    
-    Optional<Cart> findByClientId(UUID clientId);
-}
+public interface CartRepository extends JpaRepository<Cart, Long> {
 
+    Optional<Cart> findByUserId(UUID userClientId);
+}
