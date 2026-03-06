@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.proyecto.user.entity.User;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -22,6 +23,15 @@ public class JwtService {
     private long jwtExpiration;
     @Value("${jwt.refreshExpiration}")
     private long refreshExpiration;
+
+    public String extractUsername(String token) {
+        final Claims jwtToken = Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        return jwtToken.getSubject();
+    }
 
     public String generateToken(User client) {
         return buildToken(client, jwtExpiration);
@@ -44,5 +54,19 @@ public class JwtService {
     private SecretKey getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public boolean isTokenValid(String refreshToken, User user) {
+        final String userEmail = extractUsername(refreshToken);
+        return !userEmail.equals(user.getEmail()) && !isTokenExpired(refreshToken);
+    }
+
+    private boolean isTokenExpired(String token) {
+        final Claims claims = Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        return claims.getExpiration().before(new Date());
     }
 }

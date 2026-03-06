@@ -25,6 +25,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+    @SuppressWarnings("deprecation")
     public TokenResponseDTO register(RegisterDTO request) {
         var client = User.builder().build();
         client.setUsername(request.username());
@@ -38,6 +39,7 @@ public class AuthService {
         return new TokenResponseDTO(token, refreshToken);
     }
 
+    @SuppressWarnings("deprecation")
     public TokenResponseDTO login(LoginDTO request) {
 
         authenticationManager.authenticate(
@@ -54,6 +56,7 @@ public class AuthService {
         return new TokenResponseDTO(token, refreshToken);
     }
 
+    @SuppressWarnings("deprecation")
     private void revokeAllUserTokens(User user) {
         var validUserTokens = tokenRepository.findAllValidIsFalseOrRevokedIsFalseTokenByUserId(user.getId());
         if (validUserTokens.isEmpty())
@@ -65,11 +68,33 @@ public class AuthService {
         tokenRepository.saveAll(validUserTokens);
     }
 
+    @SuppressWarnings("deprecation")
     public TokenResponseDTO refreshToken(String authHeader) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'refreshToken'");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new RuntimeException("Invalid token");
+        }
+
+        final String refreshToken = authHeader.substring(7);
+        var userEmail = jwtService.extractUsername(refreshToken);
+
+        if (userEmail == null) {
+            throw new RuntimeException("Invalid token");
+        }
+
+        var user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!jwtService.isTokenValid(refreshToken, user)) {
+            throw new RuntimeException("Invalid token");
+        }
+
+        final String accessToken = jwtService.generateToken(user);
+        revokeAllUserTokens(user);
+        saveUserToken(user, accessToken);
+        return new TokenResponseDTO(accessToken, refreshToken);
     }
 
+    @SuppressWarnings("deprecation")
     private void saveUserToken(User user, String token) {
         var tokenEntity = Token.builder()
                 .user(user)
