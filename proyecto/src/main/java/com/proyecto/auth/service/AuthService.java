@@ -14,7 +14,6 @@ import com.proyecto.user.entity.User;
 import com.proyecto.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.var;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +24,6 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    @SuppressWarnings("deprecation")
     public TokenResponseDTO register(RegisterDTO request) {
         var client = User.builder().build();
         client.setUsername(request.username());
@@ -39,7 +37,6 @@ public class AuthService {
         return new TokenResponseDTO(token, refreshToken);
     }
 
-    @SuppressWarnings("deprecation")
     public TokenResponseDTO login(LoginDTO request) {
 
         authenticationManager.authenticate(
@@ -56,7 +53,6 @@ public class AuthService {
         return new TokenResponseDTO(token, refreshToken);
     }
 
-    @SuppressWarnings("deprecation")
     private void revokeAllUserTokens(User user) {
         var validUserTokens = tokenRepository.findAllValidIsFalseOrRevokedIsFalseTokenByUserId(user.getId());
         if (validUserTokens.isEmpty())
@@ -68,7 +64,6 @@ public class AuthService {
         tokenRepository.saveAll(validUserTokens);
     }
 
-    @SuppressWarnings("deprecation")
     public TokenResponseDTO refreshToken(String authHeader) {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new RuntimeException("Invalid token");
@@ -94,7 +89,6 @@ public class AuthService {
         return new TokenResponseDTO(accessToken, refreshToken);
     }
 
-    @SuppressWarnings("deprecation")
     private void saveUserToken(User user, String token) {
         var tokenEntity = Token.builder()
                 .user(user)
