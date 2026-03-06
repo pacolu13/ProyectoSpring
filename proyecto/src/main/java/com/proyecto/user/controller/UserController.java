@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/v1/users")
 @AllArgsConstructor
 public class UserController {
 
