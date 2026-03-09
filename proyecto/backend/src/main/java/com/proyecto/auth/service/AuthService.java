@@ -89,6 +89,7 @@ public class AuthService {
         return new TokenResponseDTO(accessToken, refreshToken);
     }
 
+    @SuppressWarnings("null")
     private void saveUserToken(User user, String token) {
         var tokenEntity = Token.builder()
                 .user(user)

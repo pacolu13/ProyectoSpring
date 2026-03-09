@@ -137,6 +137,7 @@ class ProductServiceTest {
     // añadirListaProducto
     // ─────────────────────────────────────────────
 
+    @SuppressWarnings("null")
     @Test
     @DisplayName("añadirListaProducto - guarda y retorna lista de ProductDTO")
     void añadirListaProducto_GuardaYRetornaLista() {
@@ -159,6 +160,7 @@ class ProductServiceTest {
         verify(productoMapper, times(1)).toDTOList(entities);
     }
 
+    @SuppressWarnings("null")
     @Test
     @DisplayName("añadirListaProducto - lista vacía no llama a saveAll con elementos")
     void añadirListaProducto_ListaVacia() {
@@ -232,6 +234,7 @@ class ProductServiceTest {
     // eliminarListaProductos
     // ─────────────────────────────────────────────
 
+    @SuppressWarnings("null")
     @Test
     @DisplayName("eliminarListaProductos - elimina cuando todos los IDs existen")
     void eliminarListaProductos_CuandoTodosExisten_Elimina() {
@@ -248,6 +251,7 @@ class ProductServiceTest {
         verify(repoProducto, times(1)).deleteAllById(ids);
     }
 
+    @SuppressWarnings("null")
     @Test
     @DisplayName("eliminarListaProductos - lanza RuntimeException si algún ID no existe")
     void eliminarListaProductos_CuandoUnoNoExiste_LanzaExcepcion() {
@@ -263,6 +267,7 @@ class ProductServiceTest {
         verify(repoProducto, never()).deleteAllById(anyList());
     }
 
+    @SuppressWarnings("null")
     @Test
     @DisplayName("eliminarListaProductos - lista vacía no llama a deleteAllById")
     void eliminarListaProductos_ListaVacia_NoEliminaNada() {

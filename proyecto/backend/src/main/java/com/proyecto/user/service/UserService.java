@@ -26,6 +26,7 @@ public class UserService {
         return userMapper.toDTOList(userRepository.findAll());
     }
 
+    @SuppressWarnings("null")
     public UserDTO getUserById(UUID id) {
         return userMapper.toDTO(userRepository.findById(id).orElse(null));
 
@@ -33,6 +34,7 @@ public class UserService {
 
     public UserDTO createUser(UserCreateDTO createUserDTO) {
         User user = userMapper.toEntity(createUserDTO);
+        @SuppressWarnings("null")
         User savedUser = userRepository.save(user);
         return userMapper.toDTO(savedUser);
     }
@@ -44,6 +46,7 @@ public class UserService {
             cart.setUser(user);
             user.setCart(cart);
         }
+        @SuppressWarnings("null")
         List<User> savedUsers = userRepository.saveAll(users);
         return userMapper.toDTOList(savedUsers);
     }
@@ -52,6 +55,7 @@ public class UserService {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
+    @SuppressWarnings("null")
     public void deleteUser(UUID id) {
         userRepository.deleteById(id);
     }
