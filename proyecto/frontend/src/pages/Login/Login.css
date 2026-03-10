@@ -1,0 +1,166 @@
+/* ─── Root layout ─────────────────────────────────────────── */
+.login-root {
+  min-height: 100vh;
+  background: radial-gradient(
+    ellipse 120% 100% at 50% 50%,
+    #141414 0%,
+    #0c0c0c 60%,
+    #080808 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Georgia", "Times New Roman", serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── Globe ───────────────────────────────────────────────── */
+.globe-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.42;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ─── Vignette ────────────────────────────────────────────── */
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 65% 65% at 50% 50%,
+    transparent 10%,
+    rgba(8, 8, 8, 0.82) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ─── Card ────────────────────────────────────────────────── */
+.login-card {
+  position: relative;
+  z-index: 10;
+  width: 370px;
+  background: rgba(14, 14, 14, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  padding: 50px 42px 42px;
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+
+  /* Entry animation */
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.login-card--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Brand ───────────────────────────────────────────────── */
+.login-brand {
+  margin-bottom: 36px;
+}
+
+.login-brand__logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 8px;
+}
+
+.login-brand__name {
+  color: rgba(195, 195, 195, 0.85) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.28em !important;
+  text-transform: uppercase;
+  font-family: "Georgia", serif !important;
+}
+
+/* ─── Title / subtitle ────────────────────────────────────── */
+.login-title {
+  font-size: 24px !important;
+  font-weight: 400 !important;
+  color: rgba(232, 232, 232, 0.95) !important;
+  letter-spacing: -0.02em !important;
+  font-family: "Georgia", serif !important;
+  margin: 0 !important;
+}
+
+.login-subtitle {
+  margin-top: 5px !important;
+  font-size: 12.5px !important;
+  color: rgba(145, 145, 145, 0.65) !important;
+  letter-spacing: 0.02em !important;
+  font-family: "Georgia", serif !important;
+}
+
+/* ─── Forgot password link ────────────────────────────────── */
+.login-forgot {
+  font-size: 11px !important;
+  color: rgba(145, 145, 145, 0.5) !important;
+  letter-spacing: 0.05em !important;
+  text-decoration: none !important;
+  font-family: "Georgia", serif !important;
+  cursor: pointer;
+}
+
+.login-forgot:hover {
+  color: rgba(180, 180, 180, 0.7) !important;
+}
+
+/* ─── Submit button ───────────────────────────────────────── */
+.login-btn {
+  width: 100%;
+  padding: 13px 0 !important;
+  background: rgba(205, 205, 205, 0.92) !important;
+  border: none !important;
+  border-radius: 2px !important;
+  color: #0f0f0f !important;
+  font-size: 11.5px !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  font-family: "Georgia", serif !important;
+  font-weight: 400 !important;
+  cursor: pointer;
+  transition: background 0.2s ease !important;
+  min-height: unset !important;
+}
+
+.login-btn:hover:not(:disabled) {
+  background: rgba(230, 230, 230, 1) !important;
+}
+
+.login-btn:disabled {
+  background: rgba(130, 130, 130, 0.18) !important;
+  color: rgba(110, 110, 110, 0.6) !important;
+  cursor: not-allowed !important;
+}
+
+/* ─── Register link ───────────────────────────────────────── */
+.login-register-text {
+  margin-top: 24px !important;
+  text-align: center;
+  font-size: 12px !important;
+  color: rgba(120, 120, 120, 0.6) !important;
+  letter-spacing: 0.03em !important;
+  font-family: "Georgia", serif !important;
+}
+
+.login-register-link {
+  color: rgba(185, 185, 185, 0.75) !important;
+  text-decoration: none !important;
+  font-family: "Georgia", serif !important;
+}
+
+.login-register-link:hover {
+  color: rgba(210, 210, 210, 0.9) !important;
+}

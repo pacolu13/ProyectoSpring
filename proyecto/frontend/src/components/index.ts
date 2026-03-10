@@ -1,0 +1,5 @@
+export * from "./Button/Button"
+export * from "./Globe/Globe"
+export * from "./Header/Header"
+export * from "./Footer/Footer"
+export * from "./SocialMedia/SocialMedia"
