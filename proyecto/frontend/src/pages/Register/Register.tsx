@@ -1,5 +1,5 @@
-import type { Box, Typography, TextField, Button } from "@mui/material";
-import type { Link } from "react-router-dom";
+import { Box, Typography, TextField, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const Register = () => {
     return (
@@ -32,7 +32,7 @@ export const Register = () => {
                 </Button>
                 <Typography className="register-login-text">
                     ¿Ya tenés cuenta?{" "}
-                    <Link href="#" className="register-login-link">
+                    <Link to="/login" className="register-login-link">
                         Ingresá
                     </Link>
                 </Typography>

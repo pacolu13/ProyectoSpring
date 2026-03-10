@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Header, Footer } from "./components/index.ts"
-import { Home, Login, Register, Products } from "./pages/index.ts"
+import { Home, Login, Register, Products } from "./pages/index"
 
 export const AppRouter = () => {
     return <>

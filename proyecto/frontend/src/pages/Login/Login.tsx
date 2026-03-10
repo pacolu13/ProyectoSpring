@@ -6,59 +6,17 @@ import {
   Typography,
   InputAdornment,
   IconButton,
-  Alert,
   Link,
   CircularProgress,
 } from "@mui/material";
 import { Visibility, VisibilityOff, Language } from "@mui/icons-material";
-import { Globe } from "../../components/index";
+import type { TokenResponseDTO, FormState } from "../../interfaces/index";
+import { apiClient } from "../../services/apiClient";
+import { Globe, ErrorAlert } from "../../components/index";
+import { inputSx } from "../../styles";
 import "../Login/Login";
 
-interface FormState {
-  username: string;
-  password: string;
-}
-
-interface TokenResponseDTO {
-  token: string;
-  refreshToken?: string;
-}
-
-const inputSx = {
-  "& .MuiOutlinedInput-root": {
-    color: "rgba(228,228,228,0.95)",
-    fontFamily: "Georgia, serif",
-    fontSize: "14px",
-    backgroundColor: "rgba(24,24,24,0.85)",
-    borderRadius: "2px",
-    "& fieldset": {
-      borderColor: "rgba(255,255,255,0.06)",
-      borderWidth: "1px",
-    },
-    "&:hover fieldset": {
-      borderColor: "rgba(180,180,180,0.2)",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "rgba(195,195,195,0.28)",
-      borderWidth: "1px",
-    },
-    "&.Mui-focused": {
-      backgroundColor: "rgba(38,38,38,0.95)",
-    },
-  },
-  "& .MuiInputLabel-root": {
-    color: "rgba(150,150,150,0.65)",
-    fontFamily: "Georgia, serif",
-    fontSize: "12px",
-    letterSpacing: "0.1em",
-    textTransform: "uppercase",
-  },
-  "& .MuiInputLabel-root.Mui-focused": {
-    color: "rgba(185,185,185,0.75)",
-  },
-};
-
-export const LoginPage = () => {
+export const Login = () => {
   const [form, setForm] = useState<FormState>({ username: "", password: "" });
   const [loading, setLoading] = useState<boolean>(false);
   const [showPass, setShowPass] = useState<boolean>(false);
@@ -72,9 +30,9 @@ export const LoginPage = () => {
 
   const handleChange =
     (field: keyof FormState) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setForm((f) => ({ ...f, [field]: e.target.value }));
-    };
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        setForm((f) => ({ ...f, [field]: e.target.value }));
+      };
 
   const handleSubmit = async (): Promise<void> => {
     if (!form.username || !form.password) {
@@ -84,31 +42,19 @@ export const LoginPage = () => {
     setError("");
     setLoading(true);
 
-    try {
-      const res = await fetch("/api/v1/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: form.username,
-          password: form.password,
-        }),
-      });
+    const { data, error } = await apiClient.post<TokenResponseDTO>("/auth/login", {
+      username: form.username,
+      password: form.password,
+    });
 
-      if (!res.ok) throw new Error("Credenciales incorrectas.");
-
-      const data: TokenResponseDTO = await res.json();
-      console.log("Token recibido:", data.token);
-      // localStorage.setItem("token", data.token);
+    if (error) {
+      setError(error);
+    } else {
+      apiClient.setAuthToken(data!.token);
       // navigate("/dashboard");
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Error inesperado.");
-      }
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
+
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -116,7 +62,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <Box className="login-root">
+    <Box className="login-root" alignContent={"center"} justifyContent={"center"}>
       {/* Globe background */}
       <Box className="globe-wrapper">
         <Globe />
@@ -196,21 +142,7 @@ export const LoginPage = () => {
 
         {/* Error */}
         {error && (
-          <Alert
-            severity="error"
-            sx={{
-              mb: "16px",
-              backgroundColor: "rgba(215,90,90,0.07)",
-              border: "1px solid rgba(215,90,90,0.14)",
-              color: "rgba(215,90,90,0.9)",
-              borderRadius: "2px",
-              fontSize: "12px",
-              fontFamily: "Georgia, serif",
-              "& .MuiAlert-icon": { color: "rgba(215,90,90,0.7)" },
-            }}
-          >
-            {error}
-          </Alert>
+          <ErrorAlert message={error}/>
         )}
 
         {/* Submit */}
