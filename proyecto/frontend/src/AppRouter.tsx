@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { Header } from "./components/Header/Header"
-import { Footer } from "./components/Footer/Footer"
-import { Home,Login,Register,Products } from "./pages/index"
+import { Header, Footer } from "./components/index.ts"
+import { Home, Login, Register, Products } from "./pages/index.ts"
 
 export const AppRouter = () => {
     return <>

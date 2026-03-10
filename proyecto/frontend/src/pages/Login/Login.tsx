@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff, Language } from "@mui/icons-material";
 import { Globe } from "../../components/index";
-import "./LoginPage.css";
+import "../Login/Login";
 
 interface FormState {
   username: string;
