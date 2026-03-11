@@ -8,6 +8,7 @@
     #080808 100%
   );
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-family: "Georgia", "Times New Roman", serif;
@@ -17,37 +18,23 @@
 
 /* ─── Globe ───────────────────────────────────────────────── */
 .globe-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transform: translate(-50%, -50%);
   opacity: 0.42;
   z-index: 1;
   pointer-events: none;
 }
 
-/* ─── Vignette ────────────────────────────────────────────── */
-.vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse 65% 65% at 50% 50%,
-    transparent 10%,
-    rgba(8, 8, 8, 0.82) 100%
-  );
-  z-index: 2;
-  pointer-events: none;
-}
-
 /* ─── Card ────────────────────────────────────────────────── */
 .login-card {
-  position: relative;
+  display: flex;
   z-index: 10;
-  width: 370px;
-  background: rgba(14, 14, 14, 0.78);
+  background: transparent;
+  background: rgba(122, 111, 111, 0.78);
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 3px;
-  padding: 50px 42px 42px;
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
   box-shadow:
@@ -60,14 +47,11 @@
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
-.login-card--visible {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 /* ─── Brand ───────────────────────────────────────────────── */
 .login-brand {
   margin-bottom: 36px;
+  background-color: aliceblue;
 }
 
 .login-brand__logo {

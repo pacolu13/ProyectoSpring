@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import "./Globe.css";
 
 const GLOBE_SIZE = 560;
+const CANVAS_SIZE = GLOBE_SIZE * 1.12; // margen extra para la atmósfera
 
 interface Dot {
   phi: number;
@@ -49,13 +50,13 @@ export const Globe = () => {
     if (!ctx) return;
 
     const R = GLOBE_SIZE / 2;
-    const cx = R;
-    const cy = R;
+    const cx = CANVAS_SIZE / 2;  // centro del canvas más grande
+    const cy = CANVAS_SIZE / 2;
 
     function draw(): void {
       if (!ctx) return;
 
-      ctx.clearRect(0, 0, GLOBE_SIZE, GLOBE_SIZE);
+      ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
       const rot = rotRef.current;
 
       // Atmosphere glow
@@ -136,7 +137,7 @@ export const Globe = () => {
       // Specular highlight
       const spec = ctx.createRadialGradient(
         cx - R * 0.28, cy - R * 0.28, 0,
-        cx - R * 0.1,  cy - R * 0.05, R * 0.65
+        cx - R * 0.1, cy - R * 0.05, R * 0.65
       );
       spec.addColorStop(0, "rgba(255,255,255,0.13)");
       spec.addColorStop(0.35, "rgba(255,255,255,0.05)");
@@ -165,11 +166,13 @@ export const Globe = () => {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={GLOBE_SIZE}
-      height={GLOBE_SIZE}
-      className="globe-canvas"
-    />
+    <div className="globe-container">
+      <canvas
+        ref={canvasRef}
+        width={CANVAS_SIZE}
+        height={CANVAS_SIZE}
+        className="globe-canvas"
+      />
+    </div>
   );
 };

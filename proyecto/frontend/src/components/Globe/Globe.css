@@ -1,3 +1,12 @@
+.globe-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
 .globe-canvas {
   display: block;
+  max-width: 115vh;
+  min-width: 75vh;
+  background: transparent;
 }
