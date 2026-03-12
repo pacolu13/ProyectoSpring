@@ -33,6 +33,7 @@ public class SecurityConfig {
                         .authorizeHttpRequests(auth -> auth
                                 .requestMatchers("/api/v1/auth/**").permitAll() // Permite el acceso a las rutas de autenticación sin necesidad de autenticación
                                 .requestMatchers("/api/v1/products").permitAll()
+                                .requestMatchers("/api/v1/products-listing").permitAll()
                                 .anyRequest().authenticated() // Requiere autenticación para cualquier otra ruta
                         )
                         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

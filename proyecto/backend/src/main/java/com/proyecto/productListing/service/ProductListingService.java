@@ -1,6 +1,7 @@
 package com.proyecto.productListing.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -27,9 +28,13 @@ public class ProductListingService {
     private final ProductListingRepository productListingRepository;
     private final ProductListingMapper productListingMapper;
 
-    public List<ProductListingDTO> findAllProductsListing() {
-        List<ProductListing> productosVentaList = productListingRepository.findAll();
-        return productListingMapper.toDTOList(productosVentaList);
+    public List<ProductListingDTO> findAllProductsListing(Long idProduct) {
+    List<ProductListing> productosVentaList = productListingRepository
+        .findAll()
+        .stream()
+        .filter(prdct -> prdct.getProduct().getId().equals(idProduct))
+        .collect(Collectors.toList());
+    return productListingMapper.toDTOList(productosVentaList);
     }
 
     public ProductListingDTO findyProductListingById(Long id) {
