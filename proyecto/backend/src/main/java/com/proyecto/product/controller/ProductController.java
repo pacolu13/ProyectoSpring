@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins = "*", allowedHeaders = "*") // Permite solicitudes desde cualquier origen (útil para desarrollo,
                                                   // pero revisar en producción)
 @RestController
-@RequestMapping("/productos")
+@RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 
 public class ProductController {
