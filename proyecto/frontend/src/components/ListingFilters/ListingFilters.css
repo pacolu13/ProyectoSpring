@@ -1,0 +1,119 @@
+
+/* ─── Sidebar ─────────────────────────────────────────────── */
+.listing-filters {
+  flex-shrink: 0;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 24px 20px;
+  background: rgba(14, 14, 14, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  backdrop-filter: blur(16px);
+  height: fit-content;
+  position: sticky;
+  top: 80px;
+}
+
+.listing-filters__title {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(160, 160, 160, 0.6);
+}
+
+.listing-filters__group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.listing-filters__label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(110, 110, 110, 0.55);
+  font-family: "Georgia", serif;
+}
+
+.listing-filters__input {
+  width: 100%;
+  padding: 9px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 2px;
+  color: rgba(200, 200, 200, 0.85);
+  font-size: 12px;
+  font-family: "Georgia", serif;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.listing-filters__input:focus {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.listing-filters__input::placeholder {
+  color: rgba(90, 90, 90, 0.5);
+}
+
+/* Quitar flechas del input number */
+.listing-filters__input::-webkit-outer-spin-button,
+.listing-filters__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/* ─── Sort buttons ────────────────────────────────────────── */
+.listing-filters__sort {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.listing-filters__sort-btn {
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 2px;
+  color: rgba(130, 130, 130, 0.6);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  font-family: "Georgia", serif;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.listing-filters__sort-btn:hover {
+  color: rgba(190, 190, 190, 0.85);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.listing-filters__sort-btn.active {
+  color: rgba(210, 210, 210, 0.95);
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ─── Clear ───────────────────────────────────────────────── */
+.listing-filters__clear {
+  padding: 9px 0;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  color: rgba(100, 100, 100, 0.5);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-family: "Georgia", serif;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.listing-filters__clear:hover {
+  color: rgba(160, 160, 160, 0.7);
+  border-color: rgba(255, 255, 255, 0.1);
+}
