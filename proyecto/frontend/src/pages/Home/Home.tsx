@@ -1,6 +1,7 @@
 import './Home.css'
 import { apiClient } from '../../services/apiClient'
 import { useEffect, useState } from 'react'
+import { Button } from '../../components'
 
 interface Product {
     id: number
@@ -67,9 +68,7 @@ export const Home = () => {
                                 <h3>{product.name}</h3>
                                 <p>{product.description}</p>
 
-                                <button className="buy-button">
-                                    Ver producto
-                                </button>
+                                <Button label='Ver producto' parentMethod={() => { window.location.href = `/products/${product?.id}`; }}></Button>
                             </div>
 
                         </div>
