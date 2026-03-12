@@ -13,14 +13,14 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import type { TokenResponseDTO, FormState } from "../../interfaces/index";
 import { apiClient } from "../../services/apiClient";
 import { Globe, ErrorAlert } from "../../components/index";
-import { inputSx } from "../../styles";
-import "../Login/Login";
+import "../Login/Login.css";
 
 export const Login = () => {
   const [form, setForm] = useState<FormState>({ username: "", password: "" });
   const [loading, setLoading] = useState<boolean>(false);
   const [showPass, setShowPass] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const inputSx = { mb: "24px" };
 
   const handleChange =
     (field: keyof FormState) =>
@@ -63,86 +63,74 @@ export const Login = () => {
 
       {/* Card */}
       <Box className="login-card">
-          
-          {/* Username */}
-          <TextField
-            fullWidth
-            label="Usuario"
-            placeholder="tu_usuario"
-            value={form.username}
-            onChange={handleChange("username")}
-            onKeyDown={handleKeyDown}
-            variant="outlined"
-            size="small"
-            sx={{ ...inputSx, mb: "16px" }}
-          />
 
-          {/* Password */}
-          <TextField
-            fullWidth
-            label="Contraseña"
-            placeholder="••••••••"
-            type={showPass ? "text" : "password"}
-            value={form.password}
-            onChange={handleChange("password")}
-            onKeyDown={handleKeyDown}
-            variant="outlined"
-            size="small"
-            sx={{ ...inputSx, mb: "10px" }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={() => setShowPass((s) => !s)}
-                    edge="end"
-                    size="small"
-                    sx={{ color: "rgba(130,130,130,0.55)" }}
-                  >
-                    {showPass ? (
-                      <VisibilityOff sx={{ fontSize: 16 }} />
-                    ) : (
-                      <Visibility sx={{ fontSize: 16 }} />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
+        <TextField
+          fullWidth
+          label="Usuario"
+          placeholder="tu_usuario"
+          value={form.username}
+          onChange={handleChange("username")}
+          onKeyDown={handleKeyDown}
+          variant="outlined"
+          size="small"
+          sx={inputSx}
+        />
 
-          {/* Forgot password */}
-          <Box sx={{ display: "flex", justifyContent: "flex-end", mb: "22px" }}>
-            <Link href="#" className="login-forgot">
-              ¿Olvidaste tu contraseña?
-            </Link>
-          </Box>
+        <TextField
+          fullWidth
+          label="Contraseña"
+          placeholder="••••••••"
+          type={showPass ? "text" : "password"}
+          value={form.password}
+          onChange={handleChange("password")}
+          onKeyDown={handleKeyDown}
+          variant="outlined"
+          size="small"
+          sx={inputSx}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setShowPass((s) => !s)} edge="end" size="small">
+                  {showPass ? <VisibilityOff sx={{ fontSize: 26 }} /> : <Visibility sx={{ fontSize: 26 }} />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+        {/* Forgot password */}
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mb: "22px" }}>
+          <Link href="#" className="login-forgot">
+            ¿Olvidaste tu contraseña?
+          </Link>
+        </Box>
 
-          {/* Error */}
-          {error && (
-            <ErrorAlert message={error} />
+        {/* Error */}
+        {error && (
+          <ErrorAlert message={error} />
+        )}
+
+        {/* Submit */}
+        <Button
+          fullWidth
+          onClick={handleSubmit}
+          disabled={loading}
+          className="login-btn"
+          disableElevation
+        >
+          {loading ? (
+            <CircularProgress size={16} sx={{ color: "rgba(110,110,110,0.6)" }} />
+          ) : (
+            "Ingresar"
           )}
+        </Button>
 
-          {/* Submit */}
-          <Button
-            fullWidth
-            onClick={handleSubmit}
-            disabled={loading}
-            className="login-btn"
-            disableElevation
-          >
-            {loading ? (
-              <CircularProgress size={16} sx={{ color: "rgba(110,110,110,0.6)" }} />
-            ) : (
-              "Ingresar"
-            )}
-          </Button>
-
-          {/* Register */}
-          <Typography className="login-register-text">
-            ¿No tenés cuenta?{" "}
-            <Link href="#" className="login-register-link">
-              Registrate
-            </Link>
-          </Typography>
+        {/* Register */}
+        <Typography className="login-register-text">
+          ¿No tenés cuenta?{" "}
+          <Link href="#" className="login-register-link">
+            Registrate
+          </Link>
+        </Typography>
       </Box>
     </Box>
   );

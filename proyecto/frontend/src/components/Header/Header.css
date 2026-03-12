@@ -1,52 +1,73 @@
+/* ─── Header ──────────────────────────────────────────────── */
 .header {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: var(--footer-header-color);
-    box-shadow: 0 0 10px rgba(255, 252, 252, 0.5);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  background: rgba(8, 8, 8, 0.85);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.6);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  font-family: "Georgia", "Times New Roman", serif;
 }
 
+/* ─── Título ──────────────────────────────────────────────── */
 .header h1 {
-    font-size: 2rem;
-    color: var(--background-color);
-    margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgba(210, 210, 210, 0.85);
+  margin: 0;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-family: "Georgia", serif;
 }
 
+/* ─── Nav ─────────────────────────────────────────────────── */
 .header nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .header nav ul {
-    list-style: none;
-    display: flex;
-    gap: 1.5rem;
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
 }
 
-.header nav ul li {
-    border: none;
-    transition: 0.3s ease-in-out;
-
-}
-
+/* ─── Links ───────────────────────────────────────────────── */
 .header nav ul li a {
-    border: none;
-    transition: 0.3s ease-in-out;
-
+  font-size: 11px;
+  font-family: "Georgia", serif;
+  color: rgba(145, 145, 145, 0.6);
+  text-decoration: none;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: color 0.25s ease, border-color 0.25s ease;
 }
 
-.header nav ul li:hover {
-    background-color: var(--background-color);
+.header nav ul li a:hover {
+  color: rgba(210, 210, 210, 0.9);
+  border-bottom-color: rgba(210, 210, 210, 0.25);
 }
 
-.header nav ul li:hover a {
-    color: var(--primary-color);
-}
+/* ─── Mobile ──────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+  }
 
-.header nav ul li a {
-    font-size: 1.2rem;
-    color: var(--background-color);
+  .header nav ul {
+    gap: 1.25rem;
+  }
 }

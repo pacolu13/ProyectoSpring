@@ -1,27 +1,30 @@
 /* ─── Root layout ─────────────────────────────────────────── */
 .login-root {
   min-height: 100vh;
-  background: radial-gradient(
-    ellipse 120% 100% at 50% 50%,
-    #141414 0%,
-    #0c0c0c 60%,
-    #080808 100%
-  );
+  min-width: 100vh;
+  background: radial-gradient(ellipse 120% 100% at 50% 50%,
+      #141414 0%,
+      #0c0c0c 60%,
+      #080808 100%);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-family: "Georgia", "Times New Roman", serif;
   position: relative;
+  /* ← crítico */
   overflow: hidden;
 }
 
 /* ─── Globe ───────────────────────────────────────────────── */
 .globe-wrapper {
+  position: absolute;
+  /* ← posicionado sobre el root */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translate(-50%, -50%);
   opacity: 0.42;
   z-index: 1;
   pointer-events: none;
@@ -29,10 +32,13 @@
 
 /* ─── Card ────────────────────────────────────────────────── */
 .login-card {
-  display: flex;
+  position: relative;
   z-index: 10;
-  background: transparent;
-  background: rgba(122, 111, 111, 0.78);
+  width: 500px;
+  height: 400px;
+  /* ajustá al ancho real de tu card */
+  padding: 32px;
+  background: rgba(18, 18, 18, 0.82);
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 3px;
   backdrop-filter: blur(22px);
@@ -40,13 +46,14 @@
   box-shadow:
     0 40px 100px rgba(0, 0, 0, 0.75),
     0 0 0 1px rgba(255, 255, 255, 0.03) inset;
-
-  /* Entry animation */
-  opacity: 0;
-  transform: translateY(18px);
+  filter: blur(0px);
+  
+  /* Entry animation — empieza visible */
+  opacity: 1;
+  transform: scale(0.7) translateY(0);
+  transform-origin: center center;
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
-
 
 /* ─── Brand ───────────────────────────────────────────────── */
 .login-brand {
@@ -63,7 +70,7 @@
 
 .login-brand__name {
   color: rgba(195, 195, 195, 0.85) !important;
-  font-size: 11px !important;
+  font-size: 15px !important;
   letter-spacing: 0.28em !important;
   text-transform: uppercase;
   font-family: "Georgia", serif !important;
@@ -149,3 +156,66 @@
   color: rgba(210, 210, 210, 0.9) !important;
 }
 
+/* ─── MUI TextField overrides ────────────────────────────── */
+
+/* Contenedor del input */
+.login-card .MuiOutlinedInput-root {
+  font-family: "Georgia", serif;
+  font-size: 13px;
+  color: rgba(210, 210, 210, 0.9);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 2px;
+}
+
+/* Borde en reposo */
+.login-card .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  transition: border-color 0.2s ease;
+}
+
+/* Borde hover */
+.login-card .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+/* Borde focus */
+.login-card .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(200, 200, 200, 0.45) !important;
+  border-width: 1px !important;
+}
+
+/* Label flotante */
+.login-card .MuiInputLabel-root {
+  font-family: "Georgia", serif;
+  font-size: 12.5px;
+  color: rgba(130, 130, 130, 0.6);
+  letter-spacing: 0.04em;
+}
+
+.login-card .MuiInputLabel-root.Mui-focused {
+  color: rgba(180, 180, 180, 0.7);
+}
+
+/* Texto escrito */
+.login-card .MuiInputBase-input {
+  font-family: "Georgia", serif;
+  font-size: 13px;
+  color: rgba(210, 210, 210, 0.9);
+  padding: 10px 14px;
+}
+
+/* Placeholder */
+.login-card .MuiInputBase-input::placeholder {
+  color: rgba(100, 100, 100, 0.5);
+  opacity: 1;
+}
+
+/* Icono ojo */
+.login-card .MuiIconButton-root {
+  color: rgba(130, 130, 130, 0.55);
+}
+
+.login-card .MuiIconButton-root:hover {
+  color: rgba(180, 180, 180, 0.8);
+  background: transparent;
+}
