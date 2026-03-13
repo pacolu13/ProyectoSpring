@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.proyecto.config.ApiRoutes;
 import com.proyecto.productListing.dto.ProductListingCreateDTO;
 import com.proyecto.productListing.dto.ProductListingDTO;
 import com.proyecto.productListing.service.ProductListingService;
@@ -20,23 +21,23 @@ import lombok.RequiredArgsConstructor;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api/v1/product-listings")
+@RequestMapping(ApiRoutes.PRODUCTS_LISTING)
 @RequiredArgsConstructor
 
 public class ProductListingController {
 
-    private final ProductListingService servicioProductoVenta;
+    private final ProductListingService productListingService;
 
     @GetMapping("/{idProduct}")
     public ResponseEntity<List<ProductListingDTO>> getAllProductListing(@PathVariable Long idProduct){
-        List<ProductListingDTO> response = servicioProductoVenta.findAllProductsListing(idProduct);
+        List<ProductListingDTO> response = productListingService.findAllProductsListing(idProduct);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
     public ResponseEntity<List<ProductListingDTO>> añadirListaProductosVenta(
             @RequestBody List<ProductListingCreateDTO> listaProductosVenta) {
-        List<ProductListingDTO> response = servicioProductoVenta.addProductListingList(listaProductosVenta);
+        List<ProductListingDTO> response = productListingService.addProductListingList(listaProductosVenta);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

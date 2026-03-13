@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public record ProductListingDTO(
         Long id,
-        String nameSeller,
-        String nameProduct,
+        String sellerName,
+        String productName,
         Integer quantity,
         BigDecimal price) {
 

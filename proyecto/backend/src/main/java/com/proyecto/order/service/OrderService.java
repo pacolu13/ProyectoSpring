@@ -30,7 +30,7 @@ public class OrderService {
     private final OrderMapper orderMapper;
 
     @Transactional // O se ejecuta todo o no se ejecuta nada, rollback en caso de error
-    public OrderDTO confirmarCompra(UUID clientId) {
+    public OrderDTO orderSubmit(UUID clientId) {
         User client = userRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado"));
 

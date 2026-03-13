@@ -5,29 +5,28 @@ import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.proyecto.config.ApiRoutes;
 import com.proyecto.order.dto.OrderDTO;
 import com.proyecto.order.service.OrderService;
 
-import org.springframework.web.bind.annotation.PostMapping;
+import lombok.AllArgsConstructor;
 
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api/v1/orders")
+@RequestMapping(ApiRoutes.ORDERS)
+@AllArgsConstructor
 public class OrderController {
 
     private final OrderService orderService;
 
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
-    }
-
-    @PostMapping("/confirmar/{clientId}")
-    public ResponseEntity<OrderDTO> confirmarCompra(@PathVariable UUID clientId) {
-        OrderDTO compraDTO = orderService.confirmarCompra(clientId);
+    @PostMapping("/submit/{clientId}")
+    public ResponseEntity<OrderDTO> orderSubmit(@PathVariable UUID clientId) {
+        OrderDTO compraDTO = orderService.orderSubmit(clientId);
         return ResponseEntity.ok(compraDTO);
     }
 }

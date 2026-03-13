@@ -25,33 +25,33 @@ public class SellerService {
     private final UserRepository userRepository;
     private final SellerMapper sellerMapper;
 
-    public List<SellerDTO> obtenerVendedores() {
-        List<User> vendedores = userRepository.findAll();
-        return sellerMapper.toDTOList(vendedores);
+    public List<SellerDTO> getAllSellers() {
+        List<User> response = userRepository.findAll();
+        return sellerMapper.toDTOList(response);
     }
 
-    public SellerDTO obtenerVendedorPorId(UUID id) {
-        User vendedor = userRepository.findById(id)
+    public SellerDTO getSellerById(UUID id) {
+        User response = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vendedor no encontrado"));
-        return sellerMapper.toDTO(vendedor);
+        return sellerMapper.toDTO(response);
     }
 
-    public List<SellerDTO> obtenerVendedorPorFiltro(Optional<String> nombre, Optional<String> apellido, Optional<String> email) {
-        SellerSearch busqueda = new SellerSearch(nombre, apellido, email);
-        List<User> vendedores = userRepository.findAll(busqueda);
-        if (vendedores == null || vendedores.isEmpty()) {
+    public List<SellerDTO> getSellerByFilter(Optional<String> nombre, Optional<String> apellido, Optional<String> email) {
+        SellerSearch research = new SellerSearch(nombre, apellido, email);
+        List<User> sellersList = userRepository.findAll(research);
+        if (sellersList == null || sellersList.isEmpty()) {
             throw new RuntimeException("No se encontraron vendedores con los filtros especificados");
         }
-        return sellerMapper.toDTOList(vendedores);
+        return sellerMapper.toDTOList(sellersList);
     }
 
-    public List<SellerDTO> añadirVendedores(List<SellerCreateDTO> vendedores) {
-        List<User> nuevo = sellerMapper.toEntityList(vendedores);
-        List<User> resultado = userRepository.saveAll(nuevo);
-        return sellerMapper.toDTOList(resultado);
+    public List<SellerDTO> addSellers(List<SellerCreateDTO> sellersList) {
+        List<User> newList = sellerMapper.toEntityList(sellersList);
+        List<User> response = userRepository.saveAll(newList);
+        return sellerMapper.toDTOList(response);
     }
 
-    public void eliminarCliente(UUID id) {
+    public void sellerDelete(UUID id) {
         if(!userRepository.existsById(id)){
             throw new ResourceNotFoundException("No se pudo encontrar un vendedor para ese id");
         }

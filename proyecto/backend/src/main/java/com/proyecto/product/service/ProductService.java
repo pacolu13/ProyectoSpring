@@ -19,46 +19,38 @@ import lombok.RequiredArgsConstructor;
 
 public class ProductService {
 
-    private final ProductRepository repoProducto;
+    private final ProductRepository productRepository;
     private final ProductMapper productoMapper;
 
-    public List<ProductDTO> obtenerTodosLosProductos() {
-        List<ProductDTO> response = productoMapper.toDTOList(repoProducto.findAll());
+    public List<ProductDTO> getAllProducts() {
+        List<ProductDTO> response = productoMapper.toDTOList(productRepository.findAll());
         return response;
     }
 
-    public ProductDTO obtenerProductoPorId(Long id) {
-        Product response = repoProducto.findById(id)
+    public ProductDTO getProductById(Long id) {
+        Product response = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
         return productoMapper.toDTO(response);
     }
 
-    public List<ProductDTO> añadirListaProducto(List<ProductCreateDTO> productos) {
+    public List<ProductDTO> addProductList(List<ProductCreateDTO> productos) {
         List<Product> listaProductos = productoMapper.toEntityList(productos);
-        List<ProductDTO> response = productoMapper.toDTOList(repoProducto.saveAll(listaProductos));
+        List<ProductDTO> response = productoMapper.toDTOList(productRepository.saveAll(listaProductos));
         return response;
     }
 
-    public void actualizarProducto(Long id, ProductUpdateDTO dto) {
-        Product productoExistente = repoProducto.findById(id).orElseThrow(
+    public void productUpdate(Long id, ProductUpdateDTO dto) {
+        Product productoExistente = productRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Producto no encontrado"));
 
         productoMapper.updateProductFromDto(dto, productoExistente);
     }
 
-    public void eliminarProducto(Long id) {
-        if (!repoProducto.existsById(id)) {
+    public void productDelete(Long id) {
+        if (!productRepository.existsById(id)) {
             throw new RuntimeException("Producto no encontrado");
         }
-        repoProducto.deleteById(id);
+        productRepository.deleteById(id);
     }
 
-    public void eliminarListaProductos(List<Long> ids) {
-        for (Long id : ids) {
-            if (!repoProducto.existsById(id)) {
-                throw new RuntimeException("Producto con ID " + id + " no encontrado");
-            }
-        }
-        repoProducto.deleteAllById(ids);
-    }
 }

@@ -12,11 +12,12 @@ import com.proyecto.auth.dto.LoginDTO;
 import com.proyecto.auth.dto.RegisterDTO;
 import com.proyecto.auth.dto.TokenResponseDTO;
 import com.proyecto.auth.service.AuthService;
+import com.proyecto.config.ApiRoutes;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/v1/auth")
+@RequestMapping(ApiRoutes.AUTH)
 @RequiredArgsConstructor
 public class AuthController {
 

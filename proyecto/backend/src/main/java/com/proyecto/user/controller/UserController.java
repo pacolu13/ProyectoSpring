@@ -3,9 +3,7 @@ package com.proyecto.user.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyecto.user.dto.UserCreateDTO;
-import com.proyecto.user.dto.UserDTO;
-import com.proyecto.user.dto.UserUpdateDTO;
+import com.proyecto.user.dto.*;
 import com.proyecto.user.service.UserService;
 
 import lombok.AllArgsConstructor;
@@ -21,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.proyecto.config.ApiRoutes;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping(ApiRoutes.USERS)
 @AllArgsConstructor
 public class UserController {
 

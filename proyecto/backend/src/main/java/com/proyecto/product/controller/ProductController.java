@@ -6,36 +6,34 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.proyecto.config.ApiRoutes;
 import com.proyecto.product.dto.*;
 import com.proyecto.product.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
 
-// Controlador para manejar las operaciones relacionadas con los productos
-@CrossOrigin(origins = "*", allowedHeaders = "*") // Permite solicitudes desde cualquier origen (útil para desarrollo,
-                                                  // pero revisar en producción)
-@RestController
-@RequestMapping("/api/v1/products")
+@CrossOrigin(origins = "*", allowedHeaders = "*") 
+@RequestMapping(ApiRoutes.PRODUCTS)
 @RequiredArgsConstructor
 
 public class ProductController {
 
-    private final ProductService servicioProducto;
+    private final ProductService productService;
 
     @GetMapping
-    public List<ProductDTO> ObtenerTodosLosProductos() {
-        return servicioProducto.obtenerTodosLosProductos();
+    public List<ProductDTO> getAllProducts() {
+        return productService.getAllProducts();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> ObtenerProductoPorId(@PathVariable Long id) {
-        ProductDTO response = servicioProducto.obtenerProductoPorId(id);
+        ProductDTO response = productService.getProductById(id);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
     public ResponseEntity<List<ProductDTO>> añadirListaProducto(@RequestBody List<ProductCreateDTO> listaProductos) {
-        List<ProductDTO> response = servicioProducto.añadirListaProducto(listaProductos);
+        List<ProductDTO> response = productService.addProductList(listaProductos);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -44,13 +42,13 @@ public class ProductController {
             @PathVariable Long id,
             @RequestBody ProductUpdateDTO dto) {
 
-        servicioProducto.actualizarProducto(id, dto);
+        productService.productUpdate(id, dto);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
-        servicioProducto.eliminarProducto(id);
+        productService.productDelete(id);
         return ResponseEntity.noContent().build();
     }
 }
