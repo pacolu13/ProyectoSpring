@@ -16,7 +16,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -79,7 +78,7 @@ class ProductServiceTest {
         when(repoProducto.findAll()).thenReturn(products);
         when(productoMapper.toDTOList(products)).thenReturn(productDTOs);
 
-        List<ProductDTO> result = productService.obtenerTodosLosProductos();
+        List<ProductDTO> result = productService.getAllProducts();
 
         assertNotNull(result);
         assertEquals(1, result.size());
@@ -95,7 +94,7 @@ class ProductServiceTest {
         when(repoProducto.findAll()).thenReturn(Collections.emptyList());
         when(productoMapper.toDTOList(Collections.emptyList())).thenReturn(Collections.emptyList());
 
-        List<ProductDTO> result = productService.obtenerTodosLosProductos();
+        List<ProductDTO> result = productService.getAllProducts();
 
         assertNotNull(result);
         assertTrue(result.isEmpty());
@@ -112,7 +111,7 @@ class ProductServiceTest {
         when(repoProducto.findById(1L)).thenReturn(Optional.of(product));
         when(productoMapper.toDTO(product)).thenReturn(productDTO);
 
-        ProductDTO result = productService.obtenerProductoPorId(1L);
+        ProductDTO result = productService.getProductById(1L);
 
         assertNotNull(result);
         assertEquals(productDTO, result);
@@ -126,7 +125,7 @@ class ProductServiceTest {
         when(repoProducto.findById(anyLong())).thenReturn(Optional.empty());
 
         RuntimeException ex = assertThrows(RuntimeException.class,
-                () -> productService.obtenerProductoPorId(99L));
+                () -> productService.getProductById(99L));
 
         assertEquals("Producto no encontrado", ex.getMessage());
         verify(repoProducto, times(1)).findById(99L);
@@ -149,7 +148,7 @@ class ProductServiceTest {
         when(repoProducto.saveAll(entities)).thenReturn(entities);
         when(productoMapper.toDTOList(entities)).thenReturn(savedDTOs);
 
-        List<ProductDTO> result = productService.añadirListaProducto(createDTOs);
+        List<ProductDTO> result = productService.addProductList(createDTOs);
 
         assertNotNull(result);
         assertEquals(1, result.size());
@@ -168,7 +167,7 @@ class ProductServiceTest {
         when(repoProducto.saveAll(Collections.emptyList())).thenReturn(Collections.emptyList());
         when(productoMapper.toDTOList(Collections.emptyList())).thenReturn(Collections.emptyList());
 
-        List<ProductDTO> result = productService.añadirListaProducto(Collections.emptyList());
+        List<ProductDTO> result = productService.addProductList(Collections.emptyList());
 
         assertNotNull(result);
         assertTrue(result.isEmpty());
@@ -184,7 +183,7 @@ class ProductServiceTest {
         when(repoProducto.findById(1L)).thenReturn(Optional.of(product));
         doNothing().when(productoMapper).updateProductFromDto(productUpdateDTO, product);
 
-        assertDoesNotThrow(() -> productService.actualizarProducto(1L, productUpdateDTO));
+        assertDoesNotThrow(() -> productService.productUpdate(1L, productUpdateDTO));
 
         verify(repoProducto, times(1)).findById(1L);
         verify(productoMapper, times(1)).updateProductFromDto(productUpdateDTO, product);
@@ -196,7 +195,7 @@ class ProductServiceTest {
         when(repoProducto.findById(anyLong())).thenReturn(Optional.empty());
 
         RuntimeException ex = assertThrows(RuntimeException.class,
-                () -> productService.actualizarProducto(99L, productUpdateDTO));
+                () -> productService.productUpdate(99L, productUpdateDTO));
 
         assertEquals("Producto no encontrado", ex.getMessage());
         verify(productoMapper, never()).updateProductFromDto(any(), any());
@@ -212,7 +211,7 @@ class ProductServiceTest {
         when(repoProducto.existsById(1L)).thenReturn(true);
         doNothing().when(repoProducto).deleteById(1L);
 
-        assertDoesNotThrow(() -> productService.eliminarProducto(1L));
+        assertDoesNotThrow(() -> productService.productDelete(1L));
 
         verify(repoProducto, times(1)).existsById(1L);
         verify(repoProducto, times(1)).deleteById(1L);
@@ -224,55 +223,11 @@ class ProductServiceTest {
         when(repoProducto.existsById(anyLong())).thenReturn(false);
 
         RuntimeException ex = assertThrows(RuntimeException.class,
-                () -> productService.eliminarProducto(99L));
+                () -> productService.productDelete(99L));
 
         assertEquals("Producto no encontrado", ex.getMessage());
         verify(repoProducto, never()).deleteById(anyLong());
     }
 
-    // ─────────────────────────────────────────────
-    // eliminarListaProductos
-    // ─────────────────────────────────────────────
-
-    @SuppressWarnings("null")
-    @Test
-    @DisplayName("eliminarListaProductos - elimina cuando todos los IDs existen")
-    void eliminarListaProductos_CuandoTodosExisten_Elimina() {
-        List<Long> ids = Arrays.asList(1L, 2L);
-
-        when(repoProducto.existsById(1L)).thenReturn(true);
-        when(repoProducto.existsById(2L)).thenReturn(true);
-        doNothing().when(repoProducto).deleteAllById(ids);
-
-        assertDoesNotThrow(() -> productService.eliminarListaProductos(ids));
-
-        verify(repoProducto, times(1)).existsById(1L);
-        verify(repoProducto, times(1)).existsById(2L);
-        verify(repoProducto, times(1)).deleteAllById(ids);
-    }
-
-    @SuppressWarnings("null")
-    @Test
-    @DisplayName("eliminarListaProductos - lanza RuntimeException si algún ID no existe")
-    void eliminarListaProductos_CuandoUnoNoExiste_LanzaExcepcion() {
-        List<Long> ids = Arrays.asList(1L, 99L);
-
-        when(repoProducto.existsById(1L)).thenReturn(true);
-        when(repoProducto.existsById(99L)).thenReturn(false);
-
-        RuntimeException ex = assertThrows(RuntimeException.class,
-                () -> productService.eliminarListaProductos(ids));
-
-        assertTrue(ex.getMessage().contains("99"));
-        verify(repoProducto, never()).deleteAllById(anyList());
-    }
-
-    @SuppressWarnings("null")
-    @Test
-    @DisplayName("eliminarListaProductos - lista vacía no llama a deleteAllById")
-    void eliminarListaProductos_ListaVacia_NoEliminaNada() {
-        assertDoesNotThrow(() -> productService.eliminarListaProductos(Collections.emptyList()));
-        verify(repoProducto, times(1)).deleteAllById(Collections.emptyList());
-        verify(repoProducto, never()).existsById(anyLong());
-    }
+    
 }

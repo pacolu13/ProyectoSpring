@@ -31,9 +31,7 @@ public class SecurityConfig {
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http.csrf(AbstractHttpConfigurer::disable) // Deshabilita la protección CSRF
                         .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/api/v1/auth/**").permitAll() // Permite el acceso a las rutas de autenticación sin necesidad de autenticación
-                                .requestMatchers("/api/v1/products").permitAll()
-                                .requestMatchers("/api/v1/product-listings/**").permitAll()
+                                .requestMatchers("/api/v1/**").permitAll() // Permite el acceso a las rutas de autenticación sin necesidad de autenticación
                                 .anyRequest().authenticated() // Requiere autenticación para cualquier otra ruta
                         )
                         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

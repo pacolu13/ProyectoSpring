@@ -12,7 +12,8 @@ import com.proyecto.product.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*") 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RestController
 @RequestMapping(ApiRoutes.PRODUCTS)
 @RequiredArgsConstructor
 
@@ -21,8 +22,9 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public List<ProductDTO> getAllProducts() {
-        return productService.getAllProducts();
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        List<ProductDTO> response = productService.getAllProducts();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
