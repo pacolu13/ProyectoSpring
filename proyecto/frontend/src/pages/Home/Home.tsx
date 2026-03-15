@@ -2,6 +2,7 @@ import './Home.css'
 import { apiClient } from '../../services/apiClient'
 import { useEffect, useState } from 'react'
 import { ProductHome } from '../../components/index'
+import { useFetch } from '../../hooks'
 
 interface Product {
     id: number
@@ -16,28 +17,13 @@ interface Product {
 
 export const Home = () => {
 
-    const [products, setProducts] = useState<Product[]>([])
-    const [error, setError] = useState<string | null>(null)
+    const { data, error, isLoading } = useFetch<Product[]>('/api/v1/products');
 
-    useEffect(() => {
+    if (data == null || error) {
+        return null; // Generar un error
+    }
 
-        const fetchProducts = async () => {
-
-            const { data, error } = await apiClient.get<Product[]>("/products")
-
-            if (error) {
-                setError(error)
-                return
-            }
-
-            setProducts(data ?? [])
-        }
-
-        fetchProducts()
-
-    }, [])
-
-    const featuredProducts = products.slice(0, 6)
+    // Utilizar el isLoading
 
     return (
         <div id="Home">
@@ -56,7 +42,7 @@ export const Home = () => {
                 {error && <p className="error">{error}</p>}
 
                 <div className="products-grid">
-                    {featuredProducts.map(product => (
+                    {data.map(product => (
                         <ProductHome
                             id={product.id}
                             image={product.image}
@@ -66,9 +52,7 @@ export const Home = () => {
                         />
                     ))}
                 </div>
-
             </section>
-
         </div>
     )
 }

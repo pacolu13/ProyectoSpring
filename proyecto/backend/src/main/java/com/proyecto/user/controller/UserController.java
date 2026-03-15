@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,38 +31,40 @@ public class UserController {
 
     private final UserService userService;
 
-    /*
-    Pasar todos los metodos a EntityResponse
-    */
-   
     @GetMapping
-    public List<UserDTO> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> response = userService.getAllUsers();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public UserDTO getUserById(@PathVariable UUID id) {
-        return userService.getUserById(id);
+    public ResponseEntity<UserDTO> getUserById(@PathVariable UUID id) {
+        UserDTO response = userService.getUserById(id);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public UserDTO createUser(@RequestBody UserCreateDTO createUserDTO) {
-        return userService.createUser(createUserDTO);
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserCreateDTO createUserDTO) {
+        UserDTO response = userService.createUser(createUserDTO);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/list")
-    public List<UserDTO> createUserList(@RequestBody List<UserCreateDTO> createUserDTOList) {
-        return userService.createUserList(createUserDTOList);
+    public ResponseEntity<List<UserDTO>> createUserList(@RequestBody List<UserCreateDTO> createUserDTOList) {
+        List<UserDTO> response = userService.createUserList(createUserDTOList);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
-    public UserDTO updateUser(@PathVariable UUID id, @RequestBody UserUpdateDTO updateUserDTO) {
-        return userService.updateUser(id, updateUserDTO);
+    public ResponseEntity<UserDTO> updateUser(@PathVariable UUID id, @RequestBody UserUpdateDTO updateUserDTO) {
+        UserDTO response = userService.updateUser(id, updateUserDTO);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
