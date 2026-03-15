@@ -1,6 +1,7 @@
 export interface ProductListingDTO {
   id: number;
   price: number;
-  nameProduct: string;
-  nameSeller: string;
+  productName: string;
+  sellerName: string;
+  creationDate: string;
 }

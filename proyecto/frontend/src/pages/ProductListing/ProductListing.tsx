@@ -9,7 +9,7 @@ export const ProductListing = () => {
   const { data, error, isLoading } = useFetch<ProductListingDTO[]>(
     `/api/v1/product-listings/${idProduct}`
   );
-    //Modificar, actualmente no devuelve nada
+  //Modificar, actualmente no devuelve nada
   if (idProduct == null || data == null) return null;
 
   const handleBuy = (id: number) => {
@@ -31,7 +31,7 @@ export const ProductListing = () => {
             No se pudieron cargar las publicaciones.
           </p>
         )}
-        {!isLoading && !error && (
+        {data.length == 0 && (
           <p className="listing-state">No hay publicaciones disponibles.</p>
         )}
         {data.map((item, i) => (
@@ -43,9 +43,14 @@ export const ProductListing = () => {
             <ProductListingCard
               id={item.id}
               price={item.price}
-              productName={item.nameProduct}
-              sellerName={item.nameSeller}
+              productName={item.productName}
+              sellerName={item.sellerName}
               onBuy={handleBuy}
+              creationDate={item.creationDate}
+              sellerSales={0}
+              sellerRating={0}
+              condition={"new"}
+              location={""}
             />
           </div>
         ))}

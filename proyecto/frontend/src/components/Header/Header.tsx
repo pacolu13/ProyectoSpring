@@ -1,4 +1,5 @@
 import type { link } from '../../interfaces/links';
+import { SearchInput, UserMenu } from '../index';
 import './Header.css';
 
 interface Props {
@@ -10,6 +11,7 @@ export const Header = ({ title, links }: Props) => {
     return (
         <header className='header'>
             <h1>{title}</h1>
+            <SearchInput onSearch={(value) => console.log("Buscar:", value)} />
             <nav>
                 <ul>
                     {links.map((link, index) => (
@@ -18,6 +20,7 @@ export const Header = ({ title, links }: Props) => {
                         </li>
                     ))}
                 </ul>
+                <UserMenu />
             </nav>
         </header>
     );

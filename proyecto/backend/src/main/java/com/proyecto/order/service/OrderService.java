@@ -29,51 +29,81 @@ public class OrderService {
     private final UserRepository userRepository;
     private final OrderMapper orderMapper;
 
-    @Transactional // O se ejecuta todo o no se ejecuta nada, rollback en caso de error
+    @Transactional
     public OrderDTO orderSubmit(UUID clientId) {
+        User client = getClientWithCart(clientId);
+        List<CartProduct> items = client.getCart().getProductsList();
+
+        validateStock(items);
+        BigDecimal total = calculateTotal(items);
+        validateBalance(client, total);
+
+        Order order = createOrder(client, items, total);
+        applyPostPurchaseEffects(client, items, total);
+
+        return orderMapper.toDTO(orderRepository.save(order));
+    }
+
+    private User getClientWithCart(UUID clientId) {
         User client = userRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado"));
 
         if (client.getCart() == null || client.getCart().getProductsList().isEmpty()) {
             throw new IllegalStateException("El carrito está vacío");
         }
+        return client;
+    }
 
-        BigDecimal total = BigDecimal.ZERO;
-        List<CartProduct> productList = client.getCart().getProductsList();
+    private Order createOrder(User client, List<CartProduct> items, BigDecimal total) {
+        Order order = new Order();
+        order.setUser(client);
+        order.setTotalBalance(total);
 
-        for (CartProduct producto : productList) {
-            if (producto.getProductListing().getQuantity() < producto.getQuantity()) {
-                throw new IllegalStateException("Stock insuficiente para el producto: "
-                        + producto.getProductListing().getProduct().getName());
-            }
-            Integer cantComprada = producto.getQuantity();
-            Integer stockActual = producto.getProductListing().getQuantity();
-            BigDecimal precioUnitario = producto.getProductListing().getPrice();
-
-            producto.getProductListing().setQuantity(stockActual - cantComprada);
-            total = total.add(precioUnitario.multiply(BigDecimal.valueOf(cantComprada)));
-        }
-
-        if (total.compareTo(client.getBalance()) > 0) {
-            throw new IllegalStateException("Saldo insuficiente para realizar la compra");
-        }
-
-        Order compra = new Order();
-        compra.setUser(client);
-        compra.setTotalBalance(total);
-
-        for (CartProduct producto : productList) {
+        for (CartProduct item : items) {
             OrderDetails detail = new OrderDetails();
-            detail.setOrder(compra);
-            detail.setProductListing(producto.getProductListing());
-            detail.setUnitPrice(producto.getProductListing().getPrice());
-            detail.setQuantity(producto.getQuantity());
-            compra.getOrderDetailsList().add(detail);
+            detail.setOrder(order);
+            detail.setProductListing(item.getProductListing());
+            detail.setUnitPrice(item.getProductListing().getPrice());
+            detail.setQuantity(item.getQuantity());
+            order.getOrderDetailsList().add(detail);
         }
 
+        return order;
+    }
+
+    private void validateStock(List<CartProduct> items) {
+        for (CartProduct item : items) {
+            if (item.getProductListing().getQuantity() < item.getQuantity()) {
+                throw new IllegalStateException("Stock insuficiente: "
+                        + item.getProductListing().getProduct().getName());
+            }
+        }
+    }
+
+    private BigDecimal calculateTotal(List<CartProduct> items) {
+        return items.stream()
+                .map(i -> i.getProductListing().getPrice()
+                        .multiply(BigDecimal.valueOf(i.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private void validateBalance(User client, BigDecimal total) {
+        if (total.compareTo(client.getBalance()) > 0) {
+            throw new IllegalStateException("Saldo insuficiente");
+        }
+    }
+
+    private void applyPostPurchaseEffects(User client, List<CartProduct> items, BigDecimal total) {
         client.setBalance(client.getBalance().subtract(total));
         client.getCart().getProductsList().clear();
 
-        return orderMapper.toDTO(orderRepository.save(compra));
+        for (CartProduct item : items) {
+            int cantidad = item.getQuantity();
+            item.getProductListing().setQuantity(
+                    item.getProductListing().getQuantity() - cantidad);
+            User seller = item.getProductListing().getUser();
+            seller.setTotalSales(seller.getTotalSales() + cantidad);
+            // Nuestras ventas cuentan la cantidad de productos vendidos
+        }
     }
 }

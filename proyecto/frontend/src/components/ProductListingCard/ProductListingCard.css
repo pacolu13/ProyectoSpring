@@ -1,97 +1,199 @@
-/* ─── Card ────────────────────────────────────────────────── */
-.product-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 22px 28px;
-  background: rgba(14, 14, 14, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 3px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
-  font-family: "Georgia", "Times New Roman", serif;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-.product-card:hover {
-  border-color: rgba(255, 255, 255, 0.14);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
-}
-
-/* ─── Body ────────────────────────────────────────────────── */
-.product-card__body {
+/* ─── Card ──────────────────────────────────────────── */
+.plc {
+  position: relative;
   display: flex;
   flex-direction: column;
+  gap: 14px;
+  background: #111318;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 20px;
+  width: 280px;
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+}
+
+.plc:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+/* ─── Badge condición ───────────────────────────────── */
+.plc__badge {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.plc__badge--new {
+  background: rgba(34, 197, 94, 0.12);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.plc__badge--used {
+  background: rgba(251, 191, 36, 0.1);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+/* ─── Body ──────────────────────────────────────────── */
+.plc__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.plc__name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #f1f5f9;
+  line-height: 1.35;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.plc__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.plc__currency {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1;
+}
+
+.plc__price {
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+/* Envío gratis */
+.plc__shipping {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #4ade80;
+}
+
+.plc__shipping-icon {
+  width: 14px;
+  height: 11px;
+}
+
+/* ─── Divider ───────────────────────────────────────── */
+.plc__divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Vendedor ──────────────────────────────────────── */
+.plc__seller {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.plc__seller-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.18);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #93c5fd;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.plc__seller-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow: hidden;
+}
+
+.plc__seller-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.plc__seller-meta {
+  display: flex;
+  align-items: center;
   gap: 6px;
 }
 
-.product-card__seller {
-  margin: 0;
+/* Stars */
+.plc__stars {
+  display: flex;
+  gap: 1px;
+}
+
+.plc__star {
+  width: 10px;
+  height: 10px;
+  color: rgba(255, 255, 255, 0.15);
+}
+
+.plc__star--filled {
+  color: #fbbf24;
+}
+
+.plc__seller-sales {
   font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(120, 120, 120, 0.6);
-  font-family: "Georgia", serif;
+  color: rgba(255, 255, 255, 0.35);
 }
 
-.product-card__name {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 400;
-  color: rgba(220, 220, 220, 0.9);
-  letter-spacing: 0.01em;
-  font-family: "Georgia", serif;
+/* ─── Footer ────────────────────────────────────────── */
+.plc__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 2px;
 }
 
-.product-card__price {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 400;
-  color: rgba(200, 200, 200, 0.85);
-  letter-spacing: -0.02em;
-  font-family: "Georgia", serif;
+.plc__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
-.product-card__currency {
-  font-size: 13px;
-  color: rgba(140, 140, 140, 0.6);
-  margin-right: 3px;
-  vertical-align: super;
+.plc__location,
+.plc__date {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.3);
 }
 
-/* ─── Botón comprar ───────────────────────────────────────── */
-.product-card__btn {
+.plc__meta-icon {
+  width: 8px;
+  height: 10px;
   flex-shrink: 0;
-  padding: 11px 28px;
-  background: rgba(205, 205, 205, 0.92);
-  border: none;
-  border-radius: 2px;
-  color: #0f0f0f;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-family: "Georgia", serif;
-  font-weight: 400;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.product-card__btn:hover {
-  background: rgba(235, 235, 235, 1);
-}
-
-/* ─── Mobile ──────────────────────────────────────────────── */
-@media (max-width: 480px) {
-  .product-card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .product-card__btn {
-    width: 100%;
-    text-align: center;
-  }
 }

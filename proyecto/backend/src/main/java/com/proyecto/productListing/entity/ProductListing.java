@@ -1,6 +1,7 @@
 package com.proyecto.productListing.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import com.proyecto.orderDetails.entity.OrderDetails;
 import com.proyecto.product.entity.Product;
@@ -29,10 +30,9 @@ public class ProductListing {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-
     private Integer quantity;
-
     private BigDecimal price;
+    private LocalDateTime creationDate = LocalDateTime.now();
 
     @OneToOne
     @JoinColumn(name = "order_details_id")

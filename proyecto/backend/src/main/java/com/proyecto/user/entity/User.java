@@ -42,7 +42,7 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "user_type")
 @Table(name = "usuarios")
-@NoArgsConstructor  // ← JPA necesita este
+@NoArgsConstructor // ← JPA necesita este
 @AllArgsConstructor // ← Builder necesita este
 public class User {
 
@@ -54,7 +54,14 @@ public class User {
     private String email;
     private String password;
     private String cuit;
+    private String location;
 
+    @Builder.Default
+    private Integer totalSales = 0;
+    @Builder.Default
+    private Float rating = 5f;
+    @Builder.Default
+    private Boolean sellerEnable = false;
     @Builder.Default
     private BigDecimal balance = BigDecimal.valueOf(500);
     @Builder.Default
@@ -77,7 +84,7 @@ public class User {
     private List<Rol> rolesList;
 
     @Builder.Default
-    @OneToMany(mappedBy="user", cascade= CascadeType.ALL, orphanRemoval= true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductListing> productsListingList = new ArrayList<>();
 
     @Override
