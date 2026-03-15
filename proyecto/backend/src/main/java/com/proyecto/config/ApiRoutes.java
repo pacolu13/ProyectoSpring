@@ -13,6 +13,8 @@ public class ApiRoutes {
     public static final String CARTS = API + "/carts";
     public static final String ORDERS = API + "/orders";
 
+    public static final String ALL_STRING = "/**";
+
     // Extender cada una por Id o los paremotros que se continuan en sus controllers
 
 }

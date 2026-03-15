@@ -29,24 +29,26 @@ public class SecurityConfig {
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-                http.csrf(AbstractHttpConfigurer::disable) // Deshabilita la protección CSRF
-                        .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/api/v1/**").permitAll() // Permite el acceso a las rutas de autenticación sin necesidad de autenticación
-                                .anyRequest().authenticated() // Requiere autenticación para cualquier otra ruta
-                        )
-                        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                        .authenticationProvider(authenticationProvider) // Configura el proveedor de autenticación personalizado
-                        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class) // Agrega el filtro de autenticación JWT antes del filtro de autenticación de nombre de usuario y contraseña
-                        .logout(logout -> 
-                                logout.logoutUrl("/api/v1/auth/logout") // Configura la URL de cierre de sesión
-                                        .addLogoutHandler((request, response, authentication) -> {
-                                                final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-                                                logout(authHeader);
-                                        })
-                                        .logoutSuccessHandler((request, response, authentication) -> 
-                                                SecurityContextHolder.clearContext())
-                        );              
-                        return http.build();
+                http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth
+                                .requestMatchers(ApiRoutes.AUTH + ApiRoutes.ALL_STRING).permitAll()
+                                .requestMatchers(ApiRoutes.PRODUCTS + ApiRoutes.ALL_STRING).permitAll()
+                                .requestMatchers(ApiRoutes.PRODUCTS_LISTING + ApiRoutes.ALL_STRING)
+                                .permitAll()
+                                .anyRequest().authenticated())
+                                .sessionManagement(session -> session
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                .authenticationProvider(authenticationProvider)
+                                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                                .logout(logout -> logout.logoutUrl("/api/v1/auth/logout")
+                                                .addLogoutHandler((request, response, authentication) -> {
+                                                        final String authHeader = request
+                                                                        .getHeader(HttpHeaders.AUTHORIZATION);
+                                                        logout(authHeader);
+                                                })
+                                                .logoutSuccessHandler((request, response,
+                                                                authentication) -> SecurityContextHolder
+                                                                                .clearContext()));
+                return http.build();
         }
 
         private void logout(String authHeader) {

@@ -11,6 +11,7 @@ import com.proyecto.auth.entity.Token;
 import com.proyecto.cart.entity.Cart;
 import com.proyecto.order.entity.Order;
 import com.proyecto.productListing.entity.ProductListing;
+import com.proyecto.rol.entity.Rol;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorColumn;
@@ -80,7 +81,7 @@ public class User {
     private List<Token> tokens;
 
     @ManyToMany
-    @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    @JoinTable(name = "user_rol", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private List<Rol> rolesList;
 
     @Builder.Default

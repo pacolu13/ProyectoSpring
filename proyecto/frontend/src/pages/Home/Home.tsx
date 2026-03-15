@@ -1,23 +1,11 @@
 import './Home.css'
-import { apiClient } from '../../services/apiClient'
-import { useEffect, useState } from 'react'
 import { ProductHome } from '../../components/index'
 import { useFetch } from '../../hooks'
-
-interface Product {
-    id: number
-    name: string
-    description: string
-    brand: string
-    category: string
-    image: string
-    active: boolean
-    creationDate: string
-}
+import type { ProductDTO } from '../../interfaces';
 
 export const Home = () => {
 
-    const { data, error, isLoading } = useFetch<Product[]>('/api/v1/products');
+    const { data, error, isLoading } = useFetch<ProductDTO[]>('/api/v1/products');
 
     if (data == null || error) {
         return null; // Generar un error
