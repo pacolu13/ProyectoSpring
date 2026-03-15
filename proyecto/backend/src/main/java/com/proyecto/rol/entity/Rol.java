@@ -1,6 +1,7 @@
 package com.proyecto.rol.entity;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.proyecto.user.entity.User;
 
@@ -27,7 +28,7 @@ public class Rol {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private UUID id;
 
     @ManyToMany(mappedBy = "rolesList")
     private List<User> userList;
