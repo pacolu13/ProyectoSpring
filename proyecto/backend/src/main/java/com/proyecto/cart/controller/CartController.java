@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.proyecto.cart.dto.CartAddProductDTO;
 import com.proyecto.cart.dto.CartDTO;
 import com.proyecto.cart.service.CartService;
+import com.proyecto.config.ApiRoutes;
 
 import lombok.RequiredArgsConstructor;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api/v1/carts")
+@RequestMapping(ApiRoutes.CARTS)
 @RequiredArgsConstructor
 public class CartController {
 

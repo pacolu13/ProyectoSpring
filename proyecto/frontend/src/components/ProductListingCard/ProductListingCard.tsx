@@ -1,4 +1,4 @@
-import './ProductCard.css';
+import './ProductListingCard.css';
 
 interface ProductCardProps {
   id: number;
@@ -8,7 +8,7 @@ interface ProductCardProps {
   onBuy: (id: number) => void;
 }
 
-export const ProductCard = ({ id, price, productName, sellerName, onBuy }: ProductCardProps) => {
+export const ProductListingCard = ({ id, price, productName, sellerName, onBuy }: ProductCardProps) => {
   return (
     <article className="product-card">
       <div className="product-card__body">

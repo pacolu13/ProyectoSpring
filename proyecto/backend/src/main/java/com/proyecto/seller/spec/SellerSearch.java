@@ -16,13 +16,13 @@ import jakarta.persistence.criteria.Root;
 
 @SuppressWarnings("null")
 public class SellerSearch implements Specification<User> {
-    private String nombre;
-    private String apellido;
+    private String name;
+    private String lastname;
     private String email;
 
-    public SellerSearch(Optional<String> nombre2, Optional<String> apellido2, Optional<String> email2) {
-        this.nombre = nombre2.orElse(null);
-        this.apellido = apellido2.orElse(null);
+    public SellerSearch(Optional<String> name2, Optional<String> lastname2, Optional<String> email2) {
+        this.name = name2.orElse(null);
+        this.lastname = lastname2.orElse(null);
         this.email = email2.orElse(null);
     }
 
@@ -31,16 +31,16 @@ public class SellerSearch implements Specification<User> {
             CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
 
-        if (nombre != null && !nombre.isEmpty()) {
-            Expression<String> nombreToLowerCase = criteriaBuilder.lower(root.get("nombre"));
-            Predicate nombrePredicate = criteriaBuilder.like(nombreToLowerCase, "%" + nombre.toLowerCase() + "%");
-            predicates.add(nombrePredicate);
+        if (name != null && !name.isEmpty()) {
+            Expression<String> nameToLowerCase = criteriaBuilder.lower(root.get("name"));
+            Predicate namePredicate = criteriaBuilder.like(nameToLowerCase, "%" + name.toLowerCase() + "%");
+            predicates.add(namePredicate);
         }
 
-        if (apellido != null && !apellido.isEmpty()) {
-            Expression<String> apellidoToLowerCase = criteriaBuilder.lower(root.get("apellido"));
-            Predicate apellidoPredicate = criteriaBuilder.like(apellidoToLowerCase, "%" + apellido.toLowerCase() + "%");
-            predicates.add(apellidoPredicate);
+        if (lastname != null && !lastname.isEmpty()) {
+            Expression<String> lastnameToLowerCase = criteriaBuilder.lower(root.get("lastname"));
+            Predicate lastnamePredicate = criteriaBuilder.like(lastnameToLowerCase, "%" + lastname.toLowerCase() + "%");
+            predicates.add(lastnamePredicate);
         }
 
         if (email != null && !email.isEmpty()) {

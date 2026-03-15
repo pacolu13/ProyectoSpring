@@ -69,8 +69,8 @@
 }
 
 .login-brand__name {
-  color: rgba(195, 195, 195, 0.85) !important;
-  letter-spacing: 0.28em !important;
+  color: rgba(195, 195, 195, 0.85);
+  letter-spacing: 0.28em;
   text-transform: uppercase;
 }
 

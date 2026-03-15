@@ -14,34 +14,30 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public class ProductListingSearch implements Specification<ProductListing>{
+public class ProductListingSearch implements Specification<ProductListing> {
     private BigDecimal maxPrice;
     private BigDecimal minPrice;
 
     // Filtrar por ubicacion y fecha
 
-    public ProductListingSearch(Optional<BigDecimal> maxPrice, Optional<BigDecimal> minPrice){
+    public ProductListingSearch(Optional<BigDecimal> maxPrice, Optional<BigDecimal> minPrice) {
         this.maxPrice = maxPrice.orElse(null);
         this.minPrice = minPrice.orElse(null);
 
     }
 
     @Override
+    @SuppressWarnings("null")
     public Predicate toPredicate(Root<ProductListing> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
-        
-        if(maxPrice == null || maxPrice.isEmpty()){
-            Expression<BigDecimal> maxPriceExp = criteriaBuilder(root.get("maxprice"));
-            Predicate maxPricePredicate = criteriaBuilder.like("%",maxPriceExp,"%");
-            predicates.add(maxPricePredicate);
+
+        if (maxPrice == null || maxPrice.equals(BigDecimal.ZERO)) {
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
         }
-        if(minPrice == null || minPrice.isEmpty()){
-            Expression<BigDecimal> minPriceExp = criteriaBuilder(root.get("minprice"));
-            Predicate minPricePredicate = criteriaBuilder.like("%",minPriceExp,"%");
-            predicates.add(minPricePredicate);
+        if (minPrice == null || minPrice.equals(BigDecimal.ZERO)) {
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice));
         }
 
         return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
     }
-
 }

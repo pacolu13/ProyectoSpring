@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks";
-import { ProductCard, ListingFilters } from "../../components/index";
+import { ProductListingCard, ListingFilters } from "../../components/index";
 import type { ProductListingDTO } from "../../interfaces/ProductListingDTO";
 import './ProductListing.css';
 
@@ -40,7 +40,7 @@ export const ProductListing = () => {
             className="listing-item"
             style={{ animationDelay: `${i * 60}ms` }}
           >
-            <ProductCard
+            <ProductListingCard
               id={item.id}
               price={item.price}
               productName={item.nameProduct}

@@ -1,7 +1,7 @@
 import './Home.css'
 import { apiClient } from '../../services/apiClient'
 import { useEffect, useState } from 'react'
-import { Button } from '../../components'
+import { ProductHome } from '../../components/index'
 
 interface Product {
     id: number
@@ -57,21 +57,13 @@ export const Home = () => {
 
                 <div className="products-grid">
                     {featuredProducts.map(product => (
-                        <div key={product.id} className="product-card">
-
-                            <div className="product-image">
-                                <img src={product.image} alt={product.name} />
-                            </div>
-
-                            <div className="product-info">
-                                <span className="product-brand">{product.brand}</span>
-                                <h3>{product.name}</h3>
-                                <p>{product.description}</p>
-
-                                <Button label='Ver producto' parentMethod={() => { window.location.href = `/products/${product?.id}`; }}></Button>
-                            </div>
-
-                        </div>
+                        <ProductHome
+                            id={product.id}
+                            image={product.image}
+                            brand={product.brand}
+                            name={product.name}
+                            description={product.description}
+                        />
                     ))}
                 </div>
 

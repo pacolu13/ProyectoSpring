@@ -3,13 +3,13 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
 html,
 body {
   margin: 0;
   padding: 0;
+
 
 }
 
