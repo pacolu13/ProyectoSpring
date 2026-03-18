@@ -32,8 +32,7 @@ public class SecurityConfig {
                 http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth
                                 .requestMatchers(ApiRoutes.AUTH + ApiRoutes.ALL_STRING).permitAll()
                                 .requestMatchers(ApiRoutes.PRODUCTS + ApiRoutes.ALL_STRING).permitAll()
-                                .requestMatchers(ApiRoutes.PRODUCTS_LISTING + ApiRoutes.ALL_STRING)
-                                .permitAll()
+                                .requestMatchers(ApiRoutes.PRODUCTS_LISTING + ApiRoutes.ALL_STRING).permitAll()
                                 .anyRequest().authenticated())
                                 .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

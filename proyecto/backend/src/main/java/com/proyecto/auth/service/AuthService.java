@@ -10,6 +10,7 @@ import com.proyecto.auth.dto.RegisterDTO;
 import com.proyecto.auth.dto.TokenResponseDTO;
 import com.proyecto.auth.entity.Token;
 import com.proyecto.auth.repository.TokenRepository;
+import com.proyecto.cart.entity.Cart;
 import com.proyecto.user.entity.User;
 import com.proyecto.user.repository.UserRepository;
 
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@SuppressWarnings("null")
 public class AuthService {
     private final TokenRepository tokenRepository;
     private final UserRepository userRepository;
@@ -25,11 +27,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public TokenResponseDTO register(RegisterDTO request) {
-        var client = User.builder().build();
-        client.setUsername(request.username());
-        client.setEmail(request.email());
-        client.setPassword(passwordEncoder.encode(request.password()));
-
+        var client = createUser(request);
         var clientSaved = userRepository.save(client);
         var token = jwtService.generateToken(clientSaved);
         var refreshToken = jwtService.generateRefreshToken(clientSaved);
@@ -51,6 +49,19 @@ public class AuthService {
         saveUserToken(user, token);
 
         return new TokenResponseDTO(token, refreshToken);
+    }
+
+    private User createUser(RegisterDTO request) {
+        var client = User.builder().build();
+        client.setUsername(request.username());
+        client.setEmail(request.email());
+        client.setPassword(passwordEncoder.encode(request.password()));
+
+        Cart cart = new Cart();
+        client.setCart(cart);
+        cart.setUser(client);
+
+        return client;
     }
 
     private void revokeAllUserTokens(User user) {
@@ -89,7 +100,6 @@ public class AuthService {
         return new TokenResponseDTO(accessToken, refreshToken);
     }
 
-    @SuppressWarnings("null")
     private void saveUserToken(User user, String token) {
         var tokenEntity = Token.builder()
                 .user(user)

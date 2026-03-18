@@ -1,8 +1,10 @@
 package com.proyecto.cart.service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.proyecto.cart.dto.CartAddProductDTO;
 import com.proyecto.cart.dto.CartDTO;
@@ -23,9 +25,19 @@ import lombok.RequiredArgsConstructor;
 public class CartService {
 
     private final CartRepository cartRepository;
-    private final UserRepository clientRepository;
+    private final UserRepository userRepository;
     private final ProductListingRepository productListingRepository;
     private final CartMapper cartMapper;
+
+    public CartDTO getCartByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+
+        Cart cart = Optional.ofNullable(user.getCart())
+                .orElseThrow(() -> new ResourceNotFoundException("Carrito no encontrado"));
+
+        return cartMapper.toDTO(cart);
+    }
 
     public CartDTO findCart(UUID clientId) {
         Cart cart = cartRepository.findByUserId(clientId)
@@ -33,8 +45,9 @@ public class CartService {
         return cartMapper.toDTO(cart);
     }
 
+    @Transactional
     public CartDTO addProduct(CartAddProductDTO dto) {
-        User client = clientRepository.findById(dto.userId())
+        User client = userRepository.findById(dto.userId())
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado"));
 
         ProductListing productListing = productListingRepository.findById(dto.productListingId())

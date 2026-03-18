@@ -70,7 +70,8 @@ public class User {
     @Builder.Default
     private LocalDateTime creationDate = LocalDateTime.now();
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL) // Crea automaticamente el Carrito
+    
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // Crea automaticamente el Carrito
     private Cart cart;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

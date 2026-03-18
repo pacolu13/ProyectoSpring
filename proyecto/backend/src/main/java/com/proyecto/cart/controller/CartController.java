@@ -3,6 +3,7 @@ package com.proyecto.cart.controller;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,13 @@ public class CartController {
 
     private final CartService cartService;
 
+    @GetMapping
+    public ResponseEntity<CartDTO> getCart(Authentication authentication) {
+        String email = authentication.getName(); // extrae del JWT
+        System.out.println("------------- EMAIL: " + email);
+        return ResponseEntity.ok(cartService.getCartByEmail(email));
+    }
+    
     @GetMapping("/{clientId}")
     public ResponseEntity<CartDTO> findCart(@PathVariable UUID clientId) {
         CartDTO response = cartService.findCart(clientId);

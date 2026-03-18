@@ -1,4 +1,4 @@
-import { FormatDate } from "../../utils/formatDate";
+import { FormatDate } from "../../utils/FormatDate";
 import { Button } from "../Button/Button";
 import "./ProductListingCard.css";
 

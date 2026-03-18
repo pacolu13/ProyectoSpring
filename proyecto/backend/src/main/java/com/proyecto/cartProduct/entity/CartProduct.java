@@ -5,6 +5,7 @@ import com.proyecto.productListing.entity.ProductListing;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,10 +32,10 @@ public class CartProduct {
 
     private Integer quantity;
     
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private ProductListing productListing;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="cart_id")
     private Cart cart;
 
