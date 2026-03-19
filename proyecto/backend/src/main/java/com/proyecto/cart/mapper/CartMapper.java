@@ -17,12 +17,10 @@ public interface CartMapper {
     @Mapping(source = "cartProductsList", target = "productsList")
     Cart toEntity(CartCreateDTO dto);
 
-    @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "productsList", target = "cartProductsList")
     CartDTO toDTO(Cart carrito);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "cartProductsList", target = "productsList")
     Cart updateCarritoFromDto(CartUpdateDTO dto, @MappingTarget Cart entity);
 

@@ -2,7 +2,6 @@ package com.proyecto.order.service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -30,8 +29,8 @@ public class OrderService {
     private final OrderMapper orderMapper;
 
     @Transactional
-    public OrderDTO orderSubmit(UUID clientId) {
-        User client = getClientWithCart(clientId);
+    public OrderDTO orderSubmit(String email) {
+        User client = getClientWithCart(email);
         List<CartProduct> items = client.getCart().getProductsList();
 
         validateStock(items);
@@ -44,8 +43,8 @@ public class OrderService {
         return orderMapper.toDTO(orderRepository.save(order));
     }
 
-    private User getClientWithCart(UUID clientId) {
-        User client = userRepository.findById(clientId)
+    private User getClientWithCart(String email) {
+        User client = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado"));
 
         if (client.getCart() == null || client.getCart().getProductsList().isEmpty()) {

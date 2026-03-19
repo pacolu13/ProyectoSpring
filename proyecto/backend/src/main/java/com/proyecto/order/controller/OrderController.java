@@ -1,10 +1,7 @@
 package com.proyecto.order.controller;
 
-import java.util.UUID;
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,20 +10,19 @@ import com.proyecto.config.ApiRoutes;
 import com.proyecto.order.dto.OrderDTO;
 import com.proyecto.order.service.OrderService;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(ApiRoutes.ORDERS)
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class OrderController {
 
     private final OrderService orderService;
 
-    @PostMapping("/submit/{clientId}")
-    public ResponseEntity<OrderDTO> orderSubmit(@PathVariable UUID clientId) {
-        OrderDTO compraDTO = orderService.orderSubmit(clientId);
+    @PostMapping("/submit")
+    public ResponseEntity<OrderDTO> orderSubmit(Authentication authentication) {
+        String email = authentication.getName();
+        OrderDTO compraDTO = orderService.orderSubmit(email);
         return ResponseEntity.ok(compraDTO);
     }
 }

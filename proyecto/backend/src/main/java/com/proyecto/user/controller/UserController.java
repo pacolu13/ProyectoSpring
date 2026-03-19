@@ -6,14 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.proyecto.user.dto.*;
 import com.proyecto.user.service.UserService;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,10 +21,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.proyecto.config.ApiRoutes;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(ApiRoutes.USERS)
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
@@ -44,12 +41,6 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserCreateDTO createUserDTO) {
-        UserDTO response = userService.createUser(createUserDTO);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
-    @PostMapping("/list")
     public ResponseEntity<List<UserDTO>> createUserList(@RequestBody List<UserCreateDTO> createUserDTOList) {
         List<UserDTO> response = userService.createUserList(createUserDTOList);
         return ResponseEntity.ok(response);

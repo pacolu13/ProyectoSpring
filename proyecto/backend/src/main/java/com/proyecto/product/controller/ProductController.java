@@ -12,7 +12,6 @@ import com.proyecto.product.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(ApiRoutes.PRODUCTS)
 @RequiredArgsConstructor

@@ -1,7 +1,6 @@
 package com.proyecto.cart.service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,21 +38,15 @@ public class CartService {
         return cartMapper.toDTO(cart);
     }
 
-    public CartDTO findCart(UUID clientId) {
-        Cart cart = cartRepository.findByUserId(clientId)
-                .orElseThrow(() -> new ResourceNotFoundException("Carrito no encontrado"));
-        return cartMapper.toDTO(cart);
-    }
-
     @Transactional
-    public CartDTO addProduct(CartAddProductDTO dto) {
-        User client = userRepository.findById(dto.userId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado"));
+    public CartDTO addProduct(String email, CartAddProductDTO dto) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
         ProductListing productListing = productListingRepository.findById(dto.productListingId())
                 .orElseThrow(() -> new ResourceNotFoundException("Producto Venta no encontrado"));
 
-        Cart cart = client.getCart();
+        Cart cart = user.getCart();
 
         if (!productListing.hayCantidad(dto.quantity())) {
             throw new ResourceNotFoundException("Stock insuficiente");
