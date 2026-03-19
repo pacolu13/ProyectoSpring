@@ -20,30 +20,30 @@ import lombok.RequiredArgsConstructor;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final ProductMapper productoMapper;
+    private final ProductMapper productMapper;
 
     public List<ProductDTO> getAllProducts() {
-        List<ProductDTO> response = productoMapper.toDTOList(productRepository.findAll());
+        List<ProductDTO> response = productMapper.toDTOList(productRepository.findAll());
         return response;
     }
 
     public ProductDTO getProductById(Long id) {
         Product response = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
-        return productoMapper.toDTO(response);
+        return productMapper.toDTO(response);
     }
 
-    public List<ProductDTO> addProductList(List<ProductCreateDTO> productos) {
-        List<Product> listaProductos = productoMapper.toEntityList(productos);
-        List<ProductDTO> response = productoMapper.toDTOList(productRepository.saveAll(listaProductos));
+    public List<ProductDTO> addProductList(List<ProductCreateDTO> productCreateDTOs) {
+        List<Product> productCreatelistDTOs = productMapper.toEntityList(productCreateDTOs);
+        List<ProductDTO> response = productMapper.toDTOList(productRepository.saveAll(productCreatelistDTOs));
         return response;
     }
 
     public void productUpdate(Long id, ProductUpdateDTO dto) {
-        Product productoExistente = productRepository.findById(id).orElseThrow(
+        Product productUpdate = productRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Producto no encontrado"));
 
-        productoMapper.updateProductFromDto(dto, productoExistente);
+        productMapper.updateProductFromDto(dto, productUpdate);
     }
 
     public void productDelete(Long id) {
