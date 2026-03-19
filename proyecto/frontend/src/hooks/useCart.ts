@@ -8,7 +8,15 @@ export const useCart = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setError("No autenticado");
+      setLoading(false);
+      return;
+    }
+
     api("/api/v1/cart")
       .then(setCart)
       .catch((e) => setError(e.message))

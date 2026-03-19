@@ -17,7 +17,7 @@ export const Cart = () => {
                     productListingId={item.productListingId}
                     quantity={item.quantity} id={0}
                 />
-            ))};
+            ))}
         </Grid>
         <Button label="Confirmar Compra" parentMethod={() => null}></Button>
     </>
