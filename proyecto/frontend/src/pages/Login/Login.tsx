@@ -1,5 +1,6 @@
 // Login.tsx
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   TextField,
@@ -11,22 +12,24 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import type { TokenResponseDTO, FormState } from "../../interfaces/index";
-import { apiClient } from "../../services/apiClient";
+import type { TokenResponseDTO } from "../../interfaces/index";
 import { useAuth } from "../../context/AuthContext";
 import { Globe, ErrorAlert } from "../../components/index";
 import "../Login/Login.css";
+import type { LoginDTO } from "../../interfaces/Auth";
+import { usePost } from "../../hooks/usePost";
 
 export const Login = () => {
   const { login } = useAuth();
-  const [form, setForm] = useState<FormState>({ email: "", password: "" });
-  const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const { post, isLoading } = usePost<TokenResponseDTO>("/api/v1/auth/login");
+  const [form, setForm] = useState<LoginDTO>({ email: "", password: "" });
   const [showPass, setShowPass] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const inputSx = { mb: "24px" };
 
   const handleChange =
-    (field: keyof FormState) =>
+    (field: keyof LoginDTO) =>
       (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm((f) => ({ ...f, [field]: e.target.value }));
       };
@@ -37,20 +40,15 @@ export const Login = () => {
       return;
     }
     setError("");
-    setLoading(true);
 
-    const { data, error } = await apiClient.post<TokenResponseDTO>("/auth/login", {
-      email: form.email,
-      password: form.password,
-    });
+    const data = await post({ email: form.email, password: form.password });
 
-    if (error) {
-      setError(error);
+    if (data) {
+      login(data.access_token);
+      navigate("/");
     } else {
-      apiClient.setAuthToken(data!.access_token);
-      login(data!.access_token);
+      setError("Credenciales incorrectas.");
     }
-    setLoading(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -109,11 +107,11 @@ export const Login = () => {
         <Button
           fullWidth
           onClick={handleSubmit}
-          disabled={loading}
+          disabled={isLoading}
           className="login-btn"
           disableElevation
         >
-          {loading ? (
+          {isLoading ? (
             <CircularProgress size={16} sx={{ color: "rgba(110,110,110,0.6)" }} />
           ) : (
             "Ingresar"
@@ -122,7 +120,7 @@ export const Login = () => {
 
         <Typography className="login-register-text">
           ¿No tenés cuenta?{" "}
-          <Link href="#" className="login-register-link">
+          <Link href="/register" className="login-register-link">
             Registrate
           </Link>
         </Typography>

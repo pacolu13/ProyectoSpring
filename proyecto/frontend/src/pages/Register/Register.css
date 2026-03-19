@@ -1,0 +1,113 @@
+.register-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0a0a0a;
+    background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 70%);
+    padding: 24px;
+}
+
+.register-form {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 40px;
+    background-color: #111111;
+    border: 1px solid #1f1f1f;
+    position: relative;
+}
+
+.register-form::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(135deg, #2a2a2a, transparent 50%);
+    z-index: -1;
+}
+
+.register-title {
+    font-size: 1.5rem !important;
+    font-weight: 500;
+    color: #f0f0f0;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 36px !important;
+}
+
+.register-input {
+    margin-bottom: 20px !important;
+}
+
+.register-input .MuiOutlinedInput-root fieldset {
+    border-color: #2a2a2a;
+    transition: border-color 0.2s ease;
+}
+
+.register-input .MuiOutlinedInput-root:hover fieldset {
+    border-color: #444;
+}
+
+.register-input .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: #f0f0f0;
+    border-width: 1px !important;
+}
+
+.register-input .MuiInputLabel-root {
+    color: #555 !important;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+}
+
+.register-input .MuiInputLabel-root.Mui-focused {
+    color: #f0f0f0 !important;
+}
+
+.register-input .MuiInputBase-input {
+    color: #f0f0f0;
+    padding: 13px 14px;
+}
+
+.register-input .MuiOutlinedInput-root input:-webkit-autofill,
+.register-input .MuiOutlinedInput-root input:-webkit-autofill:hover,
+.register-input .MuiOutlinedInput-root input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #0a0a0a inset !important;
+    -webkit-text-fill-color: #f0f0f0 !important;
+}
+
+.register-form>.MuiButtonBase-root {
+    margin-top: 8px;
+    margin-bottom: 24px;
+    border-radius: 0;
+    background-color: #f0f0f0;
+    color: #0a0a0a;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em !important;
+    padding: 13px;
+    transition: background-color 0.2s ease;
+}
+
+.register-form>.MuiButtonBase-root:hover {
+    background-color: #d0d0d0;
+}
+
+.register-login-text {
+    font-size: 0.78rem;
+    color: #444;
+    text-align: center;
+    letter-spacing: 0.03em;
+}
+
+.register-login-link {
+    color: #f0f0f0;
+    text-decoration: none;
+    border-bottom: 1px solid #333;
+    padding-bottom: 1px;
+    transition: border-color 0.2s ease;
+}
+
+.register-login-link:hover {
+    border-color: #f0f0f0;
+}

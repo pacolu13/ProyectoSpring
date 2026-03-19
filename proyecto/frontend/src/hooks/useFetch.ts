@@ -27,7 +27,7 @@ export const useFetch = <T>(url: string): Params<T> => {
     }
 
     setIsLoading(true);
-    api(url)
+    api.get(url)
       .then(setData)
       .catch((e) => setError(e.message))
       .finally(() => setIsLoading(false));
