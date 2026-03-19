@@ -1,6 +1,6 @@
 import './Home.css'
 import { ProductHome } from '../../components/index'
-import { useFetch } from '../../hooks'
+import { useFetch } from '../../hooks/useFetch'
 import type { ProductDTO } from '../../interfaces';
 
 export const Home = () => {

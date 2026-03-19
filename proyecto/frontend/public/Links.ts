@@ -7,6 +7,14 @@ export const linksHeader = [
     {
         name: 'Productos',
         url: '/products',
+    },
+    {
+        name: "Iniciar Sesion",
+        url: "/login"
+    },
+    {
+        name: "Registrarse",
+        url: "/register"
     }
 ];
 

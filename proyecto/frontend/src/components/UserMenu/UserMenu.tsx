@@ -1,23 +1,12 @@
-import { useState, useRef, useEffect } from "react";
+// components/UserMenu.tsx
+import { useRef, useEffect, useState } from "react";
 import "./UserMenu.css";
-
-interface MenuItem {
-  icon: string;
-  label: string;
-  href?: string;
-  danger?: boolean;
-}
-
-const menuItems: MenuItem[] = [
-  { icon: "👤", label: "Mi perfil" },
-  { icon: "🛍️", label: "Mis pedidos" },
-  { icon: "❤️", label: "Favoritos" },
-  { icon: "⚙️", label: "Configuración" },
-  { icon: "🚪", label: "Cerrar sesión", danger: true },
-];
+import { useFetch } from "../../hooks/useFetch";
+import type { User } from "../../interfaces/User";
 
 export const UserMenu = () => {
   const [open, setOpen] = useState(false);
+  const { data, isLoading, error } = useFetch<User>("/api/v1/users/this");
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -26,7 +15,6 @@ export const UserMenu = () => {
         setOpen(false);
       }
     };
-    document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
@@ -41,12 +29,7 @@ export const UserMenu = () => {
         <span className="user_btn__avatar">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.5" />
-            <path
-              d="M4 20c0-4 3.582-7 8-7s8 3 8 7"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
+            <path d="M4 20c0-4 3.582-7 8-7s8 3 8 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
         </span>
         <span className={`user_btn__chevron ${open ? "user_btn__chevron--up" : ""}`}>
@@ -57,7 +40,6 @@ export const UserMenu = () => {
       </button>
 
       <div className={`user_dropdown ${open ? "user_dropdown--visible" : ""}`} role="menu">
-        {/* Header del menú */}
         <div className="user_dropdown__header">
           <div className="user_dropdown__avatar_lg">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,29 +48,13 @@ export const UserMenu = () => {
             </svg>
           </div>
           <div className="user_dropdown__info">
-            <span className="user_dropdown__name">Usuario</span>
-            <span className="user_dropdown__email">usuario@email.com</span>
+            {isLoading
+              ? <span className="user_dropdown__email">Cargando...</span>
+              : <span className="user_dropdown__email">{data?.email ?? "—"}</span>
+            }
           </div>
         </div>
-
-        <div className="user_dropdown__divider" />
-
-        {/* Items */}
-        <ul className="user_dropdown__list">
-          {menuItems.map((item, i) => (
-            <li key={i}>
-              <button
-                className={`user_dropdown__item ${item.danger ? "user_dropdown__item--danger" : ""}`}
-                role="menuitem"
-                onClick={() => setOpen(false)}
-              >
-                <span className="user_dropdown__item_icon">{item.icon}</span>
-                <span>{item.label}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );
-}
+};

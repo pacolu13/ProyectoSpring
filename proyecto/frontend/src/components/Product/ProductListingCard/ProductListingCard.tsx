@@ -1,5 +1,5 @@
-import { FormatDate } from "../../utils/FormatDate";
-import { Button } from "../Button/Button";
+import { FormatDate } from "../../../utils/FormatDate";
+import { Button } from "../../Button/Button";
 import "./ProductListingCard.css";
 
 interface ProductCardProps {

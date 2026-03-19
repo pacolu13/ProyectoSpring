@@ -11,6 +11,8 @@ const api = async (url: string, options: RequestInit = {}) => {
     },
   });
 
+  console.log(response)
+  
   if (!response.ok) throw new Error(response.statusText);
   return response.json();
 };

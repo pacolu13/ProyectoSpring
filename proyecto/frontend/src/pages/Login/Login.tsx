@@ -1,3 +1,4 @@
+// Login.tsx
 import { useState } from "react";
 import {
   Box,
@@ -12,11 +13,13 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import type { TokenResponseDTO, FormState } from "../../interfaces/index";
 import { apiClient } from "../../services/apiClient";
+import { useAuth } from "../../context/AuthContext";
 import { Globe, ErrorAlert } from "../../components/index";
 import "../Login/Login.css";
 
 export const Login = () => {
-  const [form, setForm] = useState<FormState>({ username: "", password: "" });
+  const { login } = useAuth();
+  const [form, setForm] = useState<FormState>({ email: "", password: "" });
   const [loading, setLoading] = useState<boolean>(false);
   const [showPass, setShowPass] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -29,7 +32,7 @@ export const Login = () => {
       };
 
   const handleSubmit = async (): Promise<void> => {
-    if (!form.username || !form.password) {
+    if (!form.email || !form.password) {
       setError("Completá usuario y contraseña.");
       return;
     }
@@ -37,18 +40,17 @@ export const Login = () => {
     setLoading(true);
 
     const { data, error } = await apiClient.post<TokenResponseDTO>("/auth/login", {
-      username: form.username,
+      email: form.email,
       password: form.password,
     });
 
     if (error) {
       setError(error);
     } else {
-      apiClient.setAuthToken(data!.token);
-      // navigate("/dashboard");
+      apiClient.setAuthToken(data!.access_token);
+      login(data!.access_token);
     }
     setLoading(false);
-
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -61,15 +63,13 @@ export const Login = () => {
         <Globe />
       </Box>
 
-      {/* Card */}
       <Box className="login-card">
-
         <TextField
           fullWidth
           label="Usuario"
           placeholder="tu_usuario"
-          value={form.username}
-          onChange={handleChange("username")}
+          value={form.email}
+          onChange={handleChange("email")}
           onKeyDown={handleKeyDown}
           variant="outlined"
           size="small"
@@ -97,19 +97,15 @@ export const Login = () => {
             ),
           }}
         />
-        {/* Forgot password */}
+
         <Box sx={{ display: "flex", justifyContent: "flex-end", mb: "22px" }}>
           <Link href="#" className="login-forgot">
             ¿Olvidaste tu contraseña?
           </Link>
         </Box>
 
-        {/* Error */}
-        {error && (
-          <ErrorAlert message={error} />
-        )}
+        {error && <ErrorAlert message={error} />}
 
-        {/* Submit */}
         <Button
           fullWidth
           onClick={handleSubmit}
@@ -124,7 +120,6 @@ export const Login = () => {
           )}
         </Button>
 
-        {/* Register */}
         <Typography className="login-register-text">
           ¿No tenés cuenta?{" "}
           <Link href="#" className="login-register-link">

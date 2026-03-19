@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useFetch } from "../../hooks";
+import { useFetch } from "../../hooks/useFetch";
 import { ProductListingCard, ListingFilters } from "../../components/index";
 import type { ProductListingDTO } from "../../interfaces/ProductListingDTO";
 import './ProductListing.css';

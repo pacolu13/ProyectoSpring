@@ -1,16 +1,17 @@
 
 import './Cart.css'
-import { useCart } from "../../hooks/useCart";
 import { Grid, Button, ProductCart } from "../../components";
+import { useFetch } from '../../hooks/useFetch';
+import type { CartDTO } from '../../interfaces';
 
 export const Cart = () => {
-    const { cart, loading, error } = useCart();
+    const { data, isLoading, error } = useFetch<CartDTO>("/api/v1/cart");
 
-    if (cart == null) return null;
+    if (data == null) return null;
 
     return <>
         <Grid columns={3}>
-            {cart.products.map((item, i) => (
+            {data.products.map((item, i) => (
                 <ProductCart
                     key={item.id}
                     name={item.name}

@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
+import api from "../services/api";
 
 type Data<T> = T | null;
 type Error = string | null;
@@ -9,35 +11,27 @@ interface Params<T> {
     isLoading: boolean;
 }
 
+
 export const useFetch = <T>(url: string): Params<T> => {
+    const { token } = useAuth();
     const [data, setData] = useState<Data<T>>(null);
     const [error, setError] = useState<Error>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        const controller = new AbortController();
+    if (!token) {          // <- usás el token del contexto, no localStorage
+      setData(null);
+      setError("No autenticado");
+      setIsLoading(false);
+      return;
+    }
 
-        setIsLoading(true);
-
-        const fetchData = async () => {
-            try {
-                const response = await fetch(url, controller);
-
-                if (!response.ok) {
-                    throw new Error('Error en la petición');
-                }
-
-                const result = await response.json();
-                setData(result);
-            } catch (error) {
-                setError(error as Error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [url]);
+    setIsLoading(true);
+    api(url)
+      .then(setData)
+      .catch((e) => setError(e.message))
+      .finally(() => setIsLoading(false));
+  }, [token]);             // <- se reactiva cuando el contexto cambia
 
     return { data, error, isLoading };
 }

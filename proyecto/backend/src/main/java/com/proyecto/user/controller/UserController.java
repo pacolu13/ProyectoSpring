@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.proyecto.config.ApiRoutes;
 
+
 @RestController
 @RequestMapping(ApiRoutes.USERS)
 @RequiredArgsConstructor
@@ -28,6 +30,13 @@ public class UserController {
 
     private final UserService userService;
 
+
+    @GetMapping("/this")
+    public ResponseEntity<UserDTO> getUserByEmail(Authentication authentication) {
+        String email = authentication.getName(); // extrae del JWT
+        return ResponseEntity.ok(userService.getUserByEmail(email));
+    }
+    
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<UserDTO> response = userService.getAllUsers();

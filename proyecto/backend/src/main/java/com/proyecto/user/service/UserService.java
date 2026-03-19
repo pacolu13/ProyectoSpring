@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.proyecto.cart.entity.Cart;
+import com.proyecto.exceptions.ResourceNotFoundException;
 import com.proyecto.user.dto.UserCreateDTO;
 import com.proyecto.user.dto.UserDTO;
 import com.proyecto.user.dto.UserUpdateDTO;
@@ -25,6 +26,13 @@ public class UserService {
 
     public List<UserDTO> getAllUsers() {
         return userMapper.toDTOList(userRepository.findAll());
+    }
+
+    public UserDTO getUserByEmail(String email) {
+        User response = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+        return userMapper.toDTO(response);
+
     }
 
     public UserDTO getUserById(UUID id) {
