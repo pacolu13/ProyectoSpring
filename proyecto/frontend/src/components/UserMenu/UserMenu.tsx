@@ -1,12 +1,13 @@
 // components/UserMenu.tsx
 import { useRef, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import "./UserMenu.css";
-import { useFetch } from "../../hooks/useFetch";
-import type { User } from "../../interfaces/User";
 
 export const UserMenu = () => {
   const [open, setOpen] = useState(false);
-  const { data, isLoading, error } = useFetch<User>("/api/v1/users/this");
+  const { token, user, logout } = useAuth();
+  const navigate = useNavigate();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -15,8 +16,15 @@ export const UserMenu = () => {
         setOpen(false);
       }
     };
+    document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
+
+  const handleLogout = () => {
+    logout();
+    setOpen(false);
+    navigate("/login");
+  };
 
   return (
     <div className="user_menu_root" ref={ref}>
@@ -47,11 +55,20 @@ export const UserMenu = () => {
               <path d="M4 20c0-4 3.582-7 8-7s8 3 8 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </div>
+
           <div className="user_dropdown__info">
-            {isLoading
-              ? <span className="user_dropdown__email">Cargando...</span>
-              : <span className="user_dropdown__email">{data?.email ?? "—"}</span>
-            }
+            {token ? (
+              <>
+                <span className="user_dropdown__email">{user?.email}</span>
+                <button className="user_dropdown__logout" onClick={handleLogout}>
+                  Cerrar sesión
+                </button>
+              </>
+            ) : (
+              <a className="user_dropdown__login_link" href="/login">
+                Iniciar sesión
+              </a>
+            )}
           </div>
         </div>
       </div>

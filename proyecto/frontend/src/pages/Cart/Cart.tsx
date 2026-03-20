@@ -11,7 +11,7 @@ export const Cart = () => {
 
     return <>
         <Grid columns={3}>
-            {data.products.map((item, i) => (
+            {data.products.map((item) => (
                 <ProductCart
                     key={item.id}
                     name={item.name}

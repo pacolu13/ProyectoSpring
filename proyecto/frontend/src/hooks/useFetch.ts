@@ -6,19 +6,19 @@ type Data<T> = T | null;
 type Error = string | null;
 
 interface Params<T> {
-    data: Data<T>;
-    error: Error;
-    isLoading: boolean;
+  data: Data<T>;
+  error: Error;
+  isLoading: boolean;
 }
 
 
 export const useFetch = <T>(url: string): Params<T> => {
-    const { token } = useAuth();
-    const [data, setData] = useState<Data<T>>(null);
-    const [error, setError] = useState<Error>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { token } = useAuth();
+  const [data, setData] = useState<Data<T>>(null);
+  const [error, setError] = useState<Error>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    useEffect(() => {
+  useEffect(() => {
     if (!token) {          // <- usás el token del contexto, no localStorage
       setData(null);
       setError("No autenticado");
@@ -31,7 +31,7 @@ export const useFetch = <T>(url: string): Params<T> => {
       .then(setData)
       .catch((e) => setError(e.message))
       .finally(() => setIsLoading(false));
-  }, [token]);             // <- se reactiva cuando el contexto cambia
+  }, [token, url]);             // <- se reactiva cuando el contexto cambia
 
-    return { data, error, isLoading };
+  return { data, error, isLoading };
 }

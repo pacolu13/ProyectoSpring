@@ -33,7 +33,7 @@ export const Register = () => {
         const data = await post({ username: form.username, email: form.email, password: form.password });
 
         if (data) {
-            login(data.access_token);
+            login(data.access_token, { email: form.email });
             navigate("/");
         } else {
             setError("Error al registrarse.");

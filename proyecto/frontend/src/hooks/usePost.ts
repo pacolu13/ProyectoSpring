@@ -1,6 +1,5 @@
 // hooks/usePost.ts
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
 
 interface PostState<T> {
@@ -11,7 +10,6 @@ interface PostState<T> {
 }
 
 export const usePost = <T>(url: string): PostState<T> => {
-    const { login } = useAuth();
     const [data, setData] = useState<T | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);

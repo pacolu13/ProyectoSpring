@@ -32,6 +32,7 @@ export const Home = () => {
                 <div className="products-grid">
                     {data.map(product => (
                         <ProductHome
+                            key={product.id}
                             id={product.id}
                             image={product.image}
                             brand={product.brand}

@@ -44,7 +44,7 @@ export const Login = () => {
     const data = await post({ email: form.email, password: form.password });
 
     if (data) {
-      login(data.access_token);
+      login(data.access_token, { email: form.email });
       navigate("/");
     } else {
       setError("Credenciales incorrectas.");
