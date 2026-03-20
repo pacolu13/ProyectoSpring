@@ -63,6 +63,7 @@ export const UserMenu = () => {
                 <button className="user_dropdown__logout" onClick={handleLogout}>
                   Cerrar sesión
                 </button>
+                <a href="/cart"><i className="fa-solid fa-cart-shopping"></i></a>
               </>
             ) : (
               <a className="user_dropdown__login_link" href="/login">

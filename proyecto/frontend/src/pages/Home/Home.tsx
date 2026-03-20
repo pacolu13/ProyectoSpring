@@ -5,7 +5,7 @@ import type { ProductDTO } from '../../interfaces';
 
 export const Home = () => {
 
-    const { data, error, isLoading } = useFetch<ProductDTO[]>('/api/v1/products');
+    const { data, error, isLoading } = useFetch<ProductDTO[]>('/api/v1/products',false);
 
     if (data == null || error) {
         return null; // Generar un error

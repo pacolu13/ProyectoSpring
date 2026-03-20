@@ -7,7 +7,7 @@ import './ProductListing.css';
 export const ProductListing = () => {
   const { idProduct } = useParams();
   const { data, error, isLoading } = useFetch<ProductListingDTO[]>(
-    `/api/v1/product-listings/${idProduct}`
+    `/api/v1/product-listings/${idProduct}`, false
   );
   //Modificar, actualmente no devuelve nada
   if (idProduct == null || data == null) return null;
@@ -44,13 +44,10 @@ export const ProductListing = () => {
               id={item.id}
               price={item.price}
               productName={item.productName}
-              sellerName={item.sellerName}
               onBuy={handleBuy}
               creationDate={item.creationDate}
-              sellerSales={0}
-              sellerRating={0}
-              condition={"new"}
-              location={""}
+              seller={item.seller}
+              condition={item.condition}
             />
           </div>
         ))}

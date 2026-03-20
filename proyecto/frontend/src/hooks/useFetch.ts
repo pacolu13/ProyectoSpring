@@ -12,18 +12,20 @@ interface Params<T> {
 }
 
 
-export const useFetch = <T>(url: string): Params<T> => {
+export const useFetch = <T>(url: string, isProtected: boolean): Params<T> => {
   const { token } = useAuth();
   const [data, setData] = useState<Data<T>>(null);
   const [error, setError] = useState<Error>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (!token) {          // <- usás el token del contexto, no localStorage
-      setData(null);
-      setError("No autenticado");
-      setIsLoading(false);
-      return;
+    if (isProtected) {
+      if (!token) {          // <- usás el token del contexto, no localStorage
+        setData(null);
+        setError("No autenticado");
+        setIsLoading(false);
+        return;
+      }
     }
 
     setIsLoading(true);

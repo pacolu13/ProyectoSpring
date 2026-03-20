@@ -5,7 +5,7 @@ import { useFetch } from '../../hooks/useFetch';
 import type { CartDTO } from '../../interfaces';
 
 export const Cart = () => {
-    const { data, isLoading, error } = useFetch<CartDTO>("/api/v1/cart");
+    const { data, isLoading, error } = useFetch<CartDTO>("/api/v1/cart", true);
 
     if (data == null) return null;
 

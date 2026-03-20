@@ -1,0 +1,20 @@
+/* Stars */
+.plc__stars {
+  display: flex;
+  gap: 1px;
+}
+
+.plc__star {
+  width: 10px;
+  height: 10px;
+  color: rgba(255, 255, 255, 0.15);
+}
+
+.plc__star--filled {
+  color: #fbbf24;
+}
+
+.plc__seller-sales {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+}
