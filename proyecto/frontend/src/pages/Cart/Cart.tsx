@@ -5,13 +5,12 @@ import { useFetch } from '../../hooks/useFetch';
 import type { CartDTO } from '../../interfaces';
 
 export const Cart = () => {
-    const { data, isLoading, error } = useFetch<CartDTO>("/api/v1/cart", true);
-
+    const { data, isLoading, error } = useFetch<CartDTO>("/api/v1/carts", true);
     if (data == null) return null;
 
     return <>
         <Grid columns={3}>
-            {data.products.map((item) => (
+            {data.cartProductsList.map((item) => (
                 <ProductCart
                     key={item.id}
                     name={item.name}

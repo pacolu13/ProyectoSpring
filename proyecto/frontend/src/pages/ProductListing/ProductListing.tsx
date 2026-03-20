@@ -3,18 +3,26 @@ import { useFetch } from "../../hooks/useFetch";
 import { ProductListingCard, ListingFilters } from "../../components/index";
 import type { ProductListingDTO } from "../../interfaces/ProductListingDTO";
 import './ProductListing.css';
+import { usePost } from "../../hooks/usePost";
+import type { CartDTO } from "../../interfaces";
 
 export const ProductListing = () => {
   const { idProduct } = useParams();
   const { data, error, isLoading } = useFetch<ProductListingDTO[]>(
     `/api/v1/product-listings/${idProduct}`, false
   );
+
+  const { post, loading } = usePost<CartDTO>("/api/v1/carts");
+
   //Modificar, actualmente no devuelve nada
   if (idProduct == null || data == null) return null;
 
-  const handleBuy = (id: number) => {
-    // TODO: lógica de compra
-    console.log("Comprar producto listing id:", id);
+  const handleBuy = async (id: number): Promise<void> => {
+    console.log(id);
+    const result = await post({ productListingId: id, quantity: 1 });
+    if (result) {
+      console.log("Producto añadido -> Cambiarlo por popup");
+    }
   };
 
   return (
