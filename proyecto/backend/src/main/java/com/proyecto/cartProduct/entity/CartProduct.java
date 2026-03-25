@@ -1,5 +1,7 @@
 package com.proyecto.cartProduct.entity;
 
+import java.math.BigDecimal;
+
 import com.proyecto.cart.entity.Cart;
 import com.proyecto.productListing.entity.ProductListing;
 
@@ -12,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,22 +30,23 @@ import lombok.Setter;
 public class CartProduct {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Integer quantity;
-    
+    @Transient //No deja que se persista, se calcula en el momento
+    private BigDecimal subtotal;
+
     @OneToOne(fetch = FetchType.LAZY)
     private ProductListing productListing;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="cart_id")
+    @JoinColumn(name = "cart_id")
     private Cart cart;
 
     @Override
     public String toString() {
         return "ProductoCarrito [id=" + id + ", cantidad=" + quantity + "]";
     }
-
 
 }

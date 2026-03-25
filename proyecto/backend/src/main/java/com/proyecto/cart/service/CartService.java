@@ -1,5 +1,6 @@
 package com.proyecto.cart.service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import com.proyecto.cart.dto.CartDTO;
 import com.proyecto.cart.entity.Cart;
 import com.proyecto.cart.mapper.CartMapper;
 import com.proyecto.cart.repository.CartRepository;
+import com.proyecto.cartProduct.entity.CartProduct;
 import com.proyecto.exceptions.ResourceNotFoundException;
 import com.proyecto.productListing.entity.ProductListing;
 import com.proyecto.productListing.repository.ProductListingRepository;
@@ -35,7 +37,20 @@ public class CartService {
         Cart cart = Optional.ofNullable(user.getCart())
                 .orElseThrow(() -> new ResourceNotFoundException("Carrito no encontrado"));
 
+        calculateTotals(cart);
         return cartMapper.toDTO(cart);
+    }
+
+    private void calculateTotals(Cart cart) {
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (CartProduct pl : cart.getProductsList()) {
+            BigDecimal subtotal = BigDecimal.valueOf(pl.getQuantity())
+                    .multiply(pl.getProductListing().getPrice());
+            pl.setSubtotal(subtotal);
+            total = total.add(subtotal);
+        }
+        cart.setTotal(total);
     }
 
     @Transactional
@@ -52,8 +67,26 @@ public class CartService {
             throw new ResourceNotFoundException("Stock insuficiente");
         }
 
-        cart.addProduct(productListing, dto.quantity());
+        addProductToCart(cart, productListing, dto.quantity());
         cartRepository.save(cart);
         return cartMapper.toDTO(cart);
+    }
+
+    private void addProductToCart(Cart cart, ProductListing productListing, Integer quantity) {
+        CartProduct existItem = cart.getProductsList()
+                .stream()
+                .filter(cp -> cp.getProductListing().getId().equals(productListing.getId()))
+                .findFirst()
+                .orElse(null);
+
+        if (existItem != null) {
+            existItem.setQuantity(existItem.getQuantity() + quantity);
+        } else {
+            CartProduct newCartProduct = new CartProduct();
+            newCartProduct.setCart(cart);
+            newCartProduct.setProductListing(productListing);
+            newCartProduct.setQuantity(quantity);
+            cart.getProductsList().add(newCartProduct);
+        }
     }
 }

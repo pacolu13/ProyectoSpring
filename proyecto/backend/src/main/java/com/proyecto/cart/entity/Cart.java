@@ -1,10 +1,10 @@
 package com.proyecto.cart.entity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.proyecto.cartProduct.entity.CartProduct;
-import com.proyecto.productListing.entity.ProductListing;
 import com.proyecto.user.entity.User;
 
 import jakarta.persistence.*;
@@ -30,26 +30,10 @@ public class Cart {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // Sin el formato cascade no se generan las entidades anidadas
+    @Transient
+    private BigDecimal total;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartProduct> productsList = new ArrayList<>();
 
-    public void addProduct(ProductListing productListing, Integer quantity) {
-        CartProduct ExistItem = getProductsList()
-                .stream()
-                .filter(pc -> pc.getProductListing().getId().equals(productListing.getId()))
-                .findFirst()
-                .orElse(null);
-
-        if (ExistItem != null) {
-            ExistItem.setQuantity(ExistItem.getQuantity() + quantity);
-        } else {
-            CartProduct newCartProduct = new CartProduct();
-            newCartProduct.setCart(this);
-            newCartProduct.setProductListing(productListing);
-            newCartProduct.setQuantity(quantity);
-            getProductsList().add(newCartProduct);
-        }
-    }
 }

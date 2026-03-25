@@ -3,6 +3,7 @@ export interface CartProduct {
   name: string;
   productListingId: number;
   quantity: number;
+  subtotal: number;
 }
 
 export interface CartDTO {
