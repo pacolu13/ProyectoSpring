@@ -7,6 +7,7 @@ import java.util.List;
 import com.proyecto.orderDetails.dto.OrderDetailsDTO;
 
 public record OrderDTO(
+        Long id,
         String clientUsername,
         LocalDateTime orderDate,
         List<OrderDetailsDTO> orderDetailsList,

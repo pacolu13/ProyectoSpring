@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.proyecto.Mail.service.MailService;
 import com.proyecto.cartProduct.entity.CartProduct;
 import com.proyecto.exceptions.ResourceNotFoundException;
 import com.proyecto.order.dto.OrderDTO;
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 
 public class OrderService {
 
+    private final MailService mailService;
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final OrderMapper orderMapper;
@@ -39,6 +41,8 @@ public class OrderService {
 
         Order order = createOrder(client, items, total);
         applyPostPurchaseEffects(client, items, total);
+
+        mailService.sendOrderConfirmation(email, order);
 
         return orderMapper.toDTO(orderRepository.save(order));
     }
