@@ -4,14 +4,14 @@ import api from "../services/api";
 
 interface PostState<T> {
     data: T | null;
-    error: string | null;
+    addError: string | null;
     isLoading: boolean;
     post: (body: unknown) => Promise<T | null>;
 }
 
 export const usePost = <T>(url: string): PostState<T> => {
     const [data, setData] = useState<T | null>(null);
-    const [error, setError] = useState<string | null>(null);
+    const [addError, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const post = async (body: unknown): Promise<T | null> => {
@@ -29,5 +29,5 @@ export const usePost = <T>(url: string): PostState<T> => {
         }
     };
 
-    return { data, error, isLoading, post };
+    return { data, addError, isLoading, post };
 };

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components";
 import { useState } from "react";
 import type { TokenResponseDTO } from "../../interfaces";
-import type { RegisterDTO } from "../../interfaces/Auth";
+import type { RegisterDTO } from "../../interfaces/AuthDTO";
 import { usePost } from "../../hooks/usePost";
 import { useAuth } from "../../context/AuthContext";
 import './Register.css'

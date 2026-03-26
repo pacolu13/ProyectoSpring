@@ -1,27 +1,28 @@
 import { useParams } from "react-router-dom";
-import { useFetch } from "../../hooks/useFetch";
-import { ProductListingCard, ListingFilters } from "../../components/index";
-import type { ProductListingDTO } from "../../interfaces/ProductListingDTO";
+import { useFetch, usePost } from "../../hooks/index";
+import { ProductListingCard, ListingFilters, useToast } from "../../components/index";
+import type { ProductListingDTO, CartDTO } from "../../interfaces/index";
 import './ProductListing.css';
-import { usePost } from "../../hooks/usePost";
-import type { CartDTO } from "../../interfaces";
 
 export const ProductListing = () => {
   const { idProduct } = useParams();
+  const showToast = useToast();
   const { data, error, isLoading } = useFetch<ProductListingDTO[]>(
     `/api/v1/product-listings/${idProduct}`, false
   );
 
-  const { post, loading } = usePost<CartDTO>("/api/v1/carts");
+  const { post, addError } = usePost<CartDTO>("/api/v1/carts");
 
   //Modificar, actualmente no devuelve nada
   if (idProduct == null || data == null) return null;
 
   const handleBuy = async (id: number): Promise<void> => {
-    console.log(id);
-    const result = await post({ productListingId: id, quantity: 1 });
-    if (result) {
-      console.log("Producto añadido -> Cambiarlo por popup");
+    await post({ productListingId: id, quantity: 1 }); // -----> Modificar la cantidad para que el usuario ponga varios
+
+    if (addError) {
+      showToast('error', 'Error al añadir al carrito');
+    } else {
+      showToast('confirm', 'Producto añadido al carrito');
     }
   };
 

@@ -14,9 +14,9 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import type { TokenResponseDTO } from "../../interfaces/index";
 import { useAuth } from "../../context/AuthContext";
-import { Globe, ErrorAlert } from "../../components/index";
+import { Globe } from "../../components/index";
 import "../Login/Login.css";
-import type { LoginDTO } from "../../interfaces/Auth";
+import type { LoginDTO } from "../../interfaces/AuthDTO";
 import { usePost } from "../../hooks/usePost";
 
 export const Login = () => {
@@ -101,8 +101,6 @@ export const Login = () => {
             ¿Olvidaste tu contraseña?
           </Link>
         </Box>
-
-        {error && <ErrorAlert message={error} />}
 
         <Button
           fullWidth

@@ -1,17 +1,15 @@
 import './Home.css'
-import { Button, ProductHome } from '../../components/index'
-import { useFetch } from '../../hooks/useFetch'
+import { Button, ProductHome } from '../../components'
+import { useFetch } from '../../hooks'
 import type { ProductDTO } from '../../interfaces';
 
 export const Home = () => {
 
-    const { data, error, isLoading } = useFetch<ProductDTO[]>('/api/v1/products', false);
+    const { data, error } = useFetch<ProductDTO[]>('/api/v1/products', false);
 
     if (data == null || error) {
         return null; // Generar un error
     }
-
-    // Utilizar el isLoading
 
     return (
         <div id="Home">

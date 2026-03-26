@@ -1,12 +1,26 @@
 
+import { Button, ProductCart, useToast } from "../../components";
+import { useFetch, usePost } from '../../hooks';
+import type { CartDTO, OrderDTO } from '../../interfaces';
 import './Cart.css'
-import { Button, ProductCart } from "../../components";
-import { useFetch } from '../../hooks/useFetch';
-import type { CartDTO } from '../../interfaces';
 
 export const Cart = () => {
-    const { data, isLoading, error } = useFetch<CartDTO>("/api/v1/carts", true);
+    const showToast = useToast();
+    const { data } = useFetch<CartDTO>("/api/v1/carts", true);
+    const { post, addError } = usePost<OrderDTO>("/api/v1/orders/submit");
+
+    const handleBuy = async (): Promise<void> => {
+        await post(null);
+
+        if (addError) {
+            showToast('error', 'Error al realizar la compra');
+        } else {
+            showToast('confirm', 'Compra realizada');
+        }
+    };
+
     if (data == null) return null;
+
 
     return <>
         <div className='body_cart'>
@@ -20,7 +34,7 @@ export const Cart = () => {
                         key={item.id}
                         name={item.name}
                         productListingId={item.productListingId}
-                        quantity={item.quantity} id={0}
+                        quantity={item.quantity} id={item.id}
                         subtotal={item.subtotal}
                     />
                 ))}
@@ -28,7 +42,7 @@ export const Cart = () => {
                     <span>Total</span>
                     <span>{data.total}</span>
                 </div>
-                <Button label="Confirmar Compra" parentMethod={() => null}></Button>
+                <Button label="Confirmar Compra" parentMethod={handleBuy}></Button>
             </div>
         </div>
     </>
