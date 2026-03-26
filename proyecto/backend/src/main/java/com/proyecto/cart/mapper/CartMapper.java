@@ -1,10 +1,7 @@
 package com.proyecto.cart.mapper;
 
-import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.proyecto.cart.dto.*;
 import com.proyecto.cart.entity.Cart;
@@ -19,9 +16,5 @@ public interface CartMapper {
 
     @Mapping(source = "productsList", target = "cartProductsList")
     CartDTO toDTO(Cart carrito);
-
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(source = "cartProductsList", target = "productsList")
-    Cart updateCarritoFromDto(CartUpdateDTO dto, @MappingTarget Cart entity);
 
 }

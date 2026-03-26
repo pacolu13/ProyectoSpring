@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.proyecto.cart.dto.CartAddProductDTO;
 import com.proyecto.cart.dto.CartDTO;
+import com.proyecto.cart.dto.CartUpdateDTO;
 import com.proyecto.cart.entity.Cart;
 import com.proyecto.cart.mapper.CartMapper;
 import com.proyecto.cart.repository.CartRepository;
@@ -51,6 +52,32 @@ public class CartService {
             total = total.add(subtotal);
         }
         cart.setTotal(total);
+    }
+
+    public CartDTO updateCart(String email, CartUpdateDTO dto) {
+
+        System.out.println("\n" + dto + "\n");
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+
+        Cart cart = user.getCart();
+
+        CartProduct product = cart.getProductsList().stream()
+                .filter(i -> i.getProductListing().getId().equals(dto.productListingId()))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado"));
+
+        int newQuantity = product.getQuantity() + dto.quantity();
+
+        if (newQuantity <= 0) {
+            cart.getProductsList().remove(product);
+        } else {
+            product.setQuantity(newQuantity);
+        }
+
+        return cartMapper.toDTO(cartRepository.save(cart));
+
     }
 
     @Transactional

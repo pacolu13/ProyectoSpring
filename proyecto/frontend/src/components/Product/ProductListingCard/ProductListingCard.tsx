@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { SellerDTO } from "../../../interfaces";
 import { FormatDate } from "../../../utils/FormatDate";
 import { Button } from "../../Button/Button";
@@ -13,7 +14,7 @@ interface ProductCardProps {
   condition: "new" | "used"; // condición del producto
   freeShipping?: boolean;
   creationDate: string;
-  onBuy: (id: number) => void;
+  onBuy: (id: number, quantity: number) => void;
 }
 
 export const ProductListingCard = ({
@@ -26,6 +27,10 @@ export const ProductListingCard = ({
   creationDate,
   onBuy,
 }: ProductCardProps) => {
+
+  const [quantity, setQuantity] = useState(1)
+
+
   return (
     <article className="plc">
       <ConditionBadge condition={condition} />
@@ -80,7 +85,12 @@ export const ProductListingCard = ({
           </span>
           <span className="plc__date">{FormatDate(creationDate)}</span>
         </div>
-        <Button label="Comprar" parentMethod={() => onBuy(id)} />
+        <div className="card__quantity">
+          <button onClick={() => setQuantity(q => Math.max(1, q - 1))}>−</button>
+          <span>{quantity}</span>
+          <button onClick={() => setQuantity(q => q + 1)}>+</button>
+        </div>
+        <Button label="Comprar" parentMethod={() => onBuy(id, quantity)} />
       </div>
     </article>
   );

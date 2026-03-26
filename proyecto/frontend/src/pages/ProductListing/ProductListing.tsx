@@ -13,11 +13,10 @@ export const ProductListing = () => {
 
   const { post, addError } = usePost<CartDTO>("/api/v1/carts");
 
-  //Modificar, actualmente no devuelve nada
   if (idProduct == null || data == null) return null;
 
-  const handleBuy = async (id: number): Promise<void> => {
-    await post({ productListingId: id, quantity: 1 }); // -----> Modificar la cantidad para que el usuario ponga varios
+  const handleBuy = async (id: number, quantity: number): Promise<void> => {
+    await post({ productListingId: id, quantity });
 
     if (addError) {
       showToast('error', 'Error al añadir al carrito');
@@ -28,9 +27,7 @@ export const ProductListing = () => {
 
   return (
     <div className="listing-root">
-      {/* ── Sidebar filtros ── */}
-      <ListingFilters></ListingFilters>
-      {/* ── Lista ── */}
+      <ListingFilters />
       <main className="listing-main">
         {isLoading && (
           <p className="listing-state">Cargando publicaciones…</p>
@@ -40,7 +37,7 @@ export const ProductListing = () => {
             No se pudieron cargar las publicaciones.
           </p>
         )}
-        {data.length == 0 && (
+        {data.length === 0 && (
           <p className="listing-state">No hay publicaciones disponibles.</p>
         )}
         {data.map((item, i) => (
