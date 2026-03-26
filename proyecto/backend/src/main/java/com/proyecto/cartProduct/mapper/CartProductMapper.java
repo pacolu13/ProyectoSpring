@@ -14,6 +14,7 @@ public interface CartProductMapper {
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "productListing.id", target = "productListingId")
     @Mapping(source = "productListing.product.name", target = "name")
+    @Mapping(source = "productListing.price", target = "unitPrice")
     CartProductDTO toDTO(CartProduct carrito);
 
     //vamos a ignorar el carrito y el id porque no los necesitamos para crear un nuevo CartProduct
