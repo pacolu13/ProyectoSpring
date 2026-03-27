@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.proyecto.Mail.service.MailService;
 import com.proyecto.cartProduct.entity.CartProduct;
 import com.proyecto.exceptions.ResourceNotFoundException;
+import com.proyecto.mail.service.MailService;
 import com.proyecto.order.dto.OrderDTO;
 import com.proyecto.order.entity.Order;
 import com.proyecto.order.mapper.OrderMapper;

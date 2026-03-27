@@ -1,4 +1,4 @@
-package com.proyecto.Mail.service;
+package com.proyecto.mail.service;
 
 import java.math.BigDecimal;
 

@@ -29,12 +29,12 @@ public class ProductListingService {
     private final ProductListingMapper productListingMapper;
 
     public List<ProductListingDTO> findAllProductsListing(Long idProduct) {
-    List<ProductListing> productosVentaList = productListingRepository
-        .findAll()
-        .stream()
-        .filter(prdct -> prdct.getProduct().getId().equals(idProduct))
-        .collect(Collectors.toList());
-    return productListingMapper.toDTOList(productosVentaList);
+        List<ProductListing> productosVentaList = productListingRepository
+                .findAll()
+                .stream()
+                .filter(prdct -> prdct.getProduct().getId().equals(idProduct))
+                .collect(Collectors.toList());
+        return productListingMapper.toDTOList(productosVentaList);
     }
 
     public ProductListingDTO findyProductListingById(Long id) {
@@ -43,15 +43,18 @@ public class ProductListingService {
         return productListingMapper.toDTO(prod);
     }
 
-    public List<ProductListingDTO> addProductListingList(List<ProductListingCreateDTO> productsListingList) {
+    public List<ProductListingDTO> addProductListingList(List<ProductListingCreateDTO> productsListingList,
+            String email) {
+
+        User seller = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Vendedor no encontrado: " + email));
+
         List<ProductListing> productsListingSave = productsListingList.stream()
                 .map(dto -> {
-                    Product product = productRepository.findById(dto.productId())
+                    Product product = productRepository.findById(dto.product().id())
                             .orElseThrow(() -> new ResourceNotFoundException(
-                                    "Producto no encontrado: " + dto.productId()));
-                    User seller = userRepository.findById(dto.sellerId())
-                            .orElseThrow(() -> new ResourceNotFoundException(
-                                    "Vendedor no encontrado: " + dto.sellerId()));
+                                    "Producto no encontrado: " + dto.product().id()));
 
                     ProductListing entity = productListingMapper.toEntity(dto);
                     entity.setProduct(product);

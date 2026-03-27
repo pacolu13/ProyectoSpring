@@ -2,6 +2,7 @@ package com.proyecto.productListing.controller;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,15 +28,16 @@ public class ProductListingController {
     private final ProductListingService productListingService;
 
     @GetMapping("/{idProduct}")
-    public ResponseEntity<List<ProductListingDTO>> getAllProductListing(@PathVariable Long idProduct){
+    public ResponseEntity<List<ProductListingDTO>> getAllProductListing(@PathVariable Long idProduct) {
         List<ProductListingDTO> response = productListingService.findAllProductsListing(idProduct);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public ResponseEntity<List<ProductListingDTO>> añadirListaProductosVenta(
+    public ResponseEntity<List<ProductListingDTO>> añadirListaProductosVenta(Authentication authentication,
             @RequestBody List<ProductListingCreateDTO> listaProductosVenta) {
-        List<ProductListingDTO> response = productListingService.addProductListingList(listaProductosVenta);
+        String email = authentication.getName();
+        List<ProductListingDTO> response = productListingService.addProductListingList(listaProductosVenta, email);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

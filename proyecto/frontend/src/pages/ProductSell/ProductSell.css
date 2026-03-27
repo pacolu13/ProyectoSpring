@@ -1,0 +1,159 @@
+.ps-root {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.ps-card {
+    width: 100%;
+    max-width: 680px;
+    background: #111;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.ps-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 0.5rem 0 1.5rem;
+}
+
+.ps-section__title {
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #555;
+    margin: 0;
+}
+
+.ps-optional {
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #444;
+}
+
+.ps-divider {
+    height: 1px;
+    background: #1e1e1e;
+    margin: 0 0 1.5rem;
+}
+
+.ps-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.ps-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ps-label {
+    font-size: 13px;
+    color: #888;
+}
+
+.ps-required {
+    color: #e53935;
+}
+
+.ps-input {
+    background: #0a0a0a;
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #ebebeb;
+    outline: none;
+    transition: border-color 0.15s;
+    font-family: inherit;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ps-input:focus {
+    border-color: #e53935;
+}
+
+.ps-input::placeholder {
+    color: #444;
+}
+
+.ps-textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.ps-select {
+    cursor: pointer;
+    appearance: none;
+}
+
+.ps-select option {
+    background: #111;
+}
+
+.ps-state-group {
+    display: flex;
+    gap: 8px;
+}
+
+.ps-state-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid #2a2a2a;
+    background: none;
+    color: #888;
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+    font-family: inherit;
+}
+
+.ps-state-btn:hover {
+    border-color: #444;
+    color: #ccc;
+}
+
+.ps-state-btn--active {
+    border-color: #e53935;
+    color: #ebebeb;
+}
+
+.ps-preview {
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #2a2a2a;
+    margin-top: 4px;
+}
+
+.ps-submit {
+    margin-top: 1rem;
+    padding: 12px;
+    background: none;
+    border: 1px solid #e53935;
+    border-radius: 6px;
+    color: #e53935;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    font-family: inherit;
+}
+
+.ps-submit:hover {
+    background: #e53935;
+    color: #fff;
+}

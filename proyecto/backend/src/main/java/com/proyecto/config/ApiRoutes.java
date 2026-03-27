@@ -12,6 +12,7 @@ public class ApiRoutes {
     public static final String PRODUCTS_LISTING = API + "/product-listings";
     public static final String CARTS = API + "/carts";
     public static final String ORDERS = API + "/orders";
+    public static final String CATEGORIES = API + "categories";
 
     public static final String ALL_STRING = "/**";
 
