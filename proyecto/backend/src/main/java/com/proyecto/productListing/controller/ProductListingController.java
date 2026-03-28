@@ -3,7 +3,6 @@ package com.proyecto.productListing.controller;
 import java.util.List;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,10 +33,10 @@ public class ProductListingController {
     }
 
     @PostMapping
-    public ResponseEntity<List<ProductListingDTO>> añadirListaProductosVenta(Authentication authentication,
-            @RequestBody List<ProductListingCreateDTO> listaProductosVenta) {
+    public ResponseEntity<ProductListingDTO> addProductListing(Authentication authentication,
+            @RequestBody ProductListingCreateDTO productListing) {
         String email = authentication.getName();
-        List<ProductListingDTO> response = productListingService.addProductListingList(listaProductosVenta, email);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        ProductListingDTO response = productListingService.addProductListing(productListing, email);
+        return ResponseEntity.ok(response);
     }
 }

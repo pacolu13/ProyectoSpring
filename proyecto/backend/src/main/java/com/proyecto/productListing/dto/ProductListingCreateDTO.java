@@ -5,10 +5,10 @@ import java.math.BigDecimal;
 import com.proyecto.product.dto.ProductDTO;
 
 public record ProductListingCreateDTO(
-        String name,
-        String state,
-        Integer quantity,
+        String title,
         BigDecimal price,
+        String state,
+        Integer stock,
         ProductDTO product) {
 
 }

@@ -23,47 +23,43 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor // Agrega esta anotación para generar el constructor con los campos finales
 public class ProductListingService {
 
-    private final ProductRepository productRepository;
-    private final UserRepository userRepository;
-    private final ProductListingRepository productListingRepository;
-    private final ProductListingMapper productListingMapper;
+        private final UserRepository userRepository;
+        private final ProductRepository productRepository;
+        private final ProductListingRepository productListingRepository;
+        private final ProductListingMapper productListingMapper;
 
-    public List<ProductListingDTO> findAllProductsListing(Long idProduct) {
-        List<ProductListing> productosVentaList = productListingRepository
-                .findAll()
-                .stream()
-                .filter(prdct -> prdct.getProduct().getId().equals(idProduct))
-                .collect(Collectors.toList());
-        return productListingMapper.toDTOList(productosVentaList);
-    }
+        public List<ProductListingDTO> findAllProductsListing(Long idProduct) {
+                List<ProductListing> productosVentaList = productListingRepository
+                                .findAll()
+                                .stream()
+                                .filter(prdct -> prdct.getProduct().getId().equals(idProduct))
+                                .collect(Collectors.toList());
+                return productListingMapper.toDTOList(productosVentaList);
+        }
 
-    public ProductListingDTO findyProductListingById(Long id) {
-        ProductListing prod = productListingRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Producto Venta no encontrado"));
-        return productListingMapper.toDTO(prod);
-    }
+        public ProductListingDTO findyProductListingById(Long id) {
+                ProductListing prod = productListingRepository.findById(id)
+                                .orElseThrow(() -> new ResourceNotFoundException("Producto Venta no encontrado"));
+                return productListingMapper.toDTO(prod);
+        }
 
-    public List<ProductListingDTO> addProductListingList(List<ProductListingCreateDTO> productsListingList,
-            String email) {
+        public ProductListingDTO addProductListing(ProductListingCreateDTO productListing, String email) {
+                User seller = userRepository.findByEmail(email)
+                                .orElseThrow(() -> new ResourceNotFoundException(
+                                                "Vendedor no encontrado: " + email));
 
-        User seller = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Vendedor no encontrado: " + email));
+                System.out.println(productListing);
+                System.out.println(email);
+                
+                ProductListing productsListingSave = productListingMapper.toEntity(productListing);
 
-        List<ProductListing> productsListingSave = productsListingList.stream()
-                .map(dto -> {
-                    Product product = productRepository.findById(dto.product().id())
-                            .orElseThrow(() -> new ResourceNotFoundException(
-                                    "Producto no encontrado: " + dto.product().id()));
+                Product product = productsListingSave.getProduct();
+                Product productSaved = productRepository.save(product);
+                productsListingSave.setUser(seller);
+                productsListingSave.setProduct(productSaved);
+                seller.getProductsListingList().add(productsListingSave);
 
-                    ProductListing entity = productListingMapper.toEntity(dto);
-                    entity.setProduct(product);
-                    entity.setUser(seller);
-                    return entity;
-                })
-                .toList();
-
-        List<ProductListing> productsListingSaved = productListingRepository.saveAll(productsListingSave);
-        return productListingMapper.toDTOList(productsListingSaved);
-    }
+                ProductListing productsListingSaved = productListingRepository.save(productsListingSave);
+                return productListingMapper.toDTO(productsListingSaved);
+        }
 }
