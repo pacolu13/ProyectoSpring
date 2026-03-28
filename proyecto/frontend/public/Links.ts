@@ -7,6 +7,10 @@ export const linksHeader = [
     {
         name: 'Productos',
         url: '/products',
+    },
+    {
+        name: 'Vender',
+        url: '/products-sell',
     }
 ];
 

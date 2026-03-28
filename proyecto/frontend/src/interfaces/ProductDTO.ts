@@ -1,10 +1,10 @@
 export interface ProductDTO {
-    id: number
+    id?: number
     name: string
     description: string
     brand: string
     category: string
     image: string
     active: boolean
-    creationDate: string
+    creationDate?: string
 }
