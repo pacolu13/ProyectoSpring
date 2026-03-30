@@ -12,10 +12,19 @@ import './Register.css'
 export const Register = () => {
     const { login } = useAuth();
     const navigate = useNavigate();
+    const [rolList, setRolList] = useState<string[]>(["CLIENT"]);
     const { post, isLoading } = usePost<TokenResponseDTO>("/api/v1/auth/register");
     const [form, setForm] = useState<RegisterDTO>({ username: "", email: "", password: "" });
     const [error, setError] = useState<string>("");
 
+    const handleSellerRol = (value: string) => {
+        setRolList((prevList) => {
+            if (prevList.includes(value)) {
+                return prevList.filter((item) => item !== value);
+            }
+            return [...prevList, value];
+        });
+    }
 
     const handleChange =
         (field: keyof RegisterDTO) =>
@@ -30,7 +39,7 @@ export const Register = () => {
         }
         setError("");
 
-        const data = await post({ username: form.username, email: form.email, password: form.password });
+        const data = await post({ username: form.username, email: form.email, password: form.password, roles: rolList });
 
         if (data) {
             login(data.access_token, { email: form.email });
@@ -71,6 +80,14 @@ export const Register = () => {
                     onChange={handleChange("password")}
 
                 />
+                <Box className="register-seller-option">
+                    <Typography variant="body1" className="register-seller-text">
+                        ¿Querés registrarte como vendedor?
+                    </Typography>
+                    <Button label="Sí" parentMethod={() => handleSellerRol("SELLER")}></Button>
+                </Box>
+                {error && <Typography color="error">{error}</Typography>}
+
                 <Button label="REGISTRARSE" parentMethod={() => handleSubmit()}></Button>
                 <Typography className="register-login-text">
                     ¿Ya tenés cuenta?{" "}
