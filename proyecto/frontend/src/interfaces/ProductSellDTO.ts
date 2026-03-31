@@ -4,6 +4,6 @@ export interface ProductSellDTO {
     title: String;
     price: number;
     state: string;
-    stock: number;
+    quantity: number;
     product: ProductDTO;
 }

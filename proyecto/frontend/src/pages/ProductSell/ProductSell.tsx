@@ -17,7 +17,6 @@ export const ProductSell = () => {
     handleSubmit,
     watch,
     reset,
-    formState: { errors }
   } = useForm<FormDataDTO>({
     defaultValues: {
       state: STATES[0],
@@ -30,26 +29,11 @@ export const ProductSell = () => {
   const isOtherCategory = category === "Otra";
 
   const onSubmit = async (data: FormDataDTO) => {
-    if (!data.title || !data.price || !data.stock) {
-      showToast("warning", "Completá los campos obligatorios");
-      return;
-    }
-
-    if (Number(data.price) <= 0) {
-      showToast("warning", "El precio debe ser mayor a 0");
-      return;
-    }
-
-    if (Number(data.stock) <= 0) {
-      showToast("warning", "El stock debe ser mayor a 0");
-      return;
-    }
-
     const payload: ProductSellDTO = {
       title: data.title,
       price: parseFloat(data.price),
       state: data.state,
-      stock: parseInt(data.stock),
+      quantity: data.quantity,
       product: {
         name: data.productName,
         description: data.description,
@@ -59,8 +43,6 @@ export const ProductSell = () => {
         active: true,
       },
     };
-
-    console.log("Payload:", payload);
 
     const result = await post(payload);
 
@@ -79,11 +61,29 @@ export const ProductSell = () => {
         <div className="ps-section">
           <h2 className="ps-section__title">Publicación</h2>
 
-          <InputField label="Título" name="title" register={register} required placeholder="Iphone 13 pro max" />
+          <InputField
+            label="Título"
+            name="title"
+            register={register}
+            rules={{ required: "El título es obligatorio" }}
+            placeholder="Iphone 13 pro max"
+          />
 
           <div className="ps-row">
-            <InputField label="Precio" name="price" type="number" register={register} required />
-            <InputField label="Stock" name="stock" type="number" register={register} required />
+            <InputField
+              label="Precio"
+              name="price"
+              type="number"
+              register={register}
+              rules={{ required: "El precio es obligatorio", min: { value: 1, message: "Debe ser mayor a 0" } }}
+            />
+            <InputField
+              label="Stock"
+              name="quantity"
+              type="number"
+              register={register}
+              rules={{ required: "El stock es obligatorio", min: { value: 1, message: "Debe ser mayor a 0" } }}
+            />
           </div>
 
           <StatesField
@@ -93,7 +93,6 @@ export const ProductSell = () => {
             register={register}
             watch={watch}
           />
-
         </div>
 
         <div className="ps-divider" />
@@ -102,11 +101,26 @@ export const ProductSell = () => {
           <h2 className="ps-section__title">Producto (opcional)</h2>
 
           <div className="ps-row">
-            <InputField label="Nombre del producto" name="productName" register={register} placeholder="Ej: iPhone 13 Pro" />
-            <InputField label="Marca" name="brand" register={register} placeholder="Ej: Apple" />
+            <InputField
+              label="Nombre del producto"
+              name="productName"
+              register={register}
+              placeholder="Ej: iPhone 13 Pro"
+            />
+            <InputField
+              label="Marca"
+              name="brand"
+              register={register}
+              placeholder="Ej: Apple"
+            />
           </div>
 
-          <TextAreaField label="Descripción" name="description" register={register} placeholder="Descripción" />
+          <TextAreaField
+            label="Descripción"
+            name="description"
+            register={register}
+            placeholder="Descripción"
+          />
         </div>
 
         <SelectField label="Categoría" name="category" register={register}>
@@ -125,7 +139,12 @@ export const ProductSell = () => {
           />
         )}
 
-        <InputField label="URL de imagen" name="image" register={register} placeholder="URL de imagen" />
+        <InputField
+          label="URL de imagen"
+          name="image"
+          register={register}
+          placeholder="URL de imagen"
+        />
 
         {image && (
           <img
@@ -135,6 +154,7 @@ export const ProductSell = () => {
             onError={e => (e.currentTarget.style.display = "none")}
           />
         )}
+
         <Button label="Publicar" parentMethod={handleSubmit(onSubmit)} />
       </div>
     </div>

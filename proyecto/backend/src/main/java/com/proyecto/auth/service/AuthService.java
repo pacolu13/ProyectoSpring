@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @SuppressWarnings("null")
 public class AuthService {
-    private final TokenRepository tokenRepository;
+    
     private final UserRepository userRepository;
     private final RolRepository rolRepository;
     private final PasswordEncoder passwordEncoder;
@@ -32,10 +32,17 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public TokenResponseDTO register(RegisterDTO request) {
+
+        System.out.println(request);
         var client = createUser(request);
+
+        List<Rol> roles = rolRepository.findAllByNameIn(request.roles());
+        client.setRoles(roles);
+
         var clientSaved = userRepository.save(client);
         var token = jwtService.generateToken(clientSaved);
         var refreshToken = jwtService.generateRefreshToken(clientSaved);
+
         saveUserToken(clientSaved, token);
         return new TokenResponseDTO(token, refreshToken);
     }

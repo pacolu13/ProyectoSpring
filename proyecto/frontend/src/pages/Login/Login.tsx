@@ -1,58 +1,28 @@
-// Login.tsx
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Box,
-  TextField,
-  Button,
-  Typography,
-  InputAdornment,
-  IconButton,
-  Link,
-  CircularProgress,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import type { TokenResponseDTO } from "../../interfaces/index";
+import { Box, Button, Typography, Link, CircularProgress } from "@mui/material";
 import { useAuth } from "../../context/AuthContext";
-import { Globe } from "../../components/index";
-import "../Login/Login.css";
-import type { LoginDTO } from "../../interfaces/AuthDTO";
 import { usePost } from "../../hooks/usePost";
+import { useForm } from "react-hook-form";
+import { Globe, InputField, useToast } from "../../components/index";
+import type { TokenResponseDTO, LoginDTO } from "../../interfaces/index";
+import "../Login/Login.css";
 
 export const Login = () => {
   const { login } = useAuth();
+  const showToast = useToast();
   const navigate = useNavigate();
   const { post, isLoading } = usePost<TokenResponseDTO>("/api/v1/auth/login");
-  const [form, setForm] = useState<LoginDTO>({ email: "", password: "" });
-  const [showPass, setShowPass] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
-  const inputSx = { mb: "24px" };
+  const { register, handleSubmit } = useForm<LoginDTO>();
 
-  const handleChange =
-    (field: keyof LoginDTO) =>
-      (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm((f) => ({ ...f, [field]: e.target.value }));
-      };
+  const onSubmit = async (data: LoginDTO): Promise<void> => {
+    const result = await post({ email: data.email, password: data.password });
 
-  const handleSubmit = async (): Promise<void> => {
-    if (!form.email || !form.password) {
-      setError("Completá usuario y contraseña.");
-      return;
-    }
-    setError("");
-
-    const data = await post({ email: form.email, password: form.password });
-
-    if (data) {
-      login(data.access_token, { email: form.email });
+    if (result) {
+      login(result.access_token, { email: data.email });
       navigate("/");
     } else {
-      setError("Credenciales incorrectas.");
+      showToast("error", "Credenciales incorrectas.");
     }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === "Enter") handleSubmit();
   };
 
   return (
@@ -62,38 +32,21 @@ export const Login = () => {
       </Box>
 
       <Box className="login-card">
-        <TextField
-          fullWidth
-          label="Usuario"
-          placeholder="tu_usuario"
-          value={form.email}
-          onChange={handleChange("email")}
-          onKeyDown={handleKeyDown}
-          variant="outlined"
-          size="small"
-          sx={inputSx}
+        <InputField
+          label="Email"
+          name="email"
+          register={register}
+          rules={{ required: "El email es obligatorio" }}
+          placeholder="tu_email@dominio.com"
         />
 
-        <TextField
-          fullWidth
+        <InputField
           label="Contraseña"
+          name="password"
+          type="password"
+          register={register}
+          rules={{ required: "La contraseña es obligatoria" }}
           placeholder="••••••••"
-          type={showPass ? "text" : "password"}
-          value={form.password}
-          onChange={handleChange("password")}
-          onKeyDown={handleKeyDown}
-          variant="outlined"
-          size="small"
-          sx={inputSx}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={() => setShowPass((s) => !s)} edge="end" size="small">
-                  {showPass ? <VisibilityOff sx={{ fontSize: 26 }} /> : <Visibility sx={{ fontSize: 26 }} />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
         />
 
         <Box sx={{ display: "flex", justifyContent: "flex-end", mb: "22px" }}>
@@ -104,7 +57,7 @@ export const Login = () => {
 
         <Button
           fullWidth
-          onClick={handleSubmit}
+          onClick={handleSubmit(onSubmit)}
           disabled={isLoading}
           className="login-btn"
           disableElevation

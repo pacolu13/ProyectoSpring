@@ -13,6 +13,6 @@ public interface RolRepository extends JpaRepository<Rol, UUID> {
 
     Optional<Rol> findByName(RolEnum rolEnum);
 
-    List<Rol> findAllByNameIn(List<Rol> roles);
+    List<Rol> findAllByNameIn(List<String> roles);
 
 }
