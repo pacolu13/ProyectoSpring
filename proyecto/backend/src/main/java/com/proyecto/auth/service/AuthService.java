@@ -27,7 +27,6 @@ public class AuthService {
     
     private final UserRepository userRepository;
     private final RolRepository rolRepository;
-    private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -69,6 +68,9 @@ public class AuthService {
         client.setUsername(request.username());
         client.setEmail(request.email());
         client.setPassword(passwordEncoder.encode(request.password()));
+
+        List<Rol> roles = rolRepository.findAllByNameIn(request.roles());
+        client.setRoles(roles);
 
         Cart cart = new Cart();
         client.setCart(cart);

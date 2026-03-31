@@ -3,7 +3,7 @@ import { Button } from "../../Button/Button";
 import "./ProductHome.css"
 
 interface Props {
-    id: number,
+    id?: number,
     image: string,
     brand: string,
     name: string,
