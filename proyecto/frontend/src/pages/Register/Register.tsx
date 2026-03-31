@@ -1,42 +1,39 @@
-import { Box, Typography, TextField } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "../../components";
+import { useForm } from "react-hook-form";
+import { Button, InputField, useToast } from "../../components";
 import { useState } from "react";
-import type { TokenResponseDTO } from "../../interfaces";
-import type { RegisterDTO } from "../../interfaces/AuthDTO";
+import type { TokenResponseDTO, RegisterDTO } from "../../interfaces";
 import { usePost } from "../../hooks/usePost";
 import { useAuth } from "../../context/AuthContext";
-import './Register.css'
-
+import './Register.css';
 
 export const Register = () => {
     const { login } = useAuth();
+    const showToast = useToast();
     const navigate = useNavigate();
-    const { post, isLoading } = usePost<TokenResponseDTO>("/api/v1/auth/register");
-    const [form, setForm] = useState<RegisterDTO>({ username: "", email: "", password: "" });
-    const [error, setError] = useState<string>("");
+    const [isSeller, setIsSeller] = useState(false);
+    const { post } = usePost<TokenResponseDTO>("/api/v1/auth/register");
 
+    const { register, handleSubmit } = useForm<RegisterDTO>();
 
-    const handleChange =
-        (field: keyof RegisterDTO) =>
-            (e: React.ChangeEvent<HTMLInputElement>) => {
-                setForm((f) => ({ ...f, [field]: e.target.value }));
-            };
+    const onSubmit = async (data: RegisterDTO): Promise<void> => {
+        const roles = ["CLIENT"];
+        if (isSeller) roles.push("SELLER");
 
-    const handleSubmit = async (): Promise<void> => {
-        if (!form.username || !form.email || !form.password) {
-            setError("Completá usuario y contraseña.");
-            return;
-        }
-        setError("");
+        const registerData: RegisterDTO = {
+            username: data.username,
+            email: data.email,
+            password: data.password,
+            roles,
+        };
 
-        const data = await post({ username: form.username, email: form.email, password: form.password });
-
-        if (data) {
-            login(data.access_token, { email: form.email });
+        const result = await post(registerData);
+        if (result) {
+            login(result.access_token, { email: data.email });
             navigate("/");
         } else {
-            setError("Error al registrarse.");
+            showToast("error", "Error al registrarse.");
         }
     };
 
@@ -46,32 +43,61 @@ export const Register = () => {
                 <Typography variant="h4" className="register-title">
                     Registrate
                 </Typography>
-                <TextField
-                    fullWidth
+
+                <InputField
                     label="Nombre de usuario"
-                    variant="outlined"
-                    className="register-input"
-                    onChange={handleChange("username")}
-
+                    name="username"
+                    register={register}
+                    rules={{ required: "El nombre de usuario es obligatorio" }}
+                    placeholder="Nombre de usuario"
                 />
-                <TextField
-                    fullWidth
+                <InputField
                     label="Correo electrónico"
-                    variant="outlined"
-                    className="register-input"
-                    onChange={handleChange("email")}
-
+                    name="email"
+                    register={register}
+                    rules={{ required: "El correo electrónico es obligatorio" }}
+                    placeholder="Correo electrónico"
                 />
-                <TextField
-                    fullWidth
+                <InputField
                     label="Contraseña"
-                    variant="outlined"
+                    name="password"
                     type="password"
-                    className="register-input"
-                    onChange={handleChange("password")}
-
+                    register={register}
+                    rules={{ required: "La contraseña es obligatoria" }}
+                    placeholder="Contraseña"
                 />
-                <Button label="REGISTRARSE" parentMethod={() => handleSubmit()}></Button>
+
+                <Box className="register-radio-group">
+                    <Typography variant="body1" className="register-radio-label">
+                        ¿Querés registrarte como vendedor?
+                    </Typography>
+
+                    <Box className="register-radio-options">
+                        <label className="register-radio-option">
+                            <input
+                                type="radio"
+                                name="seller"
+                                value="yes"
+                                checked={isSeller === true}
+                                onChange={() => setIsSeller(true)}
+                            />
+                            Sí
+                        </label>
+                        <label className="register-radio-option">
+                            <input
+                                type="radio"
+                                name="seller"
+                                value="no"
+                                checked={isSeller === false}
+                                onChange={() => setIsSeller(false)}
+                            />
+                            No
+                        </label>
+                    </Box>
+                </Box>
+
+                <Button label="REGISTRARSE" parentMethod={handleSubmit(onSubmit)} />
+
                 <Typography className="register-login-text">
                     ¿Ya tenés cuenta?{" "}
                     <Link to="/login" className="register-login-link">

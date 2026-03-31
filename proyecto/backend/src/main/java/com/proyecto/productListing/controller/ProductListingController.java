@@ -26,6 +26,12 @@ public class ProductListingController {
 
     private final ProductListingService productListingService;
 
+    @GetMapping
+    public ResponseEntity<List<ProductListingDTO>> getAll() {
+        List<ProductListingDTO> response = productListingService.findAll();
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/{idProduct}")
     public ResponseEntity<List<ProductListingDTO>> getAllProductListing(@PathVariable Long idProduct) {
         List<ProductListingDTO> response = productListingService.findAllProductsListing(idProduct);

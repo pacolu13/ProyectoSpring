@@ -8,7 +8,7 @@ public record ProductListingCreateDTO(
         String title,
         BigDecimal price,
         String state,
-        Integer stock,
+        Integer quantity,
         ProductDTO product) {
 
 }

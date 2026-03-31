@@ -62,4 +62,9 @@ public class ProductListingService {
                 ProductListing productsListingSaved = productListingRepository.save(productsListingSave);
                 return productListingMapper.toDTO(productsListingSaved);
         }
+
+        public List<ProductListingDTO> findAll() {
+                List<ProductListing> productListingList = productListingRepository.findAll();
+                return productListingMapper.toDTOList(productListingList);
+        }
 }

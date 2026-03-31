@@ -83,7 +83,7 @@ public class User {
 
     @ManyToMany
     @JoinTable(name = "user_rol", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
-    private List<Rol> rolesList;
+    private List<Rol> roles;
 
     @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

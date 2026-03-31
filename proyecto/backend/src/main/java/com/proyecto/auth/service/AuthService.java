@@ -1,5 +1,7 @@
 package com.proyecto.auth.service;
 
+import java.util.List;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +13,8 @@ import com.proyecto.auth.dto.TokenResponseDTO;
 import com.proyecto.auth.entity.Token;
 import com.proyecto.auth.repository.TokenRepository;
 import com.proyecto.cart.entity.Cart;
+import com.proyecto.rol.entity.Rol;
+import com.proyecto.rol.repository.RolRepository;
 import com.proyecto.user.entity.User;
 import com.proyecto.user.repository.UserRepository;
 
@@ -20,17 +24,26 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @SuppressWarnings("null")
 public class AuthService {
-    private final TokenRepository tokenRepository;
+    
     private final UserRepository userRepository;
+    private final RolRepository rolRepository;
+    private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     public TokenResponseDTO register(RegisterDTO request) {
+
+        System.out.println(request);
         var client = createUser(request);
+
+        List<Rol> roles = rolRepository.findAllByNameIn(request.roles());
+        client.setRoles(roles);
+
         var clientSaved = userRepository.save(client);
         var token = jwtService.generateToken(clientSaved);
         var refreshToken = jwtService.generateRefreshToken(clientSaved);
+
         saveUserToken(clientSaved, token);
         return new TokenResponseDTO(token, refreshToken);
     }

@@ -30,7 +30,7 @@ public class Rol {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToMany(mappedBy = "rolesList")
+    @ManyToMany(mappedBy = "roles")
     private List<User> userList;
 
     @Enumerated(EnumType.STRING)

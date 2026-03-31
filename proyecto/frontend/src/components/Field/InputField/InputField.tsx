@@ -1,22 +1,24 @@
+import type { RegisterOptions } from "react-hook-form";
+
 type Props = {
   label: string;
   register: any;
   name: string;
-  required?: boolean;
+  rules?: RegisterOptions;        
   type?: string;
   placeholder?: string;
 };
 
-export const InputField = ({ label, register, name, required, type = "text", placeholder }: Props) => (
+export const InputField = ({ label, register, name, rules, type = "text", placeholder }: Props) => (
   <div className="ps-field">
     <label className="ps-label">
-      {label} {required && "*"}
+      {label} {rules?.required && "*"}   
     </label>
     <input
       className="ps-input"
       type={type}
       placeholder={placeholder}
-      {...register(name, { required })}
+      {...register(name, rules)}        
     />
   </div>
 );

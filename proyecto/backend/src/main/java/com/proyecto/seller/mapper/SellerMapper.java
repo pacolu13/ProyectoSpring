@@ -19,7 +19,7 @@ public interface SellerMapper {
     @Mapping(target = "active", ignore = true)
     @Mapping(target = "creationDate", ignore = true)
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "rolesList", ignore = true)
+    @Mapping(target = "roles", ignore = true)
     @Mapping(target = "productsListingList", ignore = true)
     User toEntity(SellerCreateDTO dto);
 
@@ -33,7 +33,7 @@ public interface SellerMapper {
     @Mapping(target = "active", ignore = true)
     @Mapping(target = "creationDate", ignore = true)
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "rolesList", ignore = true)
+    @Mapping(target = "roles", ignore = true)
     @Mapping(target = "productsListingList", ignore = true)
     User updateSellerFromDto(SellerUpdateDTO dto, @MappingTarget User entity);
 
