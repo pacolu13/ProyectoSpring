@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.proyecto.DTOs.CartAddProductDTO;
+import com.proyecto.DTOs.CartDTO;
+import com.proyecto.DTOs.CartUpdateDTO;
 import com.proyecto.config.ApiRoutes;
-import com.proyecto.models.CartAddProductDTO;
-import com.proyecto.models.CartDTO;
-import com.proyecto.models.CartUpdateDTO;
 import com.proyecto.services.CartService;
 
 import lombok.RequiredArgsConstructor;

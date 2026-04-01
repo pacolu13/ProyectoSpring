@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.proyecto.DTOs.SellerCreateDTO;
 import com.proyecto.DTOs.SellerDTO;
 import com.proyecto.exceptions.ResourceNotFoundException;
 import com.proyecto.mappers.SellerMapper;
@@ -43,12 +42,6 @@ public class SellerService {
             throw new RuntimeException("No se encontraron vendedores con los filtros especificados");
         }
         return sellerMapper.toDTOList(sellersList);
-    }
-
-    public List<SellerDTO> addSellers(List<SellerCreateDTO> sellersList) {
-        List<User> newList = sellerMapper.toEntityList(sellersList);
-        List<User> response = userRepository.saveAll(newList);
-        return sellerMapper.toDTOList(response);
     }
 
     public void sellerDelete(UUID id) {

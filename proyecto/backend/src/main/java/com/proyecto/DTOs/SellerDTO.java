@@ -7,8 +7,7 @@ public record SellerDTO(
         UUID id,
         String username,
         String email,
-        String cuit,
-        Boolean active,
+        Integer totalSales,
+        Float rating,
         LocalDateTime creationDate) {
-
 }

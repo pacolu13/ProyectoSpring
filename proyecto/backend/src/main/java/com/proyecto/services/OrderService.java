@@ -32,7 +32,7 @@ public class OrderService {
     @Transactional
     public OrderDTO orderSubmit(String email) {
         User client = getClientWithCart(email);
-        List<CartProduct> items = client.getCart().getProductsList();
+        List<CartProduct> items = client.getCart().getProducts();
 
         validateStock(items);
         BigDecimal total = calculateTotal(items);
@@ -50,7 +50,7 @@ public class OrderService {
         User client = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado"));
 
-        if (client.getCart() == null || client.getCart().getProductsList().isEmpty()) {
+        if (client.getCart() == null || client.getCart().getProducts().isEmpty()) {
             throw new IllegalStateException("El carrito está vacío");
         }
         return client;
@@ -75,7 +75,7 @@ public class OrderService {
 
     private void validateStock(List<CartProduct> items) {
         for (CartProduct item : items) {
-            if (item.getProductListing().getQuantity() < item.getQuantity()) {
+            if (item.getProductListing().getStock() < item.getQuantity()) {
                 throw new IllegalStateException("Stock insuficiente: "
                         + item.getProductListing().getProduct().getName());
             }
@@ -97,12 +97,12 @@ public class OrderService {
 
     private void applyPostPurchaseEffects(User client, List<CartProduct> items, BigDecimal total) {
         client.setBalance(client.getBalance().subtract(total));
-        client.getCart().getProductsList().clear();
+        client.getCart().getProducts().clear();
 
         for (CartProduct item : items) {
             int cantidad = item.getQuantity();
-            item.getProductListing().setQuantity(
-                    item.getProductListing().getQuantity() - cantidad);
+            item.getProductListing().setStock(
+                    item.getProductListing().getStock() - cantidad);
             User seller = item.getProductListing().getUser();
             seller.setTotalSales(seller.getTotalSales() + cantidad);
             // Nuestras ventas cuentan la cantidad de productos vendidos

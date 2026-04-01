@@ -1,4 +1,4 @@
-package com.proyecto.DTOs;
+package com.proyecto.models;
 
 public record UserUpdateDTO() {
 

@@ -11,16 +11,15 @@ export const ProductListing = () => {
     `/api/v1/product-listings/${idProduct}`, false
   );
 
-  const { post, addError } = usePost<CartDTO>("/api/v1/carts");
+  const { post } = usePost<CartDTO>("/api/v1/carts");
   if (idProduct == null || data == null) return null;
 
   const handleBuy = async (id: number, quantity: number): Promise<void> => {
-    await post({ productListingId: id, quantity });
-
-    if (addError) {
-      showToast('error', 'Error al añadir al carrito');
-    } else {
+    try {
+      await post({ productListingId: id, quantity: quantity });
       showToast('confirm', 'Producto añadido al carrito');
+    } catch (error) {
+      showToast('error', 'Error al añadir al carrito');
     }
   };
 
@@ -40,7 +39,6 @@ export const ProductListing = () => {
           <p className="listing-state">No hay publicaciones disponibles.</p>
         )}
         {data.map((item, i) => (
-          console.log(item.productName),
           <div
             key={item.id}
             className="listing-item"

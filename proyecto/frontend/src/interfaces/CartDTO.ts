@@ -11,6 +11,6 @@ export interface CartProduct {
 
 export interface CartDTO {
   id: number;
-  cartProductsList: CartProduct[];
+  cartProducts: CartProduct[];
   total: number;
 }

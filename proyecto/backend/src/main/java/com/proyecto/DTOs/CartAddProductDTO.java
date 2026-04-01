@@ -1,4 +1,4 @@
-package com.proyecto.models;
+package com.proyecto.DTOs;
 
 public record CartAddProductDTO(
         Long productListingId,

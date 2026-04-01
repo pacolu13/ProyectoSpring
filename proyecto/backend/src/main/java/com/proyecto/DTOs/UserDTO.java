@@ -12,6 +12,6 @@ public record UserDTO(
         LocalDateTime creationDate,
         Boolean active,
         BigDecimal balance,
-        Rol[] rolesList) {
+        Rol[] roles) {
 
 }

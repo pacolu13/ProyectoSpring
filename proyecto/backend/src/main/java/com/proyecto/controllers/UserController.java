@@ -3,8 +3,6 @@ package com.proyecto.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyecto.user.dto.*;
-
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -21,8 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.proyecto.DTOs.UserCreateDTO;
 import com.proyecto.DTOs.UserDTO;
-import com.proyecto.DTOs.UserUpdateDTO;
 import com.proyecto.config.ApiRoutes;
+import com.proyecto.models.UserUpdateDTO;
 import com.proyecto.services.UserService;
 
 

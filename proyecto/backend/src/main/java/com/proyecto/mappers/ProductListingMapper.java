@@ -10,10 +10,8 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.proyecto.DTOs.ProductListingCreateDTO;
 import com.proyecto.DTOs.ProductListingDTO;
-import com.proyecto.DTOs.ProductListingSellDTO;
 import com.proyecto.DTOs.ProductListingUpdateDTO;
 import com.proyecto.models.ProductListing;
-import com.proyecto.productListing.dto.*;
 
 @Mapper(componentModel = "spring", uses = UserMapper.class)
 public interface ProductListingMapper {
@@ -22,8 +20,7 @@ public interface ProductListingMapper {
 
     List<ProductListing> toEntityList(List<ProductListingCreateDTO> dtoList);
 
-    @Mapping(source = "product.name", target = "name")
-    @Mapping(source = "user.username", target = "seller.username")
+    @Mapping(source = "user" , target = "seller")
     ProductListingDTO toDTO(ProductListing entity);
 
     @Mapping(source = "product.name", target = "productName")
@@ -36,7 +33,4 @@ public interface ProductListingMapper {
     @Mapping(target = "user", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     ProductListing updateProductFromDto(ProductListingUpdateDTO dto, @MappingTarget ProductListing entity);
-
-    List<ProductListingSellDTO> toSellDTOList(List<ProductListing> sellerListings);
-
 }

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.DTOs.ProductListingCreateDTO;
 import com.proyecto.DTOs.ProductListingDTO;
-import com.proyecto.DTOs.ProductListingSellDTO;
 import com.proyecto.config.ApiRoutes;
 import com.proyecto.services.ProductListingService;
 
@@ -40,9 +39,9 @@ public class ProductListingController {
     }
 
     @GetMapping("/seller")
-    public ResponseEntity<List<ProductListingSellDTO>> getAllSellerListings(Authentication authentication) {
+    public ResponseEntity<List<ProductListingDTO>> getAllSellerListings(Authentication authentication) {
         String email = authentication.getName();
-        List<ProductListingSellDTO> response = productListingService.findAllSellerListings(email);
+        List<ProductListingDTO> response = productListingService.findAllSellerListings(email);
         return ResponseEntity.ok(response);
     }
 

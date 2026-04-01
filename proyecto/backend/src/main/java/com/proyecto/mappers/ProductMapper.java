@@ -10,7 +10,6 @@ import com.proyecto.DTOs.ProductCreateDTO;
 import com.proyecto.DTOs.ProductDTO;
 import com.proyecto.DTOs.ProductUpdateDTO;
 import com.proyecto.models.Product;
-import com.proyecto.product.dto.*;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {

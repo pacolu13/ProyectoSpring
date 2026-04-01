@@ -23,7 +23,7 @@ export const usePost = <T>(url: string): PostState<T> => {
             return result;
         } catch (e: any) {
             setError(e.message);
-            return null;
+            throw e;
         } finally {
             setIsLoading(false);
         }

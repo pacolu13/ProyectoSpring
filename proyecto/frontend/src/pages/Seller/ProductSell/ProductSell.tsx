@@ -31,9 +31,10 @@ export const ProductSell = () => {
   const onSubmit = async (data: FormDataDTO) => {
     const payload: CreateProductSellDTO = {
       title: data.title,
+      description: "example",
       price: parseFloat(data.price),
       state: data.state,
-      quantity: data.quantity,
+      stock: data.stock,
       product: {
         name: data.productName,
         description: data.description,
@@ -44,14 +45,13 @@ export const ProductSell = () => {
       },
     };
 
-    const result = await post(payload);
-
-    if (result) {
-      showToast("confirm", "Publicación creada exitosamente");
+    try {
+      await post(payload);
+      showToast("confirm", "Publicación creada con éxito");
       reset();
-    } else {
+    } catch (error) {
       showToast("error", "Error al crear la publicación");
-    }
+    } 
   };
 
   return (

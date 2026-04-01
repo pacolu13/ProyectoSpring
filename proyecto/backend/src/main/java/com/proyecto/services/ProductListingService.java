@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.proyecto.DTOs.ProductListingCreateDTO;
 import com.proyecto.DTOs.ProductListingDTO;
-import com.proyecto.DTOs.ProductListingSellDTO;
 import com.proyecto.exceptions.ResourceNotFoundException;
 import com.proyecto.mappers.ProductListingMapper;
 import com.proyecto.models.Product;
@@ -51,14 +50,14 @@ public class ProductListingService {
 
                 System.out.println(productListing);
                 System.out.println(email);
-                
+
                 ProductListing productsListingSave = productListingMapper.toEntity(productListing);
 
                 Product product = productsListingSave.getProduct();
                 Product productSaved = productRepository.save(product);
                 productsListingSave.setUser(seller);
                 productsListingSave.setProduct(productSaved);
-                seller.getProductsListingList().add(productsListingSave);
+                seller.getProductsListings().add(productsListingSave);
 
                 ProductListing productsListingSaved = productListingRepository.save(productsListingSave);
                 return productListingMapper.toDTO(productsListingSaved);
@@ -69,11 +68,11 @@ public class ProductListingService {
                 return productListingMapper.toDTOList(productListingList);
         }
 
-        public List<ProductListingSellDTO> findAllSellerListings(String email) {
-            User seller = userRepository.findByEmail(email)
-                            .orElseThrow(() -> new ResourceNotFoundException(
-                                            "Vendedor no encontrado: " + email));
+        public List<ProductListingDTO> findAllSellerListings(String email) {
+                User seller = userRepository.findByEmail(email)
+                                .orElseThrow(() -> new ResourceNotFoundException(
+                                                "Vendedor no encontrado: " + email));
                 List<ProductListing> sellerListings = productListingRepository.findByUser(seller);
-                return productListingMapper.toSellDTOList(sellerListings);
+                return productListingMapper.toDTOList(sellerListings);
         }
 }

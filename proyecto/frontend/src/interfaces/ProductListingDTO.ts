@@ -2,7 +2,7 @@ export interface ProductListingDTO {
   id: number;
   price: number;
   productName: string;
-  creationDate: string;
+  creationDate: Date;
   condition: "new" | "used";
   seller: SellerDTO;
 }

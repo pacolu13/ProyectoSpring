@@ -10,7 +10,6 @@ import com.proyecto.DTOs.ProductCreateDTO;
 import com.proyecto.DTOs.ProductDTO;
 import com.proyecto.DTOs.ProductUpdateDTO;
 import com.proyecto.config.ApiRoutes;
-import com.proyecto.product.dto.*;
 import com.proyecto.services.ProductService;
 
 import lombok.RequiredArgsConstructor;

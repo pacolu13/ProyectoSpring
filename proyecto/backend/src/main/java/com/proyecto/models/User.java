@@ -70,7 +70,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private List<Order> ordersList = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Token> tokens;
@@ -81,7 +81,7 @@ public class User {
 
     @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductListing> productsListingList = new ArrayList<>();
+    private List<ProductListing> productsListings = new ArrayList<>();
 
     @Override
     public int hashCode() {

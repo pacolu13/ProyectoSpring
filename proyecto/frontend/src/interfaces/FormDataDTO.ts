@@ -1,7 +1,7 @@
 export interface FormDataDTO {
     title: string;
     price: string;
-    quantity: number;
+    stock: number;
     state: string;
     productName: string;
     description: string;

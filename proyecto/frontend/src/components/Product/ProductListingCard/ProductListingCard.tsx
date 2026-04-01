@@ -13,7 +13,7 @@ interface ProductCardProps {
   seller: SellerDTO;
   condition: "new" | "used"; // condición del producto
   freeShipping?: boolean;
-  creationDate: string;
+  creationDate: Date;
   onBuy: (id: number, quantity: number) => void;
 }
 

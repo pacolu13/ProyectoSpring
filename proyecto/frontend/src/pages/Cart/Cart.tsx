@@ -13,7 +13,7 @@ export const Cart = () => {
     const { post, addError } = usePost<OrderDTO>("/api/v1/orders/submit");
     const [thisTotal, setTotal] = useState<number>(0);
 
-    
+
     useEffect(() => {
         if (data?.total != null) setTotal(data.total);
     }, [data]);
@@ -52,9 +52,9 @@ export const Cart = () => {
             <div className='cart'>
                 <div className='cart__tittle'>
                     <span>CARRITO</span>
-                    <span>{data.cartProductsList.length} items</span>
+                    <span>{data.cartProducts?.length ?? 0} items</span>
                 </div>
-                {data.cartProductsList.map((item) => (
+                {(data.cartProducts ?? []).map((item) => (
                     <ProductCart
                         key={item.id}
                         name={item.name}

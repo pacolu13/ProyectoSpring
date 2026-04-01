@@ -27,9 +27,12 @@ public class ProductListing {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    private Integer quantity;
+    private String title;
+    private String description;
+    private Integer stock;
     private BigDecimal price;
-    private LocalDateTime creationDate = LocalDateTime.now();
+    private StateProduct state;
+    private LocalDateTime createdDate = LocalDateTime.now();
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_details_id")
@@ -44,7 +47,7 @@ public class ProductListing {
     private User user;
 
     public boolean hayCantidad(Integer cantidad) {
-        return getQuantity() >= cantidad;
+        return getStock() >= cantidad;
     }
     
 }

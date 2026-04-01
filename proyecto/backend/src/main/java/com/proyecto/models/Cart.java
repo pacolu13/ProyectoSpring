@@ -31,6 +31,6 @@ public class Cart {
     private BigDecimal total;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartProduct> productsList = new ArrayList<>();
+    private List<CartProduct> products = new ArrayList<>();
 
 }
