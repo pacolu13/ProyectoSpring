@@ -12,11 +12,11 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.proyecto.auth.entity.Token;
-import com.proyecto.auth.repository.TokenRepository;
-import com.proyecto.auth.service.JwtService;
-import com.proyecto.user.entity.User;
-import com.proyecto.user.repository.UserRepository;
+import com.proyecto.models.Token;
+import com.proyecto.models.User;
+import com.proyecto.repositories.TokenRepository;
+import com.proyecto.repositories.UserRepository;
+import com.proyecto.services.JwtService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

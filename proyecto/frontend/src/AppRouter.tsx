@@ -1,8 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Header, Footer } from "./components/index.ts"
-import { Home, Login, Register, Cart, Products, ProductListing } from "./pages/index"
+import { Home, Login, Register, Cart, Products, ProductListing, ProductSell, ManageListings } from "./pages"
 import { linksHeader, linksFooter, mensajeFooter } from "../public/Links.ts"
-import { ProductSell } from "./pages/ProductSell/ProductSell.tsx"
 
 export const AppRouter = () => {
     return <>
@@ -16,7 +15,8 @@ export const AppRouter = () => {
                 <Route path='/products' element={<Products />} />
                 <Route path='/products/:idProduct' element={<ProductListing />} />
                 <Route path='/cart' element={<Cart />} />
-                <Route path='products-sell' element={<ProductSell />} />
+                <Route path='/products-sell' element={<ProductSell />} />
+                <Route path='/manage-listings' element={<ManageListings />} />
             </Routes>
             <Footer text={mensajeFooter} links={linksFooter} />
         </BrowserRouter>

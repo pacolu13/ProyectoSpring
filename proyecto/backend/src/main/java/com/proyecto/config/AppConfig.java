@@ -12,8 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
-import com.proyecto.user.entity.User;
-import com.proyecto.user.repository.UserRepository;
+import com.proyecto.models.User;
+import com.proyecto.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

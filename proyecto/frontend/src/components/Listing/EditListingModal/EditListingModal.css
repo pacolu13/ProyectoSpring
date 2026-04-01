@@ -1,0 +1,112 @@
+/* EditListingModal.css */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+}
+
+.modal-card {
+    background-color: #141414;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    border-left: 4px solid #e53935;
+    padding-left: 10px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #ffffff;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.modal-row {
+    display: flex;
+    gap: 12px;
+}
+
+.modal-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.modal-toggle__label {
+    font-size: 0.9rem;
+    color: #d0d0d0;
+}
+
+.modal-toggle__checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: #e53935;
+    cursor: pointer;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.modal-btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.modal-btn:hover {
+    opacity: 0.85;
+}
+
+.modal-btn--cancel {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+    border: 1px solid #3a3a3a;
+}
+
+.modal-btn--save {
+    background-color: #e53935;
+    color: #ffffff;
+}

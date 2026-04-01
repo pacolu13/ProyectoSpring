@@ -26,12 +26,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.proyecto.product.dto.ProductCreateDTO;
-import com.proyecto.product.dto.ProductDTO;
-import com.proyecto.product.dto.ProductUpdateDTO;
-import com.proyecto.product.entity.Product;
-import com.proyecto.product.mapper.ProductMapper;
-import com.proyecto.product.repository.ProductRepository;
+import com.proyecto.DTOs.ProductCreateDTO;
+import com.proyecto.DTOs.ProductDTO;
+import com.proyecto.DTOs.ProductUpdateDTO;
+import com.proyecto.mappers.ProductMapper;
+import com.proyecto.models.Product;
+import com.proyecto.repositories.ProductRepository;
+import com.proyecto.services.ProductService;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {

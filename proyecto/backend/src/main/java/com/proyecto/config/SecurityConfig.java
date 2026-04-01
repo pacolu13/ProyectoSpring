@@ -13,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.proyecto.auth.repository.TokenRepository;
+import com.proyecto.repositories.TokenRepository;
 
 import lombok.RequiredArgsConstructor;
 

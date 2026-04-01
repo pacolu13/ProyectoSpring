@@ -4,9 +4,9 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import com.proyecto.rol.entity.Rol;
-import com.proyecto.rol.entity.RolEnum;
-import com.proyecto.rol.repository.RolRepository;
+import com.proyecto.models.Rol;
+import com.proyecto.models.RolEnum;
+import com.proyecto.repositories.RolRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
