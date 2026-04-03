@@ -25,7 +25,7 @@ import lombok.Setter;
 public class ProductListing {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String description;
@@ -46,8 +46,4 @@ public class ProductListing {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public boolean hayCantidad(Integer cantidad) {
-        return getStock() >= cantidad;
-    }
-    
 }

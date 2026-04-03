@@ -31,6 +31,8 @@ public class CartService {
     private final ProductListingRepository productListingRepository;
     private final CartMapper cartMapper;
 
+    private final ProductListingService productListingService;
+
     public CartDTO getCartByEmail(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
@@ -55,8 +57,6 @@ public class CartService {
     }
 
     public CartDTO updateCart(String email, CartUpdateDTO dto) {
-
-        System.out.println("\n" + dto + "\n");
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
@@ -90,9 +90,7 @@ public class CartService {
 
         Cart cart = user.getCart();
 
-        if (!productListing.hayCantidad(dto.quantity())) {
-            throw new ResourceNotFoundException("Stock insuficiente");
-        }
+       productListingService.checkStock(productListing.getId(), dto.quantity());
 
         addProductToCart(cart, productListing, dto.quantity());
         cartRepository.save(cart);

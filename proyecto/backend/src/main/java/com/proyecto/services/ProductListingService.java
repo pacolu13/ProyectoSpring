@@ -75,4 +75,12 @@ public class ProductListingService {
                 List<ProductListing> sellerListings = productListingRepository.findByUser(seller);
                 return productListingMapper.toDTOList(sellerListings);
         }
+
+        // Metodo para ver si hay suficiente stock
+        public boolean checkStock(Long productListingId, Integer quantity) {
+                ProductListing productListing = productListingRepository.findById(productListingId)
+                                .orElseThrow(() -> new ResourceNotFoundException(
+                                                "Producto Venta no encontrado: " + productListingId));
+                return productListing.getStock() >= quantity;
+        } 
 }

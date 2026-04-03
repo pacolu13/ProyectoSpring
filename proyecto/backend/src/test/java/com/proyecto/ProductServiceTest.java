@@ -1,4 +1,4 @@
-package com.proyecto.product.service;
+package com.proyecto;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
