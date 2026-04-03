@@ -1,6 +1,7 @@
 package com.proyecto.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -38,19 +39,14 @@ public class ProductListingService {
         }
 
         public ProductListingDTO findyProductListingById(Long id) {
-                ProductListing prod = productListingRepository.findById(id)
-                                .orElseThrow(() -> new ResourceNotFoundException("Producto Venta no encontrado"));
+                ProductListing prod = orElseThrow(productListingRepository.findById(id),
+                                "Producto Venta no encontrado");
+
                 return productListingMapper.toDTO(prod);
         }
 
         public ProductListingDTO addProductListing(ProductListingCreateDTO productListing, String email) {
-                User seller = userRepository.findByEmail(email)
-                                .orElseThrow(() -> new ResourceNotFoundException(
-                                                "Vendedor no encontrado: " + email));
-
-                System.out.println(productListing);
-                System.out.println(email);
-
+                User seller = orElseThrow(userRepository.findByEmail(email), "Vendedor no encontrado: " + email);
                 ProductListing productsListingSave = productListingMapper.toEntity(productListing);
 
                 Product product = productsListingSave.getProduct();
@@ -69,18 +65,19 @@ public class ProductListingService {
         }
 
         public List<ProductListingDTO> findAllSellerListings(String email) {
-                User seller = userRepository.findByEmail(email)
-                                .orElseThrow(() -> new ResourceNotFoundException(
-                                                "Vendedor no encontrado: " + email));
+                User seller = orElseThrow(userRepository.findByEmail(email), "Vendedor no encontrado: " + email);
                 List<ProductListing> sellerListings = productListingRepository.findByUser(seller);
                 return productListingMapper.toDTOList(sellerListings);
         }
 
         // Metodo para ver si hay suficiente stock
-        public boolean checkStock(Long productListingId, Integer quantity) {
-                ProductListing productListing = productListingRepository.findById(productListingId)
-                                .orElseThrow(() -> new ResourceNotFoundException(
-                                                "Producto Venta no encontrado: " + productListingId));
-                return productListing.getStock() >= quantity;
-        } 
+        public boolean checkStock(Long id, Integer quantity) {
+                ProductListing prod = orElseThrow(productListingRepository.findById(id),
+                                "Producto Venta no encontrado");
+                return prod.getStock() >= quantity;
+        }
+
+        private <T> T orElseThrow(Optional<T> optional, String message) {
+                return optional.orElseThrow(() -> new ResourceNotFoundException(message));
+        }
 }
