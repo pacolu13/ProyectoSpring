@@ -5,6 +5,6 @@ export interface ProductDTO {
     brand: string
     category: string
     image: string
-    active: boolean
+    active?: boolean
     creationDate?: string
 }

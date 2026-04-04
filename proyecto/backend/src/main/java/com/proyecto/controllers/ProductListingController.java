@@ -49,6 +49,7 @@ public class ProductListingController {
     public ResponseEntity<ProductListingDTO> addProductListing(Authentication authentication,
             @RequestBody ProductListingCreateDTO productListing) {
         String email = authentication.getName();
+        System.out.println("EMAIL: " + email + "PRODUCTO: " + productListing);
         ProductListingDTO response = productListingService.addProductListing(productListing, email);
         return ResponseEntity.ok(response);
     }

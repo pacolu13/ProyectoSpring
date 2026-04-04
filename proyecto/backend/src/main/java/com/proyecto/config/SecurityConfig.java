@@ -59,7 +59,7 @@ public class SecurityConfig {
                                 tokenRepository.save(token);
                         });
                 } else {
-                        throw new RuntimeException("Invalid Token");
+                        ExceptionFactory.createTokenInvalidException();
                 }
         }
 }

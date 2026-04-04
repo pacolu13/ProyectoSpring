@@ -4,11 +4,10 @@ import { Button, useToast, InputField, SelectField, StatesField, TextAreaField }
 import { useForm } from "react-hook-form";
 import "./ProductSell.css";
 
-const STATES = ["Nuevo", "Usado", "No funciona"];
+const STATES = ["NEW", "USED", "DAMAGED"];
 
 export const ProductSell = () => {
   const showToast = useToast();
-
   const { data: categories } = useFetch<CategoryDTO[]>("/api/v1/categories", false);
   const { post } = usePost<ProductSellDTO>("/api/v1/product-listings");
 
@@ -17,11 +16,7 @@ export const ProductSell = () => {
     handleSubmit,
     watch,
     reset,
-  } = useForm<FormDataDTO>({
-    defaultValues: {
-      state: STATES[0],
-    },
-  });
+  } = useForm<FormDataDTO>({});
 
   const category = watch("category");
   const image = watch("image");
@@ -31,27 +26,27 @@ export const ProductSell = () => {
   const onSubmit = async (data: FormDataDTO) => {
     const payload: CreateProductSellDTO = {
       title: data.title,
-      description: "example",
+      description: data.description,
       price: parseFloat(data.price),
+      stock: parseInt(data.stock),
       state: data.state,
-      stock: data.stock,
       product: {
         name: data.productName,
-        description: data.description,
+        description: data.productDescription,
         brand: data.brand,
         category: isOtherCategory ? data.customCategory : data.category,
         image: data.image,
-        active: true,
       },
     };
 
     try {
+      console.log("Payload:", payload);
       await post(payload);
       showToast("confirm", "Publicación creada con éxito");
       reset();
     } catch (error) {
       showToast("error", "Error al crear la publicación");
-    } 
+    }
   };
 
   return (
@@ -69,6 +64,14 @@ export const ProductSell = () => {
             placeholder="Iphone 13 pro max"
           />
 
+          <TextAreaField
+            label="Descripción"
+            name="description"
+            register={register}
+            placeholder="Descripción"
+          />
+
+
           <div className="ps-row">
             <InputField
               label="Precio"
@@ -79,7 +82,7 @@ export const ProductSell = () => {
             />
             <InputField
               label="Stock"
-              name="quantity"
+              name="stock"
               type="number"
               register={register}
               rules={{ required: "El stock es obligatorio", min: { value: 1, message: "Debe ser mayor a 0" } }}
@@ -117,7 +120,7 @@ export const ProductSell = () => {
 
           <TextAreaField
             label="Descripción"
-            name="description"
+            name="productDescription"
             register={register}
             placeholder="Descripción"
           />
@@ -125,7 +128,7 @@ export const ProductSell = () => {
 
         <SelectField label="Categoría" name="category" register={register}>
           {categories?.map(cat => (
-            <option key={cat.id} value={cat.id}>
+            <option key={cat.id} value={cat.name}>
               {cat.name}
             </option>
           ))}

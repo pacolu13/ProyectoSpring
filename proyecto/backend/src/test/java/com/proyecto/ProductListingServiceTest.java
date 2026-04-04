@@ -1,5 +1,6 @@
 package com.proyecto;
 
+import com.proyecto.DTOs.ProductCreateDTO;
 import com.proyecto.DTOs.ProductDTO;
 import com.proyecto.DTOs.ProductListingCreateDTO;
 import com.proyecto.DTOs.ProductListingDTO;
@@ -37,6 +38,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("ProductListingService - Unit Tests")
+@SuppressWarnings("null")
 class ProductListingServiceTest {
 
     // =========================================================================
@@ -229,13 +231,12 @@ class ProductListingServiceTest {
                     BigDecimal.valueOf(10.00),
                     10,
                     StateProduct.NEW,
-                    new ProductDTO(1L,
+                    new ProductCreateDTO(
                             "Name",
                             "description",
                             "Brand",
                             "Category",
-                            "Image", true,
-                            LocalDateTime.now()));
+                            "Image"));
         }
 
         @Test

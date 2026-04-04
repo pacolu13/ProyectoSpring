@@ -10,5 +10,5 @@ public record ProductListingCreateDTO(
         BigDecimal price,
         Integer stock,
         StateProduct state,
-        ProductDTO product) {
+        ProductCreateDTO product) {
 }
