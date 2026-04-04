@@ -204,7 +204,7 @@ class ProductListingServiceTest {
              */
             assertThatThrownBy(() -> productListingService.findyProductListingById(999L))
                     .isInstanceOf(ResourceNotFoundException.class)
-                    .hasMessageContaining("Producto Venta no encontrado");
+                    .hasMessageContaining("Product listing not found");
 
             // Verificamos que no se llamó al mapper (el flujo cortó antes)
             verifyNoInteractions(productListingMapper);
@@ -277,7 +277,7 @@ class ProductListingServiceTest {
             // Act & Assert
             assertThatThrownBy(() -> productListingService.addProductListing(createDTO, unknownEmail))
                     .isInstanceOf(ResourceNotFoundException.class)
-                    .hasMessageContaining(unknownEmail);
+                    .hasMessageContaining("Seller not found");
 
             // Si el seller no existe, nunca debemos guardar nada
             verifyNoInteractions(productRepository, productListingRepository);
@@ -359,7 +359,7 @@ class ProductListingServiceTest {
             // Act & Assert
             assertThatThrownBy(() -> productListingService.findAllSellerListings(unknownEmail))
                     .isInstanceOf(ResourceNotFoundException.class)
-                    .hasMessageContaining(unknownEmail);
+                    .hasMessageContaining("Seller not found");
 
             verifyNoInteractions(productListingRepository, productListingMapper);
         }
@@ -421,7 +421,7 @@ class ProductListingServiceTest {
             // Act & Assert
             assertThatThrownBy(() -> productListingService.checkStock(999L, 1))
                     .isInstanceOf(ResourceNotFoundException.class)
-                    .hasMessageContaining("999");
+                    .hasMessageContaining("Product listing not found");
         }
     }
 }

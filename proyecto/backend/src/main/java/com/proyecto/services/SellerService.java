@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.proyecto.DTOs.SellerDTO;
-import com.proyecto.exceptions.ResourceNotFoundException;
+import com.proyecto.config.ExceptionFactory;
 import com.proyecto.mappers.SellerMapper;
 import com.proyecto.models.User;
 import com.proyecto.repositories.UserRepository;
@@ -16,9 +16,8 @@ import com.proyecto.spec.SellerSearch;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@SuppressWarnings("null")
 @RequiredArgsConstructor
-
+@SuppressWarnings("null")
 public class SellerService {
 
     private final UserRepository userRepository;
@@ -31,23 +30,25 @@ public class SellerService {
 
     public SellerDTO getSellerById(UUID id) {
         User response = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vendedor no encontrado"));
+                .orElseThrow(() -> ExceptionFactory.createSellerNotFoundException());
         return sellerMapper.toDTO(response);
     }
 
-    public List<SellerDTO> getSellerByFilter(Optional<String> nombre, Optional<String> apellido, Optional<String> email) {
+    public List<SellerDTO> getSellerByFilter(Optional<String> nombre, Optional<String> apellido,
+            Optional<String> email) {
         SellerSearch research = new SellerSearch(nombre, apellido, email);
         List<User> sellersList = userRepository.findAll(research);
         if (sellersList == null || sellersList.isEmpty()) {
-            throw new RuntimeException("No se encontraron vendedores con los filtros especificados");
+            throw ExceptionFactory.createSellersNotFoundException();
         }
         return sellerMapper.toDTOList(sellersList);
     }
 
     public void sellerDelete(UUID id) {
-        if(!userRepository.existsById(id)){
-            throw new ResourceNotFoundException("No se pudo encontrar un vendedor para ese id");
+        if (!userRepository.existsById(id)) {
+            throw ExceptionFactory.createSellerNotFoundException();
         }
         userRepository.deleteById(id);
     }
+
 }

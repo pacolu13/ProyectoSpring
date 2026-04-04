@@ -93,19 +93,7 @@ class CartServiceTest {
 
             assertThatThrownBy(() -> cartService.getCartByEmail("noexiste@email.com"))
                     .isInstanceOf(ResourceNotFoundException.class)
-                    .hasMessageContaining("Usuario no encontrado");
-        }
-
-        @Test
-        @DisplayName("Error: usuario sin carrito → lanza ResourceNotFoundException")
-        void getCart_cartIsNull_throwsException() {
-            user.setCart(null);
-            when(userRepository.findByEmail(user.getEmail()))
-                    .thenReturn(Optional.of(user));
-
-            assertThatThrownBy(() -> cartService.getCartByEmail(user.getEmail()))
-                    .isInstanceOf(ResourceNotFoundException.class)
-                    .hasMessageContaining("Carrito no encontrado");
+                    .hasMessageContaining("User not found");
         }
 
         @Test
@@ -179,7 +167,7 @@ class CartServiceTest {
 
             assertThatThrownBy(() -> cartService.updateCart("noexiste@email.com", buildDTO(1L, 1)))
                     .isInstanceOf(ResourceNotFoundException.class)
-                    .hasMessageContaining("Usuario no encontrado");
+                    .hasMessageContaining("User not found");
         }
 
         @Test
@@ -189,7 +177,7 @@ class CartServiceTest {
 
             assertThatThrownBy(() -> cartService.updateCart(user.getEmail(), buildDTO(99L, 1)))
                     .isInstanceOf(ResourceNotFoundException.class)
-                    .hasMessageContaining("Producto no encontrado");
+                    .hasMessageContaining("Product not found in cart");
         }
 
         @Test
@@ -279,7 +267,7 @@ class CartServiceTest {
 
             assertThatThrownBy(() -> cartService.addProduct("noexiste@email.com", buildDTO(1L, 1)))
                     .isInstanceOf(ResourceNotFoundException.class)
-                    .hasMessageContaining("Usuario no encontrado");
+                    .hasMessageContaining("User not found");
         }
 
         @Test
@@ -290,7 +278,7 @@ class CartServiceTest {
 
             assertThatThrownBy(() -> cartService.addProduct(user.getEmail(), buildDTO(99L, 1)))
                     .isInstanceOf(ResourceNotFoundException.class)
-                    .hasMessageContaining("Producto Venta no encontrado");
+                    .hasMessageContaining("Product listing not found");
         }
 
         @Test

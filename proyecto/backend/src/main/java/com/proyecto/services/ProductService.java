@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.proyecto.DTOs.ProductCreateDTO;
 import com.proyecto.DTOs.ProductDTO;
 import com.proyecto.DTOs.ProductUpdateDTO;
+import com.proyecto.config.ExceptionFactory;
 import com.proyecto.mappers.ProductMapper;
 import com.proyecto.models.Product;
 import com.proyecto.repositories.ProductRepository;
@@ -29,7 +30,7 @@ public class ProductService {
 
     public ProductDTO getProductById(Long id) {
         Product response = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                .orElseThrow(() -> ExceptionFactory.createProductNotFoundException());
         return productMapper.toDTO(response);
     }
 
@@ -41,14 +42,14 @@ public class ProductService {
 
     public void productUpdate(Long id, ProductUpdateDTO dto) {
         Product productUpdate = productRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Producto no encontrado"));
+                () -> ExceptionFactory.createProductNotFoundException());
 
         productMapper.updateProductFromDto(dto, productUpdate);
     }
 
     public void productDelete(Long id) {
         if (!productRepository.existsById(id)) {
-            throw new RuntimeException("Producto no encontrado");
+            throw ExceptionFactory.createProductNotFoundException();
         }
         productRepository.deleteById(id);
     }

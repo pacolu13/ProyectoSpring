@@ -1,7 +1,6 @@
 package com.proyecto.services;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.proyecto.DTOs.CartAddProductDTO;
 import com.proyecto.DTOs.CartDTO;
 import com.proyecto.DTOs.CartUpdateDTO;
-import com.proyecto.exceptions.ResourceNotFoundException;
+import com.proyecto.config.ExceptionFactory;
 import com.proyecto.models.Cart;
 import com.proyecto.models.CartProduct;
 import com.proyecto.models.ProductListing;
@@ -22,8 +21,8 @@ import com.proyecto.mappers.CartMapper;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@SuppressWarnings("null")
 @RequiredArgsConstructor // Agrega esta anotación para generar el constructor con los campos finales
+@SuppressWarnings("null")
 public class CartService {
 
     private final CartRepository cartRepository;
@@ -35,11 +34,9 @@ public class CartService {
 
     public CartDTO getCartByEmail(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+                .orElseThrow(() -> ExceptionFactory.createUserNotFoundException());
 
-        Cart cart = Optional.ofNullable(user.getCart())
-                .orElseThrow(() -> new ResourceNotFoundException("Carrito no encontrado"));
-
+        Cart cart = user.getCart();
         calculateTotals(cart);
         return cartMapper.toDTO(cart);
     }
@@ -59,14 +56,14 @@ public class CartService {
     public CartDTO updateCart(String email, CartUpdateDTO dto) {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+                .orElseThrow(() -> ExceptionFactory.createUserNotFoundException());
 
         Cart cart = user.getCart();
 
         CartProduct product = cart.getProducts().stream()
                 .filter(i -> i.getProductListing().getId().equals(dto.productListingId()))
                 .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado"));
+                .orElseThrow(() -> ExceptionFactory.createCartProductNotFoundException());
 
         int newQuantity = product.getQuantity() + dto.quantity();
 
@@ -83,14 +80,14 @@ public class CartService {
     @Transactional
     public CartDTO addProduct(String email, CartAddProductDTO dto) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+                .orElseThrow(() -> ExceptionFactory.createUserNotFoundException());
 
         ProductListing productListing = productListingRepository.findById(dto.productListingId())
-                .orElseThrow(() -> new ResourceNotFoundException("Producto Venta no encontrado"));
+                .orElseThrow(() -> ExceptionFactory.createProductListingNotFoundException());
 
         Cart cart = user.getCart();
 
-       productListingService.checkStock(productListing.getId(), dto.quantity());
+        productListingService.checkStock(productListing.getId(), dto.quantity());
 
         addProductToCart(cart, productListing, dto.quantity());
         cartRepository.save(cart);

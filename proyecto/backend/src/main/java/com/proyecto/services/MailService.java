@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@SuppressWarnings("null")
 public class MailService {
 
     private final JavaMailSender mailSender;
@@ -22,7 +23,6 @@ public class MailService {
     @Value("${mail.from}")
     private String from;
 
-    @SuppressWarnings("null")
     public void sendOrderConfirmation(String to, Order order) {
         try {
             MimeMessage message = mailSender.createMimeMessage();

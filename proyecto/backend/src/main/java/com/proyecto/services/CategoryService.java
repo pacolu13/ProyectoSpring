@@ -4,15 +4,15 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.proyecto.exceptions.ResourceNotFoundException;
+import com.proyecto.config.ExceptionFactory;
 import com.proyecto.models.Category;
 import com.proyecto.repositories.CategoryRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
-@SuppressWarnings("null")
 @RequiredArgsConstructor
+@SuppressWarnings("null")
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
@@ -28,7 +28,7 @@ public class CategoryService {
 
     public Category updateCategory(Long id, String categoryName) {
         Category response = categoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Categoria no encontrada"));
+                .orElseThrow(() -> ExceptionFactory.createCategoryNotFoundException());
         return response;
     }
 

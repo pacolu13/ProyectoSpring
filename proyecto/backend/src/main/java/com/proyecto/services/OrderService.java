@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.proyecto.DTOs.OrderDTO;
-import com.proyecto.exceptions.ResourceNotFoundException;
 import com.proyecto.mappers.OrderMapper;
 import com.proyecto.models.CartProduct;
 import com.proyecto.models.Order;
@@ -14,14 +13,14 @@ import com.proyecto.models.OrderDetails;
 import com.proyecto.models.User;
 import com.proyecto.repositories.OrderRepository;
 import com.proyecto.repositories.UserRepository;
+import com.proyecto.config.ExceptionFactory;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@SuppressWarnings("null")
 @RequiredArgsConstructor
-
+@SuppressWarnings("null")
 public class OrderService {
 
     private final MailService mailService;
@@ -47,11 +46,10 @@ public class OrderService {
     }
 
     private User getClientWithCart(String email) {
-        User client = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado"));
+        User client = getUserByEmail(email);
 
         if (client.getCart() == null || client.getCart().getProducts().isEmpty()) {
-            throw new IllegalStateException("El carrito está vacío");
+            throw ExceptionFactory.createCartEmptyException();
         }
         return client;
     }
@@ -76,8 +74,7 @@ public class OrderService {
     private void validateStock(List<CartProduct> items) {
         for (CartProduct item : items) {
             if (item.getProductListing().getStock() < item.getQuantity()) {
-                throw new IllegalStateException("Stock insuficiente: "
-                        + item.getProductListing().getProduct().getName());
+                throw ExceptionFactory.createProductOutOfStockException();
             }
         }
     }
@@ -91,7 +88,7 @@ public class OrderService {
 
     private void validateBalance(User client, BigDecimal total) {
         if (total.compareTo(client.getBalance()) > 0) {
-            throw new IllegalStateException("Saldo insuficiente");
+            throw ExceptionFactory.createUserBalanceInsufficientException();
         }
     }
 
@@ -107,5 +104,10 @@ public class OrderService {
             seller.setTotalSales(seller.getTotalSales() + cantidad);
             // Nuestras ventas cuentan la cantidad de productos vendidos
         }
+    }
+
+    private User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> ExceptionFactory.createUserNotFoundException());
     }
 }

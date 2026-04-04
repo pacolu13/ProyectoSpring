@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.proyecto.DTOs.LoginDTO;
 import com.proyecto.DTOs.RegisterDTO;
 import com.proyecto.DTOs.TokenResponseDTO;
+import com.proyecto.config.ExceptionFactory;
 import com.proyecto.models.Cart;
 import com.proyecto.models.Rol;
 import com.proyecto.models.Token;
@@ -24,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @SuppressWarnings("null")
 public class AuthService {
-    
+
     private final UserRepository userRepository;
     private final RolRepository rolRepository;
     private final TokenRepository tokenRepository;
@@ -55,7 +56,7 @@ public class AuthService {
                         request.email(),
                         request.password()));
         var user = userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> ExceptionFactory.createUserNotFoundException());
         var token = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
@@ -93,21 +94,21 @@ public class AuthService {
 
     public TokenResponseDTO refreshToken(String authHeader) {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new RuntimeException("Invalid token");
+            throw ExceptionFactory.createTokenInvalidException();
         }
 
         final String refreshToken = authHeader.substring(7);
         var userEmail = jwtService.extractUsername(refreshToken);
 
         if (userEmail == null) {
-            throw new RuntimeException("Invalid token");
+            throw ExceptionFactory.createTokenInvalidException();
         }
 
         var user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> ExceptionFactory.createUserNotFoundException());
 
         if (!jwtService.isTokenValid(refreshToken, user)) {
-            throw new RuntimeException("Invalid token");
+            throw ExceptionFactory.createTokenInvalidException();
         }
 
         final String accessToken = jwtService.generateToken(user);

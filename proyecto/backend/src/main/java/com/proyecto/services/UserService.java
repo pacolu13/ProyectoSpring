@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.proyecto.DTOs.UserCreateDTO;
 import com.proyecto.DTOs.UserDTO;
-import com.proyecto.exceptions.ResourceNotFoundException;
+import com.proyecto.config.ExceptionFactory;
 import com.proyecto.mappers.UserMapper;
 import com.proyecto.models.Cart;
 import com.proyecto.models.User;
@@ -30,7 +30,7 @@ public class UserService {
 
     public UserDTO getUserByEmail(String email) {
         User response = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+                .orElseThrow(() -> ExceptionFactory.createUserNotFoundException());
         return userMapper.toDTO(response);
 
     }

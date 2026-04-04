@@ -128,7 +128,7 @@ class ProductServiceTest {
         RuntimeException ex = assertThrows(RuntimeException.class,
                 () -> productService.getProductById(99L));
 
-        assertEquals("Producto no encontrado", ex.getMessage());
+        assertEquals("Product not found", ex.getMessage());
         verify(repoProducto, times(1)).findById(99L);
         verify(productoMapper, never()).toDTO(any());
     }
@@ -198,7 +198,7 @@ class ProductServiceTest {
         RuntimeException ex = assertThrows(RuntimeException.class,
                 () -> productService.productUpdate(99L, productUpdateDTO));
 
-        assertEquals("Producto no encontrado", ex.getMessage());
+        assertEquals("Product not found", ex.getMessage());
         verify(productoMapper, never()).updateProductFromDto(any(), any());
     }
 
@@ -226,7 +226,7 @@ class ProductServiceTest {
         RuntimeException ex = assertThrows(RuntimeException.class,
                 () -> productService.productDelete(99L));
 
-        assertEquals("Producto no encontrado", ex.getMessage());
+        assertEquals("Product not found", ex.getMessage());
         verify(repoProducto, never()).deleteById(anyLong());
     }
 

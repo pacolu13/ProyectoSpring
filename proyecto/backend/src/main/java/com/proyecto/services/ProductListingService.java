@@ -1,14 +1,13 @@
 package com.proyecto.services;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.proyecto.DTOs.ProductListingCreateDTO;
 import com.proyecto.DTOs.ProductListingDTO;
-import com.proyecto.exceptions.ResourceNotFoundException;
+import com.proyecto.config.ExceptionFactory;
 import com.proyecto.mappers.ProductListingMapper;
 import com.proyecto.models.Product;
 import com.proyecto.models.ProductListing;
@@ -20,8 +19,8 @@ import com.proyecto.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@SuppressWarnings("null")
 @RequiredArgsConstructor // Agrega esta anotación para generar el constructor con los campos finales
+@SuppressWarnings("null")
 public class ProductListingService {
 
         private final UserRepository userRepository;
@@ -39,14 +38,12 @@ public class ProductListingService {
         }
 
         public ProductListingDTO findyProductListingById(Long id) {
-                ProductListing prod = orElseThrow(productListingRepository.findById(id),
-                                "Producto Venta no encontrado");
-
+                ProductListing prod = getProductListingById(id);
                 return productListingMapper.toDTO(prod);
         }
 
         public ProductListingDTO addProductListing(ProductListingCreateDTO productListing, String email) {
-                User seller = orElseThrow(userRepository.findByEmail(email), "Vendedor no encontrado: " + email);
+                User seller = getSellerByEmail(email);
                 ProductListing productsListingSave = productListingMapper.toEntity(productListing);
 
                 Product product = productsListingSave.getProduct();
@@ -65,19 +62,24 @@ public class ProductListingService {
         }
 
         public List<ProductListingDTO> findAllSellerListings(String email) {
-                User seller = orElseThrow(userRepository.findByEmail(email), "Vendedor no encontrado: " + email);
+                User seller = getSellerByEmail(email);
                 List<ProductListing> sellerListings = productListingRepository.findByUser(seller);
                 return productListingMapper.toDTOList(sellerListings);
         }
 
-        // Metodo para ver si hay suficiente stock
         public boolean checkStock(Long id, Integer quantity) {
-                ProductListing prod = orElseThrow(productListingRepository.findById(id),
-                                "Producto Venta no encontrado");
+                ProductListing prod = getProductListingById(id);
                 return prod.getStock() >= quantity;
         }
 
-        private <T> T orElseThrow(Optional<T> optional, String message) {
-                return optional.orElseThrow(() -> new ResourceNotFoundException(message));
+        private ProductListing getProductListingById(Long id) {
+                return productListingRepository.findById(id)
+                                .orElseThrow(() -> ExceptionFactory.createProductListingNotFoundException());
         }
+
+        private User getSellerByEmail(String email) {
+                return userRepository.findByEmail(email)
+                                .orElseThrow(() -> ExceptionFactory.createSellerNotFoundException());
+        }
+
 }
