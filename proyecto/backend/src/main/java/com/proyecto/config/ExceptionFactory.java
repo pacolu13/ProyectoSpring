@@ -3,8 +3,13 @@ package com.proyecto.config;
 import java.util.Optional;
 
 import com.proyecto.exceptions.ResourceNotFoundException;
+import com.proyecto.models.Order;
 
 public class ExceptionFactory {
+
+    public static RuntimeException createNotFoundException() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
     private ExceptionFactory() {
 

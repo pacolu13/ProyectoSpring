@@ -3,9 +3,12 @@ package com.proyecto.services;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import com.proyecto.DTOs.OrderDTO;
+import com.proyecto.config.ExceptionFactory;
+import com.proyecto.events.OrderCreatedEvent;
 import com.proyecto.mappers.OrderMapper;
 import com.proyecto.models.CartProduct;
 import com.proyecto.models.Order;
@@ -13,7 +16,6 @@ import com.proyecto.models.OrderDetails;
 import com.proyecto.models.User;
 import com.proyecto.repositories.OrderRepository;
 import com.proyecto.repositories.UserRepository;
-import com.proyecto.config.ExceptionFactory;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,8 @@ public class OrderService {
     private final UserRepository userRepository;
     private final OrderMapper orderMapper;
 
+    private final RabbitTemplate rabbitTemplate;
+
     @Transactional
     public OrderDTO orderSubmit(String email) {
         User client = getClientWithCart(email);
@@ -40,9 +44,20 @@ public class OrderService {
         Order order = createOrder(client, items, total);
         applyPostPurchaseEffects(client, items, total);
 
-        mailService.sendOrderConfirmation(email, order);
+        Order savedOrder = orderRepository.save(order);
 
-        return orderMapper.toDTO(orderRepository.save(order));
+        OrderCreatedEvent event = new OrderCreatedEvent(
+                savedOrder.getId(),
+                email
+        );
+
+        rabbitTemplate.convertAndSend(
+                "order.exchange",
+                "order.created",
+                event
+        );
+
+        return orderMapper.toDTO(savedOrder);
     }
 
     private User getClientWithCart(String email) {
@@ -82,7 +97,7 @@ public class OrderService {
     private BigDecimal calculateTotal(List<CartProduct> items) {
         return items.stream()
                 .map(i -> i.getProductListing().getPrice()
-                        .multiply(BigDecimal.valueOf(i.getQuantity())))
+                .multiply(BigDecimal.valueOf(i.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
