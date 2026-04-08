@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
+@SuppressWarnings("null")
 public class OrderCreatedListener {
     private final MailService mailService;
     private final OrderRepository orderRepository;

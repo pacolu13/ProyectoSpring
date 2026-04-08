@@ -9,10 +9,9 @@ import { formatPrice } from "../../utils/FormatPrice";
 export const Cart = () => {
     const showToast = useToast();
     const { data } = useFetch<CartDTO>("/api/v1/carts", true);
-    const { put, putError } = usePut<CartDTO>("/api/v1/carts");
-    const { post, addError } = usePost<OrderDTO>("/api/v1/orders/submit");
+    const { put } = usePut<CartDTO>("/api/v1/carts");
+    const { post } = usePost<OrderDTO>("/api/v1/orders/submit");
     const [thisTotal, setTotal] = useState<number>(0);
-
 
     useEffect(() => {
         if (data?.total != null) setTotal(data.total);
@@ -21,29 +20,31 @@ export const Cart = () => {
     if (data == null) return null;
 
     const handleIncrease = async (productListingId: number, unitPrice: number): Promise<void> => {
-        await put({ productListingId, quantity: 1 });
-        if (putError) {
-            showToast('error', 'Error al actualizar el carrito');
-        } else {
+        try {
+            await put({ productListingId, quantity: 1 });
             setTotal(t => t + unitPrice);
+        }
+        catch (error) {
+            showToast('error', 'Error al actualizar el carrito');
         }
     };
 
     const handleDecrease = async (productListingId: number, unitPrice: number): Promise<void> => {
-        await put({ productListingId, quantity: -1 });
-        if (putError) {
-            showToast('error', 'Error al actualizar el carrito');
-        } else {
+        try {
+            await put({ productListingId, quantity: -1 });
             setTotal(t => t - unitPrice);
+        } catch (error) {
+            showToast('error', 'Error al actualizar el carrito');
         }
     };
 
     const handleBuy = async (): Promise<void> => {
-        await post(null);
-        if (addError) {
-            showToast('error', 'Error al realizar la compra');
-        } else {
-            showToast('confirm', 'Compra realizada');
+        try {
+            await post(null);
+            showToast('confirm', 'Compra confirmada exitosamente');
+        }
+        catch (error) {
+            showToast('error', 'Error al confirmar la compra');
         }
     };
 
@@ -52,9 +53,10 @@ export const Cart = () => {
             <div className='cart'>
                 <div className='cart__tittle'>
                     <span>CARRITO</span>
-                    <span>{data.cartProducts?.length ?? 0} items</span>
+                    <span>{data.products?.length ?? 0} items</span>
                 </div>
-                {(data.cartProducts ?? []).map((item) => (
+                {(data.products ?? []).map((item) => (
+                    console.log(item),
                     <ProductCart
                         key={item.id}
                         name={item.name}

@@ -25,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 @SuppressWarnings("null")
 public class OrderService {
 
-    private final MailService mailService;
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final OrderMapper orderMapper;
