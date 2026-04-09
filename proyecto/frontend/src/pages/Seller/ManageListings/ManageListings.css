@@ -1,84 +1,99 @@
 .ml-root {
-    min-height: 100vh;
-    background-color: #0a0a0a;
-    padding: 40px;
-    color: #f0f0f0;
+    padding: 2rem;
+    max-width: 860px;
+    margin: 0 auto;
 }
 
 .ml-title {
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: #ffffff;
-    margin-bottom: 28px;
-    border-left: 4px solid #e53935;
-    padding-left: 12px;
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    letter-spacing: 0.01em;
 }
 
+/* Tabla */
 .ml-table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #141414;
-    border-radius: 10px;
+    background: #111;
+    border-radius: 8px;
     overflow: hidden;
 }
 
-.ml-table thead {
-    background-color: #1e1e1e;
-}
-
-.ml-table th {
-    padding: 14px 18px;
-    text-align: left;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #888;
+/* Encabezado */
+.ml-table thead tr {
     border-bottom: 1px solid #2a2a2a;
 }
 
+.ml-table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #555;
+}
+
+/* Filas */
 .ml-table td {
-    padding: 14px 18px;
-    font-size: 0.92rem;
-    color: #d0d0d0;
-    border-bottom: 1px solid #1e1e1e;
+    padding: 0.875rem 1rem;
+    font-size: 0.9rem;
+    color: #ccc;
+    border-bottom: 1px solid #1a1a1a;
+    vertical-align: middle;
 }
 
 .ml-table tbody tr:last-child td {
     border-bottom: none;
 }
 
-.ml-table tbody tr:hover {
-    background-color: #1a1a1a;
-    transition: background-color 0.2s ease;
+.ml-table tbody tr:hover td {
+    color: #fff;
 }
 
+/* Acciones */
 .ml-actions {
     display: flex;
-    gap: 8px;
+    gap: 0.5rem;
 }
 
 .ml-btn {
-    padding: 6px 14px;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.82rem;
-    font-weight: 500;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 400;
     cursor: pointer;
-    transition: opacity 0.2s ease;
-}
-
-.ml-btn:hover {
-    opacity: 0.85;
+    background: transparent;
+    transition: color 0.15s, border-color 0.15s;
 }
 
 .ml-btn--edit {
-    background-color: #2a2a2a;
-    color: #f0f0f0;
-    border: 1px solid #3a3a3a;
+    color: #555;
+    border-color: #2a2a2a;
+}
+
+.ml-btn--edit:hover {
+    color: #fff;
+    border-color: #555;
 }
 
 .ml-btn--delete {
-    background-color: #e53935;
-    color: #ffffff;
+    color: #7a2020;
+    border-color: #2a2a2a;
+}
+
+.ml-btn--delete:hover {
+    color: #e05555;
+    border-color: #7a2020;
+}
+
+/* Error */
+.ml-error {
+    padding: 1rem;
+    color: #e05555;
+    text-align: center;
+    font-size: 0.9rem;
 }

@@ -1,11 +1,11 @@
 import './Home.css'
 import { Button, ProductHome } from '../../components'
 import { useFetch } from '../../hooks'
-import type { ProductDTO } from '../../interfaces';
+import type { ProductSellDTO } from '../../interfaces';
 
 export const Home = () => {
 
-    const { data, error } = useFetch<ProductDTO[]>('/api/v1/products', false);
+    const { data, error } = useFetch<ProductSellDTO[]>('/api/v1/product-listings', false);
 
     if (data == null || error) {
         return null; // Generar un error
@@ -30,14 +30,14 @@ export const Home = () => {
                 {error && <p className="error">{error}</p>}
 
                 <div className="products-grid">
-                    {data.map(product => (
+                    {data.map(listing => (
                         <ProductHome
-                            key={product.id}
-                            id={product.id}
-                            image={product.image}
-                            brand={product.brand}
-                            name={product.name}
-                            description={product.description}
+                            key={listing.id}
+                            id={listing.id}
+                            image={listing.product.image}
+                            brand={listing.product.brand}
+                            name={listing.product.name}
+                            description={listing.product.description}
                         />
                     ))}
                 </div>

@@ -4,7 +4,7 @@ type Props = {
   label: string;
   register: any;
   name: string;
-  rules?: RegisterOptions;        
+  rules?: RegisterOptions;
   type?: string;
   placeholder?: string;
 };
@@ -12,13 +12,13 @@ type Props = {
 export const InputField = ({ label, register, name, rules, type = "text", placeholder }: Props) => (
   <div className="ps-field">
     <label className="ps-label">
-      {label} {rules?.required && "*"}   
+      {label} {rules?.required && "*"}
     </label>
     <input
       className="ps-input"
       type={type}
       placeholder={placeholder}
-      {...register(name, rules)}        
+      {...register(name, rules)}
     />
   </div>
 );

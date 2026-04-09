@@ -38,14 +38,14 @@ export const ProductForm = ({ register, watch, categories }: ProductFormProps) =
                         name="price"
                         type="number"
                         register={register}
-                        rules={{ required: "El precio es obligatorio", min: { value: 1, message: "Debe ser mayor a 0" } }}
+                        rules={{ required: "El precio es obligatorio", min: { value: 1, message: "Debe ser mayor a 0" }, valueAsNumber: true }}
                     />
                     <InputField
                         label="Stock"
                         name="stock"
                         type="number"
                         register={register}
-                        rules={{ required: "El stock es obligatorio", min: { value: 1, message: "Debe ser mayor a 0" } }}
+                        rules={{ required: "El stock es obligatorio", min: { value: 1, message: "Debe ser mayor a 0" }, valueAsNumber: true }}
                     />
                 </div>
                 <StatesField
@@ -87,7 +87,6 @@ export const ProductForm = ({ register, watch, categories }: ProductFormProps) =
                     {categories?.map(cat => (
                         <option key={cat.id} value={cat.name}>{cat.name}</option>
                     ))}
-                    <option value="Otra">Otra</option>
                 </SelectField>
                 {isOtherCategory && (
                     <InputField

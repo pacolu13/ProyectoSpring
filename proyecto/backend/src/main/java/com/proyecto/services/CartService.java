@@ -111,4 +111,20 @@ public class CartService {
             cart.getProducts().add(newCartProduct);
         }
     }
+
+    public CartDTO removeProduct(String email, Long productListingId) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> ExceptionFactory.createUserNotFoundException());
+
+        Cart cart = user.getCart();
+
+        CartProduct product = cart.getProducts().stream()
+                .filter(i -> i.getProductListing().getId().equals(productListingId))
+                .findFirst()
+                .orElseThrow(() -> ExceptionFactory.createCartProductNotFoundException());
+
+        cart.getProducts().remove(product);
+
+        return cartMapper.toDTO(cartRepository.save(cart));
+    }
 }

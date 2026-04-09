@@ -13,24 +13,15 @@ export const ProductSell = () => {
   const { register, handleSubmit, watch, reset } = useForm<CreateProductSellDTO>();
 
   const onSubmit = async (data: CreateProductSellDTO) => {
-    const payload: CreateProductSellDTO = {
-      ...data,
-      product: {
-        ...data.product,
-        category: data.product.category === "Otra"
-          ? data.product.category
-          : data.product.category,
-      },
-    };
-
     try {
-      await post(payload);
+      await post(data); 
       showToast("confirm", "Publicación creada con éxito");
       reset();
     } catch {
       showToast("error", "Error al crear la publicación");
     }
   };
+
   return (
     <div className="ps-root">
       <div className="ps-card">

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useToast, EditListingModal } from "../../../components";
 import type { ProductSellDTO, CreateProductSellDTO, CategoryDTO } from "../../../interfaces";
-import { usePut, useFetch } from "../../../hooks";
+import { usePut, useFetch, useDelete } from "../../../hooks";
 
 type Props = {
     listing: ProductSellDTO;
@@ -11,7 +11,8 @@ export const ListingRow = ({ listing }: Props) => {
     const showToast = useToast();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { put } = usePut<ProductSellDTO>(`/api/v1/product-listings/${listing.id}`);
-    const { data: categories } = useFetch<CategoryDTO[]>("/api/v1/categories", false);
+    const { constDelete } = useDelete<void>(`/api/v1/product-listings/${listing.id}`);
+    const { data: categories } = useFetch<CategoryDTO[]>("/api/v1/categories", true);
 
     const onUpdate = async (data: CreateProductSellDTO) => {
         try {
@@ -20,6 +21,15 @@ export const ListingRow = ({ listing }: Props) => {
             setIsModalOpen(false);
         } catch {
             showToast("error", "Error al actualizar la publicación");
+        }
+    };
+
+    const onDelete = async () => {
+        try {
+            await constDelete();
+            showToast("confirm", "Publicación eliminada con éxito");
+        } catch {
+            showToast("error", "Error al eliminar la publicación");
         }
     };
 
@@ -33,12 +43,13 @@ export const ListingRow = ({ listing }: Props) => {
                     <button onClick={() => setIsModalOpen(true)} className="ml-btn ml-btn--edit">
                         Editar
                     </button>
-                    <button onClick={() => showToast("confirm", `Eliminar ${listing.product.name}`)} className="ml-btn ml-btn--delete">
+                    <button onClick={onDelete} className="ml-btn ml-btn--delete">
                         Eliminar
                     </button>
                 </td>
             </tr>
 
+            {/* El modal vive fuera de la tabla en el DOM gracias al overlay fixed */}
             {isModalOpen && (
                 <EditListingModal
                     listing={listing}

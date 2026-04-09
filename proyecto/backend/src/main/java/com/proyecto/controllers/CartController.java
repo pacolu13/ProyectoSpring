@@ -2,7 +2,9 @@ package com.proyecto.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +43,13 @@ public class CartController {
     public ResponseEntity<CartDTO> addProductToCart(Authentication authentication, @RequestBody CartAddProductDTO dto) {
         String email = authentication.getName();
         CartDTO response = cartService.addProduct(email, dto);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{productListingId}")
+    public ResponseEntity<CartDTO> removeProductFromCart(Authentication authentication, @PathVariable Long productListingId) {
+        String email = authentication.getName();
+        CartDTO response = cartService.removeProduct(email, productListingId);
         return ResponseEntity.ok(response);
     }
 

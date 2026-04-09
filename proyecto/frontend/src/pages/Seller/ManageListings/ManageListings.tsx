@@ -20,7 +20,6 @@ export const ManageListings = () => {
                         <th>Producto</th>
                         <th>Precio</th>
                         <th>Stock</th>
-                        <th>Categoría</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>

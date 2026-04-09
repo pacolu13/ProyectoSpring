@@ -17,7 +17,7 @@ export const Cart = () => {
         if (data?.total != null) setTotal(data.total);
     }, [data]);
 
-    if (data == null) return null;
+
 
     const handleIncrease = async (productListingId: number, unitPrice: number): Promise<void> => {
         try {
@@ -33,6 +33,7 @@ export const Cart = () => {
         try {
             await put({ productListingId, quantity: -1 });
             setTotal(t => t - unitPrice);
+
         } catch (error) {
             showToast('error', 'Error al actualizar el carrito');
         }
@@ -47,6 +48,19 @@ export const Cart = () => {
             showToast('error', 'Error al confirmar la compra');
         }
     };
+
+    if (data == null) return <div className='body_cart'>
+        <div className='cart'>
+            <div className='cart__tittle'>
+                <span>CARRITO</span>
+                <span>0 items</span>
+            </div>
+            <div className='cart__total'>
+                <span>Total</span>
+                <span>{formatPrice(0)}</span>
+            </div>
+        </div>
+    </div>;
 
     return (
         <div className='body_cart'>
