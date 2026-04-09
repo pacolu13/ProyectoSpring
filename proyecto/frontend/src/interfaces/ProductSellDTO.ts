@@ -4,7 +4,7 @@ export interface CreateProductSellDTO {
     title: string;
     description: string;
     price: number;
-    state: string;
+    state: ProductStateDTO;
     stock: number;
     product: ProductDTO;
 }
@@ -12,3 +12,5 @@ export interface CreateProductSellDTO {
 export type ProductSellDTO = CreateProductSellDTO & {
     id: number;
 };
+
+export type ProductStateDTO = "NEW" | "USED" | "DAMAGED";

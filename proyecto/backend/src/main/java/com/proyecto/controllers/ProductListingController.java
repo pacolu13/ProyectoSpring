@@ -4,15 +4,18 @@ import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.DTOs.ProductListingCreateDTO;
 import com.proyecto.DTOs.ProductListingDTO;
+import com.proyecto.DTOs.ProductListingUpdateDTO;
 import com.proyecto.config.ApiRoutes;
 import com.proyecto.services.ProductListingService;
 
@@ -52,5 +55,20 @@ public class ProductListingController {
         System.out.println("EMAIL: " + email + "PRODUCTO: " + productListing);
         ProductListingDTO response = productListingService.addProductListing(productListing, email);
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{idListing}")
+    public ResponseEntity<ProductListingDTO> updateProductListing(Authentication authentication,
+            @PathVariable Long idListing, @RequestBody ProductListingUpdateDTO productListing) {
+        String email = authentication.getName();
+        ProductListingDTO response = productListingService.updateProductListing(idListing, productListing, email);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{idListing}")
+    public ResponseEntity<Void> deleteProductListing(Authentication authentication, @PathVariable Long idListing) {
+        String email = authentication.getName();
+        productListingService.deleteProductListing(idListing, email);
+        return ResponseEntity.noContent().build();
     }
 }

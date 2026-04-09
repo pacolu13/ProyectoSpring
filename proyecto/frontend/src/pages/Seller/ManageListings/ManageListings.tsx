@@ -1,5 +1,5 @@
 import { useFetch } from "../../../hooks";
-import { ListingRow, useToast } from "../../../components";
+import { ListingRow } from "../../../components";
 import type { ProductSellDTO } from "../../../interfaces";
 import "./ManageListings.css";
 
@@ -19,7 +19,7 @@ export const ManageListings = () => {
                     <tr>
                         <th>Producto</th>
                         <th>Precio</th>
-                        <th>Estado</th>
+                        <th>Stock</th>
                         <th>Categoría</th>
                         <th>Acciones</th>
                     </tr>

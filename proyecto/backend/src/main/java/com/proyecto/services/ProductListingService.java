@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.proyecto.DTOs.ProductListingCreateDTO;
 import com.proyecto.DTOs.ProductListingDTO;
+import com.proyecto.DTOs.ProductListingUpdateDTO;
 import com.proyecto.config.ExceptionFactory;
 import com.proyecto.mappers.ProductListingMapper;
 import com.proyecto.models.Product;
@@ -65,6 +66,31 @@ public class ProductListingService {
                 User seller = getSellerByEmail(email);
                 List<ProductListing> sellerListings = productListingRepository.findByUser(seller);
                 return productListingMapper.toDTOList(sellerListings);
+        }
+
+        public ProductListingDTO updateProductListing(Long idListing, ProductListingUpdateDTO productListing,
+                        String email) {
+                ProductListing existingListing = getProductListingById(idListing);
+
+                if (!existingListing.getUser().getEmail().equals(email)) {
+                        throw new SecurityException("Unauthorized");
+                }
+
+                ProductListing updatedEntity = productListingMapper.updateProductFromDto(productListing,
+                                existingListing);
+                ProductListing updatedListing = productListingRepository.save(updatedEntity);
+                return productListingMapper.toDTO(updatedListing);
+
+        }
+
+        public void deleteProductListing(Long idListing, String email) {
+                ProductListing existingListing = getProductListingById(idListing);
+
+                if (!existingListing.getUser().getEmail().equals(email)) {
+                        throw new SecurityException("Unauthorized");
+                }
+
+                productListingRepository.delete(existingListing);
         }
 
         public boolean checkStock(Long id, Integer quantity) {

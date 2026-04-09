@@ -1,89 +1,37 @@
-// EditListingModal.tsx
 import { useForm } from "react-hook-form";
-import { InputField } from "../../../components";
-import type { ProductSellDTO } from "../../../interfaces";
+import type { ProductSellDTO, CreateProductSellDTO, CategoryDTO } from "../../../interfaces";
+import { ProductForm } from "../../../pages/Seller/ProductForm";
 import "./EditListingModal.css";
 
 type Props = {
     listing: ProductSellDTO;
+    categories?: CategoryDTO[] | null;
     onClose: () => void;
+    onSubmit: (data: CreateProductSellDTO) => void;
 };
 
-type EditFormDTO = {
-    title: string;
-    productName: string;
-    price: string;
-    category: string;
-    quantity: number;
-    paused: boolean;
-};
-
-export const EditListingModal = ({ listing, onClose }: Props) => {
-    const { register, handleSubmit } = useForm<EditFormDTO>({
+export const EditListingModal = ({ listing, categories, onClose, onSubmit }: Props) => {
+    const { register, handleSubmit, watch } = useForm<CreateProductSellDTO>({
         defaultValues: {
             title: listing.title,
-            productName: listing.product.name,
-            price: String(listing.price),
-            quantity: listing.quantity,
+            description: listing.description,
+            price: listing.price,
+            stock: listing.stock,
+            state: listing.state,
+            product: listing.product, // mismo shape, sin mapeo
         },
     });
-
-    const onSubmit = (data: EditFormDTO) => {
-        console.log("Actualizar:", data);
-        onClose();
-    };
 
     return (
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal-card" onClick={e => e.stopPropagation()}>
-
                 <div className="modal-header">
                     <h3 className="modal-title">Editar publicación</h3>
                     <button className="modal-close" onClick={onClose}>✕</button>
                 </div>
 
                 <div className="modal-body">
-                    <InputField
-                        label="Título"
-                        name="title"
-                        register={register}
-                        rules={{ required: "El título es obligatorio" }}
-                    />
-                    <InputField
-                        label="Producto"
-                        name="productName"
-                        register={register}
-                    />
-                    <div className="modal-row">
-                        <InputField
-                            label="Precio"
-                            name="price"
-                            type="number"
-                            register={register}
-                            rules={{ required: "El precio es obligatorio", min: { value: 1, message: "Debe ser mayor a 0" } }}
-                        />
-                        <InputField
-                            label="Stock"
-                            name="quantity"
-                            type="number"
-                            register={register}
-                            rules={{ required: "El stock es obligatorio", min: { value: 1, message: "Debe ser mayor a 0" } }}
-                        />
-                    </div>
-                    <InputField
-                        label="Categoría"
-                        name="category"
-                        register={register}
-                    />
-
-                    <div className="modal-toggle">
-                        <label className="modal-toggle__label">Pausar publicación</label>
-                        <input
-                            type="checkbox"
-                            className="modal-toggle__checkbox"
-                            {...register("paused")}
-                        />
-                    </div>
+                    <ProductForm register={register} watch={watch} categories={categories} />
                 </div>
 
                 <div className="modal-footer">
@@ -94,7 +42,6 @@ export const EditListingModal = ({ listing, onClose }: Props) => {
                         Guardar
                     </button>
                 </div>
-
             </div>
         </div>
     );

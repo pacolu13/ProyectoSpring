@@ -3,7 +3,6 @@ package com.proyecto.config;
 import java.util.Optional;
 
 import com.proyecto.exceptions.ResourceNotFoundException;
-import com.proyecto.models.Order;
 
 public class ExceptionFactory {
 
@@ -84,4 +83,5 @@ public class ExceptionFactory {
     public static RuntimeException createTokenInvalidException() {
         return new IllegalArgumentException(TOKEN_INVALID);
     }
+
 }
