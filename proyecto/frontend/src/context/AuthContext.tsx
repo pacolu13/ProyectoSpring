@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from "react";
 interface AuthUser {
 
   email: string;
-  // Podés ir agregando: id, nombre, rol, etc.
+  roles: string[];
 }
 
 interface AuthContextType {
@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem("user", JSON.stringify(newUser));
     setToken(newToken);
     setUser(newUser);
+    console.log("Usuario logueado:", newUser);
   };
 
   const logout = () => {

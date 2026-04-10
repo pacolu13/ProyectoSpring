@@ -33,7 +33,7 @@ export const Home = () => {
                     {data.map(listing => (
                         <ProductHome
                             key={listing.id}
-                            id={listing.id}
+                            id={listing.product.id}
                             image={listing.product.image}
                             brand={listing.product.brand}
                             name={listing.product.name}
