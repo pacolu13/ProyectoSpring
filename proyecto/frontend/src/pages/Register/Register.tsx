@@ -31,7 +31,7 @@ export const Register = () => {
         const result = await post(registerData);
         if (result) {
             login(result.access_token, { email: data.email, roles: roles });
-            navigate("/");
+            navigate("/"); 
         } else {
             showToast("error", "Error al registrarse.");
         }

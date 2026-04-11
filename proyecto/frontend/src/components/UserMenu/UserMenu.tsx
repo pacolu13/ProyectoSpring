@@ -1,13 +1,15 @@
 import { useRef, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./UserMenu.css";
 import { AvatarIcon, CartIcon, LogoutIcon } from "../../styles/menuIcons";
+import { LinkIcon } from "./LinkIcon/LinkIcon";
 
 
 export const UserMenu = () => {
   const [open, setOpen] = useState(false);
   const { token, user, logout } = useAuth();
+  const isSeller = user?.roles.includes("SELLER");
   const navigate = useNavigate();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -54,19 +56,24 @@ export const UserMenu = () => {
         <div className="user_dropdown__actions">
           {token ? (
             <>
-              <a className="user_dropdown__item" href="/cart">
-                <span className="user_dropdown__item__icon"><CartIcon /></span>
-                Mi carrito
-              </a>
+              <LinkIcon label="Mi carrito" url="/cart" icon={<CartIcon />} />
+
+              {isSeller && (
+                <LinkIcon label="Mis listados" url="/manage-listings" icon={<CartIcon />} />
+              )}
+              {
+                isSeller && (
+                  <LinkIcon label="Vender producto" url="/products-sell" icon={<CartIcon />} />
+                )
+              }
+
               <button className="user_dropdown__item user_dropdown__item--danger" onClick={handleLogout}>
                 <span className="user_dropdown__item__icon"><LogoutIcon /></span>
                 Cerrar sesión
               </button>
             </>
           ) : (
-            <a className="user_dropdown__item" href="/login">
-              Iniciar sesión
-            </a>
+            <LinkIcon label="Iniciar sesión" url="/login" icon={<LogoutIcon />} />
           )}
         </div>
       </div>

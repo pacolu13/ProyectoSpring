@@ -23,3 +23,6 @@ export * from "./Field/TextAreaField/TextAreaField"
 export * from "./Listing/ListingFilters/ListingFilters"
 export * from "./Listing/ListingRow/ListingRow"
 export * from "./Listing/EditListingModal/EditListingModal"
+
+//User Menu
+export * from "./UserMenu/LinkIcon/LinkIcon"

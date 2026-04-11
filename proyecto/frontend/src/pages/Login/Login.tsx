@@ -18,7 +18,7 @@ export const Login = () => {
     const result = await post({ email: data.email, password: data.password });
 
     if (result) {
-      login(result.access_token, { email: data.email });
+      login(result.access_token, { email: data.email, roles: result.roles });
       navigate("/");
     } else {
       showToast("error", "Credenciales incorrectas.");

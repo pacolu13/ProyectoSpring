@@ -3,15 +3,8 @@ export const linksHeader = [
     {
         name: 'Inicio',
         url: '/',
-    },
-    {
-        name: 'Vender',
-        url: '/products-sell',
-    },
-    {
-        name: 'Mis Publicaciones',
-        url: '/manage-listings',
     }
+
 ];
 
 export const linksFooter = [

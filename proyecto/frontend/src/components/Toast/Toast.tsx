@@ -1,6 +1,6 @@
 import { useEffect, useState, type JSX } from 'react'
 import styles from './Toast.module.css'
-import type { ToastType } from '../ToastProvider/ToastContext'
+import type { ToastType } from '..//'
 
 interface ToastProps {
   type: ToastType
