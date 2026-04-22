@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Header, Footer } from "./components/index.ts"
-import { Home, Login, Register, Cart, Products, ProductListing, ProductSell, ManageListings } from "./pages"
+import { Home, Login, Register, Cart, ProductListing, ProductSell, ManageListings } from "./pages"
 import { linksHeader, linksFooter, mensajeFooter } from "../public/Links.ts"
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute.tsx"
 
@@ -12,7 +12,6 @@ export const AppRouter = () => {
                 <Route path='/' element={<Home />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
-                <Route path='/products' element={<Products />} />
                 <Route path='/products/:idProduct' element={<ProductListing />} />
 
                 <Route path="/cart" element={

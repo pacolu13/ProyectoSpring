@@ -31,7 +31,7 @@ export const ProductCart = ({ id, name, quantity, subtotal, productListingId, un
   const onDelete = async () => {
     try {
       await constDelete();
-      showToast('confirm', 'Compra confirmada exitosamente');
+      showToast('confirm', 'Producto eliminado: Recargue el navegador');
     }
     catch (error) {
       showToast('error', 'Error al eliminar el producto del carrito');

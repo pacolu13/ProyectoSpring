@@ -3,8 +3,18 @@ export interface ProductListingDTO {
   price: number;
   productName: string;
   creationDate: Date;
-  condition: "new" | "used";
+  condition: ConditionDTO;
   seller: SellerDTO;
+}
+
+export interface ProductListingDetailsDTO {
+  id: number;
+  price: number;
+  productName: string;
+  description: string;
+  condition: ConditionDTO;
+  seller: SellerDTO;
+  creationDate: Date;
 }
 
 export interface SellerDTO {
@@ -14,3 +24,5 @@ export interface SellerDTO {
   location: string;          // ciudad/provincia
 
 }
+
+export type ConditionDTO = "NEW" | "USED" | null;

@@ -36,7 +36,7 @@ export const Home = () => {
                             id={listing.product.id}
                             image={listing.product.image}
                             brand={listing.product.brand}
-                            name={listing.product.name}
+                            name={listing.title}
                             description={listing.product.description}
                         />
                     ))}

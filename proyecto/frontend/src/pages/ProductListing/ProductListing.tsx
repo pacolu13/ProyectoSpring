@@ -45,13 +45,8 @@ export const ProductListing = () => {
             style={{ animationDelay: `${i * 60}ms` }}
           >
             <ProductListingCard
-              id={item.id}
-              price={item.price}
-              productName={item.productName}
+              Product={item}
               onBuy={handleBuy}
-              creationDate={item.creationDate}
-              seller={item.seller}
-              condition={item.condition}
             />
           </div>
         ))}

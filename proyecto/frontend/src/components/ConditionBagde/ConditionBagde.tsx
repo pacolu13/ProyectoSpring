@@ -1,11 +1,12 @@
+import type { ConditionDTO } from '../../interfaces';
 import './ConditionBadge.css'
 
 interface ConditionBadgeProps {
-    condition: "new" | "used";
+    condition: ConditionDTO;
 }
 
 export const ConditionBadge = ({ condition }: ConditionBadgeProps) => (
     <span className={`plc__badge plc__badge--${condition}`}>
-        {condition === "new" ? "Nuevo" : "Usado"}
+        {condition === "NEW" ? "Nuevo" : condition === "USED" ? "Usado" : "Undefined"}
     </span>
 );

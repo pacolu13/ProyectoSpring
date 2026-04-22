@@ -49,7 +49,6 @@ export const ListingRow = ({ listing }: Props) => {
                 </td>
             </tr>
 
-            {/* El modal vive fuera de la tabla en el DOM gracias al overlay fixed */}
             {isModalOpen && (
                 <EditListingModal
                     listing={listing}

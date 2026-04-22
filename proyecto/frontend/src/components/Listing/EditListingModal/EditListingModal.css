@@ -16,10 +16,23 @@
     border-radius: 12px;
     width: 100%;
     max-width: 500px;
-    padding: 28px;
+    max-height: 90vh;
+    /* límite de altura */
     display: flex;
     flex-direction: column;
+    /* header, body y footer en columna */
     gap: 20px;
+    padding: 28px;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+    /* scroll solo en el body */
+    padding-right: 4%;
+    /* espacio para la scrollbar */
 }
 
 .modal-header {
@@ -47,12 +60,6 @@
 
 .modal-close:hover {
     color: #ffffff;
-}
-
-.modal-body {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
 }
 
 .modal-row {
@@ -109,4 +116,18 @@
 .modal-btn--save {
     background-color: #e53935;
     color: #ffffff;
+}
+
+/* Scrollbar personalizada para mantener la temática */
+.modal-body::-webkit-scrollbar {
+    width: 4px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background-color: #e53935;
+    border-radius: 2px;
 }

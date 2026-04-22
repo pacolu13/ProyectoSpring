@@ -28,11 +28,17 @@ export const Register = () => {
             roles: roles,
         };
 
-        const result = await post(registerData);
-        if (result) {
+        console.log(registerData);
+
+        try {
+            const result = await post(registerData);
+            if (!result) {
+                showToast("error", "Error al registrarse.");
+                return;
+            }
             login(result.access_token, { email: data.email, roles: roles });
-            navigate("/"); 
-        } else {
+            navigate("/");
+        } catch (error) {
             showToast("error", "Error al registrarse.");
         }
     };
@@ -67,13 +73,11 @@ export const Register = () => {
                     placeholder="Contraseña"
                 />
 
-                <Box className="register-radio-group">
-                    <Typography variant="body1" className="register-radio-label">
-                        ¿Querés registrarte como vendedor?
-                    </Typography>
+                <div className="seller-toggle">
+                    <p className="seller-toggle__label">¿Querés registrarte como vendedor?</p>
 
-                    <Box className="register-radio-options">
-                        <label className="register-radio-option">
+                    <div className="seller-toggle__options">
+                        <label className={`seller-toggle__option ${isSeller === true ? "seller-toggle__option--active" : ""}`}>
                             <input
                                 type="radio"
                                 name="seller"
@@ -81,9 +85,11 @@ export const Register = () => {
                                 checked={isSeller === true}
                                 onChange={() => setIsSeller(true)}
                             />
+                            <span className="seller-toggle__check" />
                             Sí
                         </label>
-                        <label className="register-radio-option">
+
+                        <label className={`seller-toggle__option ${isSeller === false ? "seller-toggle__option--active" : ""}`}>
                             <input
                                 type="radio"
                                 name="seller"
@@ -91,10 +97,11 @@ export const Register = () => {
                                 checked={isSeller === false}
                                 onChange={() => setIsSeller(false)}
                             />
+                            <span className="seller-toggle__check" />
                             No
                         </label>
-                    </Box>
-                </Box>
+                    </div>
+                </div>
 
                 <Button label="REGISTRARSE" parentMethod={handleSubmit(onSubmit)} />
 

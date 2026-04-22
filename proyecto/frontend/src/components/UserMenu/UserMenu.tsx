@@ -9,7 +9,7 @@ import { LinkIcon } from "./LinkIcon/LinkIcon";
 export const UserMenu = () => {
   const [open, setOpen] = useState(false);
   const { token, user, logout } = useAuth();
-  const isSeller = user?.roles.includes("SELLER");
+  const isSeller = user?.roles?.includes("SELLER") ?? false;
   const navigate = useNavigate();
   const ref = useRef<HTMLDivElement>(null);
 

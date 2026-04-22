@@ -1,7 +1,6 @@
 export * from "./Home/Home"
 export * from "./Login/Login"
 export * from "./Register/Register"
-export * from "./Products/Products"
 export * from "./ProductListing/ProductListing"
 export * from "./Seller/ProductSell/ProductSell"
 export * from "./Seller/ManageListings/ManageListings"

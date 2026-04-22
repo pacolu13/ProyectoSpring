@@ -1,4 +1,5 @@
 import type { RegisterOptions } from "react-hook-form";
+import './InputField.css'
 
 type Props = {
   label: string;

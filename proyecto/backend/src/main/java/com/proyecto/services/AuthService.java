@@ -46,7 +46,8 @@ public class AuthService {
         var refreshToken = jwtService.generateRefreshToken(clientSaved);
 
         saveUserToken(clientSaved, token);
-        return new TokenResponseDTO(token, refreshToken);
+        List<String> rolesName = clientSaved.getRoles().stream().map(rol -> rol.getName().name()).toList();
+        return new TokenResponseDTO(token, refreshToken, rolesName);
     }
 
     public TokenResponseDTO login(LoginDTO request) {
@@ -61,8 +62,8 @@ public class AuthService {
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, token);
-
-        return new TokenResponseDTO(token, refreshToken);
+        List<String> rolesName = user.getRoles().stream().map(rol -> rol.getName().name()).toList();
+        return new TokenResponseDTO(token, refreshToken, rolesName);
     }
 
     private User createUser(RegisterDTO request) {
@@ -114,7 +115,8 @@ public class AuthService {
         final String accessToken = jwtService.generateToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, accessToken);
-        return new TokenResponseDTO(accessToken, refreshToken);
+        List<String> rolesName = user.getRoles().stream().map(rol -> rol.getName().name()).toList();
+        return new TokenResponseDTO(accessToken, refreshToken, rolesName);
     }
 
     private void saveUserToken(User user, String token) {

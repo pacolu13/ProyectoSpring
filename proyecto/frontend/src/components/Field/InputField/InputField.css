@@ -1,0 +1,42 @@
+/* ── InputField custom ── */
+.ps-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.ps-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.ps-input {
+  background-color: #0d0d0d;
+  border: 1px solid #2a2a2a;
+  color: #f0f0f0;
+  font-size: 0.9rem;
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 0;
+}
+
+.ps-input::placeholder {
+  color: #3a3a3a;
+  font-size: 0.85rem;
+}
+
+.ps-input:hover {
+  border-color: #444;
+}
+
+.ps-input:focus {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.12);
+}

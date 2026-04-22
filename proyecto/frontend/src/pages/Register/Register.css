@@ -111,3 +111,77 @@
 .register-login-link:hover {
     border-color: #f0f0f0;
 }
+
+.seller-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 8px 0;
+}
+
+.seller-toggle__label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #e0e0e0;
+    /* blanco suave, visible sobre fondo oscuro */
+    margin: 0;
+}
+
+.seller-toggle__options {
+    display: flex;
+    gap: 12px;
+}
+
+.seller-toggle__option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #999;
+    background: #111;
+    transition: all 0.2s ease;
+    user-select: none;
+    flex: 1;
+    justify-content: center;
+}
+
+.seller-toggle__option:hover {
+    border-color: #c0392b;
+    color: #fff;
+}
+
+.seller-toggle__option--active {
+    border-color: #e74c3c;
+    background: rgba(231, 76, 60, 0.08);
+    color: #fff;
+}
+
+/* ocultar el radio nativo */
+.seller-toggle__option input[type="radio"] {
+    display: none;
+}
+
+/* indicador custom */
+.seller-toggle__check {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1.5px solid #555;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.seller-toggle__option--active .seller-toggle__check {
+    background: #e74c3c;
+    border-color: #e74c3c;
+    box-shadow: 0 0 6px rgba(231, 76, 60, 0.6);
+}
