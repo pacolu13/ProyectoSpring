@@ -1,11 +1,12 @@
 import './Home.css'
 import { Button, ProductHome } from '../../components'
 import { useFetch } from '../../hooks'
-import type { ProductSellDTO } from '../../interfaces';
+import type { ProductSellDTO, StatsDTO } from '../../interfaces';
 
 export const Home = () => {
 
     const { data, error } = useFetch<ProductSellDTO[]>('/api/v1/product-listings', false);
+    const { data: stats } = useFetch<StatsDTO>('/api/v1/stats', false);
 
     if (data == null || error) {
         return null; // Generar un error
@@ -21,6 +22,11 @@ export const Home = () => {
                     <Button label={'Explorar productos'} parentMethod={function (): void {
                         throw new Error('Function not implemented.');
                     }}></Button>
+                </div>
+                <div className='hero-stats'>
+                    <p>{stats?.cantOrders}</p>
+                    <p>{stats?.cantProducts}</p>
+                    <p>{stats?.cantUsers}</p>
                 </div>
             </section>
 

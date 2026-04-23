@@ -10,6 +10,6 @@ export * from "./UserDTO"
 export * from "./OrderDTO"
 export * from "./ProductSellDTO"
 export * from "./CategoryDTO"
-export * from "./FormDataDTO"
+export * from "./StatsDTO"
 
 

@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.proyecto.DTOs.UserCreateDTO;
 import com.proyecto.DTOs.UserDTO;
+import com.proyecto.DTOs.UserUpdateDTO;
 import com.proyecto.config.ExceptionFactory;
 import com.proyecto.mappers.UserMapper;
 import com.proyecto.models.Cart;
 import com.proyecto.models.User;
-import com.proyecto.models.UserUpdateDTO;
 import com.proyecto.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
