@@ -16,6 +16,8 @@ public class ApiRoutes {
     public static final String STATS = API + "/stats";
     public static final String ALL_STRING = "/**";
 
+    public static final String ADMIN = API + "/admin";
+
     // Extender cada una por Id o los paremotros que se continuan en sus controllers
 
 }

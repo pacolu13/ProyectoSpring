@@ -15,6 +15,8 @@ public class RabbitConfig {
     public static final String QUEUE = "order.created.queue";
     public static final String EXCHANGE = "order.exchange";
     public static final String ROUTING_KEY = "order.created";
+    public static final String NOTIFICATION_QUEUE = "notification.queue";
+    public static final String NOTIFICATION_ROUTING_KEY = "notification.created";
 
     @Bean
     public Queue queue() {
@@ -37,5 +39,18 @@ public class RabbitConfig {
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
+    }
+
+    @Bean
+    public Queue notificationQueue() {
+        return new Queue(NOTIFICATION_QUEUE, true);
+    }
+
+    @Bean
+    public Binding notificationBinding() {
+        return BindingBuilder
+                .bind(notificationQueue())
+                .to(exchange())
+                .with(NOTIFICATION_ROUTING_KEY);
     }
 }

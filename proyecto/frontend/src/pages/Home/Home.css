@@ -1,10 +1,9 @@
 #Home {
-    width: 100%;
-    min-height: 100vh;
-    background: #ebebeb;
+    background: #111;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 24px;
 }
-
-/* HERO */
 
 .hero {
     width: 100%;
@@ -15,56 +14,56 @@
     justify-content: center;
 }
 
-.hero-content {
+.hero-title {
+    color: #fff;
+}
+
+.hero-description {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.hero-subtitle {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.hero-section {
+    padding: 2rem 2rem 1.75rem;
     text-align: center;
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.07);
 }
 
-.hero-content h1 {
-    font-size: 68px;
-    margin-bottom: 10px;
-    color: #ebebeb;
-    font-family: "Bebas Neue", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-
+.hero-stats {
+    display: flex;
+    gap: 0;
+    border-top: 0.5px solid rgba(255, 255, 255, 0.08);
+    padding-top: 1.25rem;
 }
 
-.hero-content p {
-    font-size: 18px;
-    margin-bottom: 20px;
-    color: #ebebeb;
-}
-
-.hero-button {
-    padding: 12px 28px;
-    border: none;
-    background: #cb1d1d;
-    color: white;
-    font-size: 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.hero-button:hover {
-    background: #2968c8;
+.hero-stats>*+* {
+    border-left: 0.5px solid rgba(255, 255, 255, 0.08);
 }
 
 /* PRODUCTOS */
 
+.stat-number {
+    color: #e53935;
+}
+
 .featured {
-    padding: 40px;
-    max-width: 1200px;
-    margin: auto;
+    padding: 1.5rem 1.5rem 2rem;
 }
 
 .featured h2 {
-    margin-bottom: 25px;
-    font-size: 26px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
 }
 
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 2fr));
+    gap: 16px;
 }

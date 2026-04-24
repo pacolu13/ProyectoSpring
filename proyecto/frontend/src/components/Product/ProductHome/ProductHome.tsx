@@ -6,12 +6,12 @@ interface Props {
     id?: number,
     image: string,
     brand: string,
-    name: string,
+    title: string,
     description: string
 
 }
 
-export const ProductHome = ({ id, image, brand, name, description }: Props) => {
+export const ProductHome = ({ id, image, brand, title, description }: Props) => {
 
     const [imageError, setImageError] = useState(false);
 
@@ -22,7 +22,7 @@ export const ProductHome = ({ id, image, brand, name, description }: Props) => {
                 {!imageError && image ? (
                     <img
                         src={image}
-                        alt={name}
+                        alt={title}
                         onError={() => setImageError(true)}
                     />
                 ) : (
@@ -32,7 +32,7 @@ export const ProductHome = ({ id, image, brand, name, description }: Props) => {
 
             <div className="product-info">
                 <span className="product-brand">{brand}</span>
-                <h3>{name}</h3>
+                <h3>{title}</h3>
                 <p>{description}</p>
 
                 <Button label='Ver producto' parentMethod={() => { window.location.href = `/products/${id}`; }}></Button>

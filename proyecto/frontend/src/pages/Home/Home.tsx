@@ -1,5 +1,5 @@
 import './Home.css'
-import { Button, ProductHome } from '../../components'
+import { ProductHome, StatCard } from '../../components'
 import { useFetch } from '../../hooks'
 import type { ProductSellDTO, StatsDTO } from '../../interfaces';
 
@@ -14,27 +14,33 @@ export const Home = () => {
 
     return (
         <div id="Home">
+            <section className="hero-section">
+                <p className="hero-subtitle">Bienvenido a</p>
+                <h1 className="hero-title">Tu Tienda Online</h1>
+                <p className="hero-description">La mejor selección de productos al mejor precio</p>
 
-            <section className="hero">
-                <div className="hero-content">
-                    <h1>Bienvenido a nuestra tienda</h1>
-                    <p>Descubre tecnología, accesorios y productos de alta calidad.</p>
-                    <Button label={'Explorar productos'} parentMethod={function (): void {
-                        throw new Error('Function not implemented.');
-                    }}></Button>
-                </div>
-                <div className='hero-stats'>
-                    <p>{stats?.cantOrders}</p>
-                    <p>{stats?.cantProducts}</p>
-                    <p>{stats?.cantUsers}</p>
+                <div className="hero-stats">
+                    <StatCard
+                        label="Órdenes realizadas"
+                        value={stats?.cantOrders ?? 0}
+                        description="Pedidos procesados exitosamente."
+                    />
+                    <StatCard
+                        label="Productos disponibles"
+                        value={stats?.cantProducts ?? 0}
+                        description="Catálogo en constante crecimiento."
+                    />
+                    <StatCard
+                        label="Usuarios registrados"
+                        value={stats?.cantUsers ?? 0}
+                        description="Personas que ya confían en nosotros."
+                    />
                 </div>
             </section>
 
             <section className="featured">
                 <h2>Productos destacados</h2>
-
                 {error && <p className="error">{error}</p>}
-
                 <div className="products-grid">
                     {data.map(listing => (
                         <ProductHome
@@ -42,7 +48,7 @@ export const Home = () => {
                             id={listing.product.id}
                             image={listing.product.image}
                             brand={listing.product.brand}
-                            name={listing.title}
+                            title={listing.title}
                             description={listing.product.description}
                         />
                     ))}
