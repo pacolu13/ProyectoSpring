@@ -1,12 +1,23 @@
 import './Home.css'
-import { ProductHome, StatCard } from '../../components'
-import { useFetch } from '../../hooks'
+import { ProductHome, StatCard, useToast } from '../../components'
+import { useDelete, useFetch } from '../../hooks'
 import type { ProductSellDTO, StatsDTO } from '../../interfaces';
+import { useAuth } from '../../context/AuthContext';
 
 export const Home = () => {
-
+    const showToast = useToast();
     const { data, error } = useFetch<ProductSellDTO[]>('/api/v1/product-listings', false);
     const { data: stats } = useFetch<StatsDTO>('/api/v1/stats', false);
+    const { data: listingDelete } = useDelete<void>('/api/v1/product-listings');
+    const isAdmin = useAuth().user?.roles.includes('ADMIN') ?? false;
+
+    const handleDelete = async (id: number) => {
+        try {
+            showToast("confirm", "Publicación eliminada exitosamente.");
+        } catch (e) {
+            showToast("error", "Error al eliminar la publicación.");
+        }
+    };
 
     if (data == null || error) {
         return null; // Generar un error
@@ -50,6 +61,7 @@ export const Home = () => {
                             brand={listing.product.brand}
                             title={listing.title}
                             description={listing.product.description}
+                            isAdmin={isAdmin}
                         />
                     ))}
                 </div>

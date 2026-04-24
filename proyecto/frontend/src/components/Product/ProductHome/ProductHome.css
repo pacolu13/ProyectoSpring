@@ -89,3 +89,28 @@
 .product-btn:hover {
     background: #c62828;
 }
+
+/* ADMIN BUTTON */
+
+.btn-edit {
+    display: block;
+    width: 100%;
+    padding: 9px;
+    margin-bottom: 6px;
+    background: transparent;
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.btn-edit:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+}
