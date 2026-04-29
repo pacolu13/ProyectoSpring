@@ -10,6 +10,7 @@ import com.proyecto.DTOs.ProductListingDTO;
 import com.proyecto.DTOs.ProductListingUpdateDTO;
 import com.proyecto.config.ExceptionFactory;
 import com.proyecto.mappers.ProductListingMapper;
+import com.proyecto.models.PostState;
 import com.proyecto.models.Product;
 import com.proyecto.models.ProductListing;
 import com.proyecto.models.User;
@@ -52,9 +53,16 @@ public class ProductListingService {
                 productsListingSave.setUser(seller);
                 productsListingSave.setProduct(productSaved);
                 seller.getProductsListings().add(productsListingSave);
+                productsListingSave.setPostState(PostState.ACTIVE);
 
                 ProductListing productsListingSaved = productListingRepository.save(productsListingSave);
                 return productListingMapper.toDTO(productsListingSaved);
+        }
+
+        // Buscar publicaciones por estado
+        public List<ProductListingDTO> findByPostState(PostState postState) {
+                List<ProductListing> listings = productListingRepository.findByPostState(postState);
+                return productListingMapper.toDTOList(listings);
         }
 
         public List<ProductListingDTO> findAll() {

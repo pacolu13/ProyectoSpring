@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.proyecto.DTOs.NotificationMessageDTO;
 import com.proyecto.config.RabbitConfig;
+import com.proyecto.models.PostState;
 import com.proyecto.models.ProductListing;
 import com.proyecto.models.RolEnum;
 import com.proyecto.models.User;
@@ -23,7 +24,6 @@ public class AdminService {
     private final RabbitTemplate rabbitTemplate;
 
     public void deletePost(Long listingId, String adminEmail) {
-        // Verificar que el usuario es admin
         User admin = userRepository.findByEmail(adminEmail).orElseThrow();
         boolean isAdmin = admin.getRoles().stream()
                 .anyMatch(rol -> rol.getName() == RolEnum.ADMIN);
@@ -32,12 +32,11 @@ public class AdminService {
             throw new RuntimeException("El usuario no tiene permisos de administrador");
         }
 
-        // Obtener el listing antes de eliminarlo para acceder al dueño
         ProductListing listing = productListingRepository.findById(listingId).orElseThrow();
         User owner = listing.getUser();
 
         // Eliminar la publicación
-        productListingRepository.deleteById(listingId);
+        listing.setPostState(PostState.DELETED);
 
         // Notificar al dueño por RabbitMQ
         NotificationMessageDTO notification = new NotificationMessageDTO(

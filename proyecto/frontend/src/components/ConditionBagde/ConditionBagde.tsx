@@ -6,7 +6,7 @@ interface ConditionBadgeProps {
 }
 
 export const ConditionBadge = ({ condition }: ConditionBadgeProps) => (
-    <span className={`plc__badge plc__badge--${condition}`}>
+    <span className={`plc__badge plc__badge--${condition?.toLowerCase()}`}>
         {condition === "NEW" ? "Nuevo" : condition === "USED" ? "Usado" : "Undefined"}
     </span>
 );

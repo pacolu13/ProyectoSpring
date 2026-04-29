@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Button } from "../../Button/Button";
 import "./ProductHome.css"
 import { useToast } from "../../Toast/ToastProvider/ToastContext";
+import { useDelete } from "../../../hooks";
 
 interface Props {
     id?: number,
+    idProduct?: number,
     image: string,
     brand: string,
     title: string,
@@ -13,10 +15,22 @@ interface Props {
 
 }
 
-export const ProductHome = ({ id, image, brand, title, description, isAdmin }: Props) => {
+export const ProductHome = ({ id, idProduct, image, brand, title, description, isAdmin }: Props) => {
     const [imageError, setImageError] = useState(false);
+    const showToast = useToast();
+    const { constDelete } = useDelete<void>(`/api/v1/admin/listings/${id}`)
     const navegateToProduct = () => {
-        window.location.href = `/products/${id}`;
+        window.location.href = `/products/${idProduct}`;
+    }
+
+    const handleDelete = async () => {
+        try {
+            console.log("Eliminando publicación con ID:", id);
+            await constDelete();
+            showToast("confirm", "Publicación eliminada exitosamente");
+        } catch (error) {
+            showToast("error", "Error al eliminar la publicación");
+        }
     }
 
     return <>
@@ -41,7 +55,7 @@ export const ProductHome = ({ id, image, brand, title, description, isAdmin }: P
 
                 {isAdmin && (
                     <button className="btn-edit"
-                        onClick={() => alert("Funcionalidad de edición no implementada")}>
+                        onClick={handleDelete}>
                         Eliminar publicación
                     </button>
                 )}

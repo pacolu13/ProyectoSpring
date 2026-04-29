@@ -2,8 +2,9 @@ export interface ProductListingDTO {
   id: number;
   price: number;
   productName: string;
+  description: string;
   creationDate: Date;
-  condition: ConditionDTO;
+  state: ConditionDTO;
   seller: SellerDTO;
 }
 
@@ -12,16 +13,16 @@ export interface ProductListingDetailsDTO {
   price: number;
   productName: string;
   description: string;
-  condition: ConditionDTO;
+  state: ConditionDTO;
   seller: SellerDTO;
   creationDate: Date;
 }
 
 export interface SellerDTO {
   username: string;
-  totalSales: number;       // ventas totales del vendedor
-  rating: number;      // 0–5
-  location: string;          // ciudad/provincia
+  totalSales: number;
+  rating: number;
+  location: string;
 
 }
 

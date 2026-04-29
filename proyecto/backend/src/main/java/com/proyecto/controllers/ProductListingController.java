@@ -17,6 +17,7 @@ import com.proyecto.DTOs.ProductListingCreateDTO;
 import com.proyecto.DTOs.ProductListingDTO;
 import com.proyecto.DTOs.ProductListingUpdateDTO;
 import com.proyecto.config.ApiRoutes;
+import com.proyecto.models.PostState;
 import com.proyecto.services.ProductListingService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,12 @@ public class ProductListingController {
 
     @GetMapping
     public ResponseEntity<List<ProductListingDTO>> getAll() {
+        List<ProductListingDTO> response = productListingService.findByPostState(PostState.ACTIVE);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<List<ProductListingDTO>> getAllTest() {
         List<ProductListingDTO> response = productListingService.findAll();
         return ResponseEntity.ok(response);
     }
