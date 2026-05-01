@@ -16,6 +16,7 @@ import com.proyecto.models.ProductListing;
 @Mapper(componentModel = "spring", uses = { UserMapper.class, ProductMapper.class })
 public interface ProductListingMapper {
 
+    @Mapping(target = "user", ignore = true)
     ProductListing toEntity(ProductListingCreateDTO dto);
 
     List<ProductListing> toEntityList(List<ProductListingCreateDTO> dtoList);
@@ -23,8 +24,6 @@ public interface ProductListingMapper {
     @Mapping(source = "user", target = "seller")
     ProductListingDTO toDTO(ProductListing entity);
 
-    @Mapping(source = "product.name", target = "productName")
-    @Mapping(source = "user.username", target = "sellerName")
     List<ProductListingDTO> toDTOList(List<ProductListing> entityList);
 
     @Mapping(target = "id", ignore = true)

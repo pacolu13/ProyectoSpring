@@ -15,6 +15,7 @@ export const ProductSell = () => {
 
   const onSubmit = async (data: CreateProductSellDTO) => {
     try {
+      console.log(data);
       await post(data); 
       showToast("confirm", "Publicación creada con éxito");
       reset();
