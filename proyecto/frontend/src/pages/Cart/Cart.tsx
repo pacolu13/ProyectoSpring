@@ -1,23 +1,23 @@
 
 import { useEffect, useState } from "react";
 import { Button, ProductCart, useToast } from "../../components";
-import { useFetch, usePost, usePut } from '../../hooks';
+import { useDelete, useFetch, usePost, usePut } from '../../hooks';
 import type { CartDTO, OrderDTO } from '../../interfaces';
 import './Cart.css'
 import { formatPrice } from "../../utils/FormatPrice";
+import { cartRoutes } from "../../api/routes";
 
 export const Cart = () => {
     const showToast = useToast();
-    const { data } = useFetch<CartDTO>("/api/v1/carts", true);
-    const { put } = usePut<CartDTO>("/api/v1/carts");
-    const { post } = usePost<OrderDTO>("/api/v1/orders/submit");
+    const { data } = useFetch<CartDTO>(cartRoutes.get, true);
+    const { put } = usePut<CartDTO>(cartRoutes.update);
+    const { post } = usePost<OrderDTO>(cartRoutes.submit);
     const [thisTotal, setTotal] = useState<number>(0);
+    const { constDelete } = useDelete<void>('');
 
     useEffect(() => {
         if (data?.total != null) setTotal(data.total);
     }, [data]);
-
-
 
     const handleIncrease = async (productListingId: number, unitPrice: number): Promise<void> => {
         try {
@@ -46,6 +46,16 @@ export const Cart = () => {
         }
         catch (error) {
             showToast('error', 'Error al confirmar la compra');
+        }
+    };
+
+    const handleDelete = async (productListingId: number): Promise<void> => {
+        try {
+            await constDelete(cartRoutes.delete(productListingId));
+            showToast('confirm', 'Producto eliminado: Recargue el navegador');
+        }
+        catch (error) {
+            showToast('error', 'Error al eliminar el producto del carrito');
         }
     };
 
@@ -81,6 +91,7 @@ export const Cart = () => {
                         subtotal={item.subtotal}
                         onIncrease={handleIncrease}
                         onDecrease={handleDecrease}
+                        onDelete={handleDelete}
                     />
                 ))}
                 <div className='cart__total'>

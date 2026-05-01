@@ -5,13 +5,14 @@ import { usePost } from "../../hooks/usePost";
 import { useForm } from "react-hook-form";
 import { Globe, InputField, useToast } from "../../components/index";
 import type { TokenResponseDTO, LoginDTO } from "../../interfaces/index";
+import { userRoutes } from "../../api/routes";
 import "../Login/Login.css";
 
 export const Login = () => {
   const { login } = useAuth();
   const showToast = useToast();
   const navigate = useNavigate();
-  const { post, isLoading } = usePost<TokenResponseDTO>("/api/v1/auth/login");
+  const { post, isLoading } = usePost<TokenResponseDTO>(userRoutes.login);
   const { register, handleSubmit } = useForm<LoginDTO>();
 
   const onSubmit = async (data: LoginDTO): Promise<void> => {

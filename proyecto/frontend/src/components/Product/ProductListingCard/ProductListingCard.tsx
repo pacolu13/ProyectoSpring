@@ -13,7 +13,6 @@ interface Props {
 export const ProductListingCard = ({ Product, onBuy }: Props) => {
   const [quantity, setQuantity] = useState(1);
 
-  console.log(Product);
   return (
     <article className="plc">
       <ConditionBadge condition={Product.state} />

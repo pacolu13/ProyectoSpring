@@ -3,10 +3,11 @@ import { ProductHome, StatCard } from '../../components'
 import { useFetch } from '../../hooks'
 import type { ProductSellDTO, StatsDTO } from '../../interfaces';
 import { useAuth } from '../../context/AuthContext';
+import { productsRoutes, statsRoutes } from '../../api/routes';
 
 export const Home = () => {
-    const { data, error } = useFetch<ProductSellDTO[]>('/api/v1/product-listings', false);
-    const { data: stats } = useFetch<StatsDTO>('/api/v1/stats', false);
+    const { data, error } = useFetch<ProductSellDTO[]>(productsRoutes.list, false);
+    const { data: stats } = useFetch<StatsDTO>(statsRoutes.get, false);
     const isAdmin = useAuth().user?.roles.includes('ADMIN') ?? false;
 
     if (data == null || error) {

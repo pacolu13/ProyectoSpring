@@ -13,14 +13,14 @@ import com.proyecto.DTOs.ProductListingDTO;
 import com.proyecto.DTOs.ProductListingUpdateDTO;
 import com.proyecto.models.ProductListing;
 
-@Mapper(componentModel = "spring", uses = UserMapper.class)
+@Mapper(componentModel = "spring", uses = { UserMapper.class, ProductMapper.class })
 public interface ProductListingMapper {
 
     ProductListing toEntity(ProductListingCreateDTO dto);
 
     List<ProductListing> toEntityList(List<ProductListingCreateDTO> dtoList);
 
-    @Mapping(source = "user" , target = "seller")
+    @Mapping(source = "user", target = "seller")
     ProductListingDTO toDTO(ProductListing entity);
 
     @Mapping(source = "product.name", target = "productName")
@@ -29,7 +29,6 @@ public interface ProductListingMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "orderDetails", ignore = true)
-    @Mapping(target = "product", ignore = true)
     @Mapping(target = "user", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     ProductListing updateProductFromDto(ProductListingUpdateDTO dto, @MappingTarget ProductListing entity);

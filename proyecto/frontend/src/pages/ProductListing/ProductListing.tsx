@@ -3,15 +3,14 @@ import { useFetch, usePost } from "../../hooks/index";
 import { ProductListingCard, ListingFilters, useToast } from "../../components/index";
 import type { ProductListingDTO, CartDTO } from "../../interfaces/index";
 import './ProductListing.css';
+import { cartRoutes, productsRoutes } from "../../api/routes";
 
 export const ProductListing = () => {
   const { idProduct } = useParams();
   const showToast = useToast();
-  const { data, error, isLoading } = useFetch<ProductListingDTO[]>(
-    `/api/v1/product-listings/${idProduct}`, false
-  );
+  const { data, error, isLoading } = useFetch<ProductListingDTO[]>(productsRoutes.get(idProduct), false);
 
-  const { post } = usePost<CartDTO>("/api/v1/carts");
+  const { post } = usePost<CartDTO>(cartRoutes.get);
   if (idProduct == null || data == null) return null;
 
   const handleBuy = async (id: number, quantity: number): Promise<void> => {

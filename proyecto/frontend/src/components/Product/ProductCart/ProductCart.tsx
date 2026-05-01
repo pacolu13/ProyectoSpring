@@ -2,15 +2,11 @@ import "./ProductCart.css";
 import type { CartProduct } from "../../../interfaces";
 import { useState } from "react";
 import { formatPrice } from "../../../utils/FormatPrice";
-import { useDelete } from "../../../hooks";
-import { useToast } from "../..";
+import { HandleQuantity } from "../../HandleQuantity/HandleQuantity";
 
-export const ProductCart = ({ id, name, quantity, subtotal, productListingId, unitPrice, onIncrease, onDecrease }: CartProduct) => {
+export const ProductCart = ({ id, name, quantity, subtotal, productListingId, unitPrice, onIncrease, onDecrease, onDelete }: CartProduct) => {
   const [thisQuantity, setQuantity] = useState(quantity);
   const [thisSubtotal, setSubtotal] = useState(subtotal);
-
-  const { constDelete } = useDelete<void>(`/api/v1/carts/${productListingId}`);
-  const showToast = useToast();
 
   const handleIncrease = () => {
     setQuantity(q => q + 1);
@@ -28,26 +24,15 @@ export const ProductCart = ({ id, name, quantity, subtotal, productListingId, un
     setSubtotal(q => q - unitPrice);
   };
 
-  const onDelete = async () => {
-    try {
-      await constDelete();
-      showToast('confirm', 'Producto eliminado: Recargue el navegador');
-    }
-    catch (error) {
-      showToast('error', 'Error al eliminar el producto del carrito');
-    }
-  };
-
-
   return (
     <article className="pc">
       <div className="pc__info">
         <h3 className="pc__name">{name}</h3>
-        <div className="card__quantity">
-          <button onClick={handleDecrease}>−</button>
-          <span>{thisQuantity}</span>
-          <button onClick={handleIncrease}>+</button>
-        </div>
+        <HandleQuantity
+          quantity={thisQuantity}
+          onIncrease={handleIncrease}
+          onDecrease={handleDecrease}
+        />
       </div>
       <div className="pc__controls">
         <div className="pc__subtotal">
@@ -56,7 +41,7 @@ export const ProductCart = ({ id, name, quantity, subtotal, productListingId, un
         </div>
       </div>
       <div className="pc__button-delete">
-        <button onClick={onDelete}>Eliminar</button>
+        <button onClick={() => onDelete(productListingId)}>Eliminar</button>
       </div>
     </article>
   );

@@ -1,10 +1,12 @@
 import { useFetch } from "../../../hooks";
 import { ListingRow } from "../../../components";
 import type { ProductSellDTO } from "../../../interfaces";
+import { userRoutes } from "../../../api/routes";
+
 import "./ManageListings.css";
 
 export const ManageListings = () => {
-    const { data, error } = useFetch<ProductSellDTO[]>("/api/v1/product-listings/seller", true);
+    const { data, error } = useFetch<ProductSellDTO[]>(userRoutes.sellerListings, true);
 
     if (error) {
         return <div className="ml-error">Error al cargar las publicaciones</div>;

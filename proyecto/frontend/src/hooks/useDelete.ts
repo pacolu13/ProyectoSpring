@@ -5,19 +5,19 @@ interface DeleteState<T> {
     data: T | null;
     deleteError: string | null;
     isLoading: boolean;
-    constDelete: () => Promise<T | null>;
+    constDelete: (url?: string) => Promise<T | null>;
 }
 
-export const useDelete = <T>(url: string): DeleteState<T> => {
+export const useDelete = <T>(defaultUrl: string): DeleteState<T> => {
     const [data, setData] = useState<T | null>(null);
     const [deleteError, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const constDelete = async (): Promise<T | null> => {
+    const constDelete = async (url?: string): Promise<T | null> => {
         setIsLoading(true);
         setError(null);
         try {
-            const result = await api.delete(url);
+            const result = await api.delete(url ?? defaultUrl);
             setData(result);
             return result;
         } catch (e: any) {

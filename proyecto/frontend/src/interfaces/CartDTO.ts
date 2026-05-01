@@ -7,6 +7,7 @@ export interface CartProduct {
   subtotal: number;
   onIncrease: (productListingId: number, unitPrice: number) => void;
   onDecrease: (productListingId: number, unitPrice: number) => void;
+  onDelete: (productListingId: number) => void;
 }
 
 export interface CartDTO {

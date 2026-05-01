@@ -1,11 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Button, InputField, useToast } from "../../components";
 import { useState } from "react";
+import { Button, InputField, useToast } from "../../components";
 import type { TokenResponseDTO, RegisterDTO } from "../../interfaces";
 import { usePost } from "../../hooks/usePost";
 import { useAuth } from "../../context/AuthContext";
+import { userRoutes } from "../../api/routes";
 import './Register.css';
 
 export const Register = () => {
@@ -13,7 +14,7 @@ export const Register = () => {
     const showToast = useToast();
     const navigate = useNavigate();
     const [isSeller, setIsSeller] = useState(false);
-    const { post } = usePost<TokenResponseDTO>("/api/v1/auth/register");
+    const { post } = usePost<TokenResponseDTO>(userRoutes.register);
 
     const { register, handleSubmit } = useForm<RegisterDTO>();
 

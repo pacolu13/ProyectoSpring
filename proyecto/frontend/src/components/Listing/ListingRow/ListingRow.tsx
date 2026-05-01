@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useToast, EditListingModal } from "../../../components";
 import type { ProductSellDTO, CreateProductSellDTO, CategoryDTO } from "../../../interfaces";
 import { usePut, useFetch, useDelete } from "../../../hooks";
+import { productsRoutes, categoriesRoutes } from "../../../api/routes";
 
 type Props = {
     listing: ProductSellDTO;
@@ -10,9 +11,9 @@ type Props = {
 export const ListingRow = ({ listing }: Props) => {
     const showToast = useToast();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { put } = usePut<ProductSellDTO>(`/api/v1/product-listings/${listing.id}`);
-    const { constDelete } = useDelete<void>(`/api/v1/product-listings/${listing.id}`);
-    const { data: categories } = useFetch<CategoryDTO[]>("/api/v1/categories", true);
+    const { put } = usePut<ProductSellDTO>(productsRoutes.update(listing.id));
+    const { constDelete } = useDelete<void>(productsRoutes.delete(listing.id));
+    const { data: categories } = useFetch<CategoryDTO[]>(categoriesRoutes.list, true);
 
     const onUpdate = async (data: CreateProductSellDTO) => {
         try {

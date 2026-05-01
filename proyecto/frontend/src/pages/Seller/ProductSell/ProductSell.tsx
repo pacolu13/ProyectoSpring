@@ -3,12 +3,13 @@ import type { ProductSellDTO, CategoryDTO, CreateProductSellDTO } from "../../..
 import { Button, useToast } from "../../../components";
 import { useForm } from "react-hook-form";
 import { ProductForm } from "../ProductForm";
+import { productsRoutes, categoriesRoutes } from "../../../api/routes";
 import "./ProductSell.css";
 
 export const ProductSell = () => {
   const showToast = useToast();
-  const { data: categories } = useFetch<CategoryDTO[]>("/api/v1/categories", false);
-  const { post } = usePost<ProductSellDTO>("/api/v1/product-listings");
+  const { data: categories } = useFetch<CategoryDTO[]>(categoriesRoutes.list, false);
+  const { post } = usePost<ProductSellDTO>(productsRoutes.create);
 
   const { register, handleSubmit, watch, reset } = useForm<CreateProductSellDTO>();
 
